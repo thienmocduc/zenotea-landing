@@ -53,6 +53,10 @@ a:hover{color:var(--kim-sang)}
   box-shadow:0 0 0 1px rgba(14,33,26,1),0 0 0 2px rgba(158,127,88,.34),
              0 26px 70px rgba(0,0,0,.5);
   display:grid;grid-template-columns:1.06fr 1fr;
+  /* Hàng của lưới mặc định là auto nên vẫn cao theo nội dung và bỏ qua
+     max-height. minmax(0,1fr) mới cho hàng co lại dưới chiều cao nội dung —
+     đây mới là chỗ quyết định, min-height:0 trên ô chỉ là điều kiện đi kèm. */
+  grid-template-rows:minmax(0,1fr);
   overflow:hidden;
 }
 .thiep::before{content:'';position:absolute;inset:9px;
@@ -191,7 +195,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
    vì lúc đó không còn hai mặt để gấp nữa. */
 @media(max-width:900px){
   body{overflow:auto;padding:min(1.4cm,4vh) min(1cm,5vw)}
-  .thiep{grid-template-columns:1fr;max-height:none;overflow:visible}
+  .thiep{grid-template-columns:1fr;grid-template-rows:auto;max-height:none;overflow:visible}
   .mat{overflow-y:visible}
   .thiep::after{display:none}
   .mat-trai{border-right:0;border-bottom:1px solid rgba(197,169,128,.16)}
