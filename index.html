@@ -65,7 +65,7 @@ body{
   font-feature-settings:'lnum' 1,'tnum' 1;
 }
 .b{max-width:1860px;margin:0 auto;padding:0 clamp(24px,5vw,96px)}
-.hep{max-width:1360px;margin:0 auto;padding:0 clamp(24px,5vw,96px)}
+.hep{position:relative;z-index:1;max-width:1360px;margin:0 auto;padding:0 clamp(24px,5vw,96px)}
 /* Dòng văn xuôi dài quá 90 ký tự thì mắt khó bắt dòng kế. Giới hạn theo ĐỘ DÀI CHỮ,
    không theo pixel — cỡ chữ đổi thì bề rộng tự đổi theo. */
 .hep p, .hep .lead{max-width:68ch}
@@ -194,11 +194,19 @@ nav a:hover{color:var(--kim-sang)}
 .so span{display:block;font-size:12px;color:var(--reu);margin-top:10px;letter-spacing:.05em}
 
 /* ── khối chữ Hán lớn ── */
+/* Chữ thư pháp Quốc ngữ khổ lớn — bản sắc Việt, không dùng chữ Hán.
+   Neo ở GÓC PHẢI chỗ trống, tuyệt đối không nằm giữa đè lên nội dung.
+   Dưới 1100px không còn khoảng trống bên phải nên ẩn hẳn. */
 .dai-tu{
-  font-family:var(--serif);font-size:clamp(96px,20vw,230px);line-height:.86;
-  color:var(--kim-giua);opacity:.13;text-align:center;user-select:none;
-  margin-bottom:-.34em;pointer-events:none;
+  font-family:var(--co);font-size:clamp(72px,10vw,150px);line-height:.9;
+  color:var(--kim-giua);opacity:.16;user-select:none;pointer-events:none;
+  position:absolute;top:clamp(40px,6vw,88px);right:clamp(28px,5vw,96px);
+  text-align:right;letter-spacing:.01em;z-index:0;
+  /* Charmonman có nét bút vươn cao và đuôi dấu buông xuống — nới hộp để
+     dấu tiếng Việt không bị cắt cụt. */
+  padding:.22em .12em .26em;
 }
+@media (max-width:1100px){ .dai-tu{display:none} }
 
 /* ── lưới ── */
 .luoi{display:grid;gap:1px;background:rgba(201,162,75,.14);margin-top:56px}
