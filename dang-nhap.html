@@ -31,7 +31,7 @@ body{
     var(--den);
   color:var(--giay);font-family:var(--sans);font-size:16px;line-height:1.75;
   min-height:100svh;display:flex;align-items:center;justify-content:center;
-  padding:clamp(14px,3vw,44px);-webkit-font-smoothing:antialiased;
+  padding:min(2cm,7vh) min(3cm,7vw);-webkit-font-smoothing:antialiased;
   font-variant-numeric:lining-nums tabular-nums;
 }
 a{color:var(--kim-giua);text-decoration:none;transition:color .25s}
@@ -42,7 +42,7 @@ a:hover{color:var(--kim-sang)}
    truyền thống làm viền — và là thứ tạo cảm giác "cầm được trên tay" mà một
    khung một nét không bao giờ có. */
 .thiep{
-  width:100%;max-width:1280px;position:relative;
+  width:100%;max-width:1120px;position:relative;
   /* Chiều cao ĐI THEO nội dung. Ép cứng bằng max-height thì phần thừa không biến
      mất — nó chạy ra ngoài viền, và thứ rơi ra ngoài đầu tiên lại là chữ ký với ấn
      triện, tức phần trang trọng nhất của bức thư. */
@@ -62,7 +62,7 @@ a:hover{color:var(--kim-sang)}
              rgba(197,169,128,.15) 50%,rgba(0,0,0,.24) 58%,rgba(0,0,0,0) 100%);
 }
 
-.mat{padding:clamp(22px,2.2vw,38px);position:relative;z-index:4;min-width:0}
+.mat{padding:clamp(20px,2vw,34px);position:relative;z-index:4;min-width:0}
 .mat-trai{border-right:1px solid rgba(197,169,128,.16)}
 
 /* Dấu góc — bốn nét chỉ ở góc, không viền kín, kiểu ấn triện trên thiếp */
