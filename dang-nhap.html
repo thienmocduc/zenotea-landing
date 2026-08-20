@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zen Circle — Thiệp mời</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E211A">
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="description" content="Zen Circle — vòng trong của Zen O Tea. Thư ngỏ gửi người đồng hành.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kim-sang:#E5CEAA; --kim-giua:#C5A980; --kim-toi:#9E7F58;
+  --den:#0E211A; --den2:#12291F; --rung:#1E3A2F;
+  --reu:#6B7A6F; --la:#9DB8A8; --giay:#EFE9DC; --err:#D98676;
+  --co:'Charmonman','Segoe Script',cursive;
+  --thu:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  --kim:linear-gradient(178deg,#B89C79 0%,#C2A988 14%,#D0B591 24%,#E5CEAA 33%,
+        #D5B990 42%,#BA996A 50%,#9E7F58 59%,#A38264 70%,#C4A882 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:
+    radial-gradient(closest-side at 50% 16%,rgba(197,169,128,.09),transparent 72%),
+    radial-gradient(closest-side at 50% 100%,rgba(30,58,47,.7),transparent 74%),
+    var(--den);
+  color:var(--giay);font-family:var(--sans);font-size:16px;line-height:1.75;
+  min-height:100svh;display:flex;align-items:center;justify-content:center;
+  padding:clamp(14px,3vw,44px);-webkit-font-smoothing:antialiased;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+a{color:var(--kim-giua);text-decoration:none;transition:color .25s}
+a:hover{color:var(--kim-sang)}
+
+/* ══ THIỆP GẤP ĐÔI ══════════════════════════════════════════════════════════
+   Viền KÉP: nét ngoài đậm, nét trong mảnh lùi vào 9px. Đây là cách thiếp mời in
+   truyền thống làm viền — và là thứ tạo cảm giác "cầm được trên tay" mà một
+   khung một nét không bao giờ có. */
+.thiep{
+  width:100%;max-width:1280px;position:relative;
+  /* Chiều cao ĐI THEO nội dung. Ép cứng bằng max-height thì phần thừa không biến
+     mất — nó chạy ra ngoài viền, và thứ rơi ra ngoài đầu tiên lại là chữ ký với ấn
+     triện, tức phần trang trọng nhất của bức thư. */
+  background:linear-gradient(115deg,rgba(30,58,47,.55),rgba(14,33,26,.9) 46%,rgba(18,41,31,.75));
+  border:1px solid var(--kim-toi);
+  box-shadow:0 0 0 1px rgba(14,33,26,1),0 0 0 2px rgba(158,127,88,.34),
+             0 26px 70px rgba(0,0,0,.5);
+  display:grid;grid-template-columns:1.06fr 1fr;
+}
+.thiep::before{content:'';position:absolute;inset:9px;
+  border:1px solid rgba(197,169,128,.26);pointer-events:none;z-index:3}
+/* NẾP GẤP — bóng đổ về hai phía như tờ giấy vừa mở ra */
+.thiep::after{
+  content:'';position:absolute;left:51.5%;top:0;bottom:0;width:36px;
+  transform:translateX(-50%);pointer-events:none;z-index:2;
+  background:linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.30) 42%,
+             rgba(197,169,128,.15) 50%,rgba(0,0,0,.24) 58%,rgba(0,0,0,0) 100%);
+}
+
+.mat{padding:clamp(22px,2.2vw,38px);position:relative;z-index:4;min-width:0}
+.mat-trai{border-right:1px solid rgba(197,169,128,.16)}
+
+/* Dấu góc — bốn nét chỉ ở góc, không viền kín, kiểu ấn triện trên thiếp */
+.goc{position:absolute;width:26px;height:26px;border:1px solid var(--kim-toi);
+     z-index:5;opacity:.85;pointer-events:none}
+.goc.tt{top:18px;left:18px;border-right:0;border-bottom:0}
+.goc.tp{top:18px;right:18px;border-left:0;border-bottom:0}
+.goc.dt{bottom:18px;left:18px;border-right:0;border-top:0}
+.goc.dp{bottom:18px;right:18px;border-left:0;border-top:0}
+
+/* ── MẶT TRÁI: thư ngỏ ── */
+.mat-trai{text-align:center}
+.mat-trai .thu p{text-align:left}
+/* Logo phải NGANG TẦM tiêu đề bên kia. Trước đó 36px đứng cạnh «Zen Circle» 30px chữ cọ
+   là lép hẳn — mà đây là TÊN THƯƠNG HIỆU, nó không được nhỏ hơn tên một mục con. */
+.mat-trai img.logo{height:clamp(64px,5vw,84px);margin:0 auto 20px;display:block}
+.tieu-thu{
+  font-family:var(--co);font-weight:700;font-size:clamp(25px,2.1vw,32px);
+  line-height:1.36;padding:.3em 0 .26em;margin:0 0 4px;
+  background:var(--kim);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(60,42,20,.45));
+}
+.ngay{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+      color:var(--kim-toi);margin-bottom:16px}
+.thu{font-family:var(--thu);font-size:clamp(14.5px,.98vw,16.5px);line-height:1.78;color:#DED8C8}
+.thu p{margin-bottom:11px}
+.thu p:first-of-type{font-size:1.05em}
+.thu em{font-style:italic;color:var(--kim-sang)}
+.thu strong{font-weight:500;color:var(--kim-sang)}
+.gach-thu{width:44px;height:1px;background:var(--kim-toi);margin:16px auto;opacity:.8}
+.ky{font-family:var(--co);font-weight:700;font-size:22px;color:var(--kim-sang);
+    line-height:1.46;padding:.12em 0}
+.ky small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.2em;
+          color:var(--reu);text-transform:uppercase;margin-top:5px}
+
+/* ── MẶT PHẢI: cửa vào ── */
+.dau-phai{text-align:center;margin-bottom:18px}
+.dau-phai h1{
+  font-family:var(--co);font-weight:700;font-size:clamp(25px,2.1vw,32px);line-height:1.34;
+  padding:.3em 0 .28em;margin:-.3em 0 4px;
+  background:var(--kim);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(60,42,20,.5));
+}
+.dau-phai p{font-size:13px;color:var(--reu)}
+
+.tab{display:flex;margin-bottom:16px;border-bottom:1px solid rgba(197,169,128,.18)}
+.tab button{flex:1;background:none;border:none;border-bottom:2px solid transparent;
+  color:var(--reu);font-family:inherit;font-size:12.5px;letter-spacing:.04em;
+  padding:10px 4px;cursor:pointer;transition:all .25s}
+.tab button[aria-selected="true"]{color:var(--kim-sang);border-bottom-color:var(--kim-giua)}
+.tab button:hover{color:var(--la)}
+
+label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+      color:var(--kim-giua);margin-bottom:6px}
+.o-nhap{width:100%;padding:11px 13px;background:rgba(14,33,26,.62);
+  border:1px solid rgba(197,169,128,.24);border-radius:1px;color:var(--giay);
+  font-family:inherit;font-size:14.5px;transition:border-color .25s}
+.o-nhap::placeholder{color:#5C6B60}
+.o-nhap:focus{outline:none;border-color:var(--kim-giua);
+  box-shadow:0 0 0 3px rgba(197,169,128,.12)}
+.hang{margin-bottom:12px}
+.hang-sdt{display:flex;gap:8px}
+.hang-sdt select{width:100px;padding:11px 7px;background:rgba(14,33,26,.62);
+  border:1px solid rgba(197,169,128,.24);border-radius:1px;color:var(--giay);
+  font-family:inherit;font-size:14.5px;cursor:pointer}
+.mo-mk{position:relative}
+.mo-mk button{position:absolute;right:9px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--reu);cursor:pointer;font-size:15px;padding:4px}
+.mo-mk button:hover{color:var(--kim-giua)}
+
+.phu-hang{display:flex;justify-content:space-between;align-items:center;
+  margin:-2px 0 16px;font-size:12.5px;flex-wrap:wrap;gap:8px}
+.nho{display:flex;align-items:center;gap:6px;color:var(--la);cursor:pointer}
+.nho input{accent-color:var(--kim-giua);width:13px;height:13px;cursor:pointer}
+
+.nut-chinh{width:100%;padding:12px;border:1px solid var(--kim-sang);border-radius:1px;
+  background:linear-gradient(176deg,var(--kim-sang) 0%,#D8C098 34%,
+             var(--kim-giua) 58%,var(--kim-toi) 100%);
+  color:#14261C;font-family:inherit;font-size:12.5px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .28s;
+  box-shadow:0 1px 0 rgba(255,246,228,.35) inset,0 5px 16px rgba(0,0,0,.26)}
+.nut-chinh:hover{background:linear-gradient(176deg,#F2E3C6 0%,var(--kim-sang) 38%,
+                 #CDB08A 68%,var(--kim-giua) 100%)}
+
+.hoac{display:flex;align-items:center;gap:12px;margin:15px 0 12px;
+  color:var(--reu);font-size:11.5px;letter-spacing:.1em}
+.hoac::before,.hoac::after{content:'';flex:1;height:1px;background:rgba(197,169,128,.18)}
+
+.mang{display:flex;flex-direction:column;gap:9px}
+.nut-mang{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px;
+  border:1px solid rgba(197,169,128,.26);border-radius:1px;background:rgba(14,33,26,.46);
+  color:var(--giay);font-family:inherit;font-size:13.5px;cursor:pointer;
+  transition:all .25s;width:100%}
+.nut-mang:hover{border-color:var(--kim-giua);background:rgba(197,169,128,.09)}
+.nut-mang svg{width:18px;height:18px;flex-shrink:0}
+.zalo-o{width:18px;height:18px;border-radius:50%;background:#0068FF;color:#fff;
+  font-size:8.5px;font-weight:800;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0}
+
+.chan{text-align:center;margin-top:15px;font-size:12.5px;color:var(--reu)}
+.dieu-khoan{text-align:center;margin-top:10px;font-size:10.5px;color:#586657;line-height:1.65}
+.ve{display:block;text-align:center;margin-top:11px;font-size:12px;color:var(--reu)}
+
+.bao{display:none;margin-bottom:14px;padding:10px 12px;border-radius:1px;font-size:13px;
+  border:1px solid rgba(217,134,118,.4);background:rgba(217,134,118,.1);color:var(--err)}
+.bao.hien{display:block}
+.bao.tot{border-color:rgba(157,184,168,.4);background:rgba(157,184,168,.1);color:var(--la)}
+.an{display:none}
+
+/* Màn hẹp thì thiệp GẤP LẠI: thư nằm trên, cửa vào nằm dưới — và nếp gấp biến mất,
+   vì lúc đó không còn hai mặt để gấp nữa. */
+@media(max-width:900px){
+  .thiep{grid-template-columns:1fr;max-height:none}
+  .thiep::after{display:none}
+  .mat-trai{border-right:0;border-bottom:1px solid rgba(197,169,128,.16)}
+  .thu{font-size:16px;line-height:1.85}
+}
+@media(max-width:520px){
+  .thiep::before{inset:6px}
+  .goc{width:18px;height:18px}
+  .goc.tt,.goc.tp{top:12px}.goc.dt,.goc.dp{bottom:12px}
+  .goc.tt,.goc.dt{left:12px}.goc.tp,.goc.dp{right:12px}
+}
+
+/* ══ ẤN TRIỆN & HOA VĂN ═══════════════════════════════════════════════════
+   Thư pháp Á Đông: bức thư chỉ thành văn bản trang trọng khi có TRIỆN đóng.
+   Triện đặt lệch dưới chữ ký, hơi nghiêng — đóng tay bao giờ cũng hơi lệch,
+   và chính cái lệch đó làm nó thật. */
+.ky-hang{display:flex;align-items:flex-end;justify-content:center;gap:22px;flex-wrap:wrap}
+.trien{
+  width:58px;height:58px;flex-shrink:0;position:relative;
+  background:linear-gradient(150deg,#B8452F,#A63D2F 46%,#8E3226);
+  border-radius:3px;transform:rotate(-4.5deg);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.16) inset;
+}
+.trien::before{content:'';position:absolute;inset:5px;border:1.5px solid rgba(255,236,222,.72);
+  border-radius:2px}
+.trien span{
+  font-family:var(--thu);font-size:28px;line-height:1;color:#FFF1E6;
+  font-weight:500;text-shadow:0 1px 2px rgba(0,0,0,.3);
+}
+
+
+/* Đường chỉ vàng mảnh dẫn vào tiêu đề thư — nhịp mắt của thiếp in */
+/* Nét vàng ngắn dẫn vào tiêu đề — thay cho nhãn chữ, vì dòng tiêu đề ngay dưới
+   đã tự nói nó là thư ngỏ rồi. */
+.net-dan{width:46px;height:1px;background:var(--kim-toi);margin:0 auto 14px;opacity:.9}
+@media(max-width:520px){.trien{width:56px;height:56px}.trien span{font-size:27px}}
+</style>
+</head>
+<body>
+
+<div class="thiep">
+  <span class="goc tt"></span><span class="goc tp"></span>
+  <span class="goc dt"></span><span class="goc dp"></span>
+
+  <!-- ════════ MẶT TRÁI — THƯ NGỎ ════════ -->
+  <section class="mat mat-trai">
+    <a href="./index.html"><img class="logo" src="./logo.png" alt="Zen O Tea"></a>
+
+    <div class="net-dan"></div>
+    <h2 class="tieu-thu">Thư ngỏ gửi người đồng hành</h2>
+    <div class="ngay">Từ những vùng trà cổ Việt Nam</div>
+
+    <div class="thu">
+      <p>Kính gửi bạn — người đang đứng trước cánh cửa này,</p>
+
+      <p>
+        Tôi viết thư này không phải để mời bạn mua một chai đồ uống. Thứ đáng để mời
+        nhau, tôi nghĩ, phải là một <em>cách sống</em>.
+      </p>
+
+      <p>
+        Tôi từng đứng dưới một thân trà sáu trăm tuổi ở Hà Giang, người bản địa gọi là
+        <em>cây bà</em>. Sáu thế kỷ giữa sương muối và đá cằn, mọi khắc nghiệt không quật
+        ngã được cây đều được cây lặng lẽ chưng cất thành nội lực trong từng chiếc lá.
+        Đêm ấy tôi hiểu điều mà cả đời làm kinh doanh chưa ai dạy tôi:
+        <strong>sự sống không cần vội để lớn — sự sống cần sâu để bền.</strong>
+      </p>
+
+      <p>
+        Zen Circle không phải một danh sách khách hàng. Đó là vòng trong của những người
+        cùng tin rằng có thể vui trọn vẹn mà vẫn là chính mình — và sẵn lòng đi chậm lại
+        một nhịp để giữ lấy điều đó.
+      </p>
+
+      <p>
+        Nếu bạn thấy mình trong những dòng này, xin bước qua cánh cửa bên cạnh.
+        Chúng tôi để dành một chỗ.
+      </p>
+
+      <div class="gach-thu"></div>
+      <div class="ky-hang">
+        <div class="ky">Thiên Mộc Đức<small>Nhà sáng lập · Zen O Tea</small></div>
+        <div class="trien" title="圓 — Viên: tròn đầy, trọn vẹn"><span>圓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ MẶT PHẢI — CỬA VÀO ════════ -->
+  <section class="mat mat-phai">
+    <div class="dau-phai">
+      <h1>Zen Circle</h1>
+      <p>Bước qua cánh cửa</p>
+    </div>
+
+    <div class="bao" id="bao" role="alert"></div>
+
+    <div class="tab" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="mk">Email &amp; mật khẩu</button>
+      <button role="tab" aria-selected="false" data-tab="sdt">Số điện thoại</button>
+    </div>
+
+    <form id="form-mk" novalidate>
+      <div class="hang">
+        <label for="email">Email</label>
+        <input class="o-nhap" id="email" type="email" inputmode="email"
+               autocomplete="email" placeholder="ban@congty.com" required>
+      </div>
+      <div class="hang">
+        <label for="mk">Mật khẩu</label>
+        <div class="mo-mk">
+          <input class="o-nhap" id="mk" type="password" autocomplete="current-password"
+                 placeholder="••••••••" required>
+          <button type="button" id="hien-mk" aria-label="Hiện mật khẩu">👁</button>
+        </div>
+      </div>
+      <div class="phu-hang">
+        <label class="nho"><input type="checkbox" id="nho-toi"> Ghi nhớ tôi</label>
+        <a href="#" id="quen-mk">Quên mật khẩu?</a>
+      </div>
+      <button class="nut-chinh" type="submit">Đăng nhập</button>
+    </form>
+
+    <form id="form-sdt" class="an" novalidate>
+      <div class="hang">
+        <label for="sdt">Số điện thoại</label>
+        <div class="hang-sdt">
+          <select id="ma-vung" aria-label="Mã vùng">
+            <option value="+84" selected>🇻🇳 +84</option>
+            <option value="+65">🇸🇬 +65</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+82">🇰🇷 +82</option>
+            <option value="+86">🇨🇳 +86</option>
+            <option value="+1">🇺🇸 +1</option>
+          </select>
+          <input class="o-nhap" id="sdt" type="tel" inputmode="numeric"
+                 autocomplete="tel" placeholder="912 345 678" required>
+        </div>
+      </div>
+      <div class="hang an" id="hang-otp">
+        <label for="otp">Mã xác thực vừa gửi</label>
+        <input class="o-nhap" id="otp" inputmode="numeric" maxlength="6"
+               autocomplete="one-time-code" placeholder="6 chữ số"
+               style="letter-spacing:.5em;text-align:center;font-size:17px">
+      </div>
+      <button class="nut-chinh" type="submit" id="nut-sdt">Gửi mã xác thực</button>
+    </form>
+
+    <div class="hoac">hoặc</div>
+
+    <div class="mang">
+      <button class="nut-mang" type="button" data-mang="Google">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5h-1.9V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+          <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+          <path fill="#1976D2" d="M43.6 20.5h-1.9V20H24v8h11.3c-.8 2.3-2.3 4.2-4.1 5.6l6.2 5.2C36.9 40.2 44 35 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+        </svg>
+        Tiếp tục với Google
+      </button>
+      <button class="nut-mang" type="button" data-mang="Zalo">
+        <span class="zalo-o" aria-hidden="true">Za</span>
+        Tiếp tục với Zalo
+      </button>
+    </div>
+
+    <p class="chan">Chưa có tài khoản? <a href="#" id="dang-ky">Gia nhập Zen Circle</a></p>
+    <p class="dieu-khoan">
+      Tiếp tục nghĩa là bạn đồng ý với <a href="#">Điều khoản sử dụng</a>
+      và <a href="#">Chính sách riêng tư</a>.
+    </p>
+    <a class="ve" href="./index.html">← Về trang chủ</a>
+  </section>
+</div>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const bao = $('#bao');
+  const noi = (chu, tot) => {
+    bao.textContent = chu;
+    bao.className = 'bao hien' + (tot ? ' tot' : '');
+    bao.scrollIntoView({ block: 'nearest' });
+  };
+
+  document.querySelectorAll('.tab button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.tab button').forEach(x =>
+        x.setAttribute('aria-selected', String(x === b)));
+      const laMk = b.dataset.tab === 'mk';
+      $('#form-mk').classList.toggle('an', !laMk);
+      $('#form-sdt').classList.toggle('an', laMk);
+      bao.className = 'bao';
+    });
+  });
+
+  $('#hien-mk').addEventListener('click', () => {
+    const o = $('#mk'), dangAn = o.type === 'password';
+    o.type = dangAn ? 'text' : 'password';
+    $('#hien-mk').setAttribute('aria-label', dangAn ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  });
+
+  // Kiểm ngay trên máy người dùng, để họ biết sai chỗ nào trước khi gửi đi đâu cả.
+  const emailHopLe = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+  const sdtHopLe = v => /^0?\d{9,10}$/.test(v.replace(/[\s.\-]/g, ''));
+
+  $('#form-mk').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!emailHopLe($('#email').value)) return noi('Email chưa đúng dạng — bạn kiểm lại giúp nhé.');
+    if ($('#mk').value.length < 6) return noi('Mật khẩu tối thiểu 6 ký tự.');
+    noi('Giao diện đã nhận thông tin hợp lệ. Cửa đăng nhập thật sẽ hoạt động khi hệ thống tài khoản được nối vào.', true);
+  });
+
+  let daGuiMa = false;
+  $('#form-sdt').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!sdtHopLe($('#sdt').value)) return noi('Số điện thoại chưa đúng — nhập 9–10 chữ số.');
+    if (!daGuiMa) {
+      daGuiMa = true;
+      $('#hang-otp').classList.remove('an');
+      $('#nut-sdt').textContent = 'Xác thực & đăng nhập';
+      $('#otp').focus();
+      return noi('Giao diện đã sẵn sàng nhận mã. Việc gửi tin nhắn thật cần nối nhà cung cấp SMS.', true);
+    }
+    if (!/^\d{6}$/.test($('#otp').value)) return noi('Mã xác thực gồm đúng 6 chữ số.');
+    noi('Giao diện đã nhận đủ thông tin. Bước xác thực thật sẽ chạy khi nối hệ thống tài khoản.', true);
+  });
+
+  document.querySelectorAll('[data-mang]').forEach(b => {
+    b.addEventListener('click', () => noi(
+      'Nút ' + b.dataset.mang + ' đã sẵn sàng. Cần đăng ký ứng dụng bên ' + b.dataset.mang +
+      ' và nối khoá vào máy chủ thì mới đăng nhập thật được.', true));
+  });
+
+  $('#quen-mk').addEventListener('click', e => {
+    e.preventDefault();
+    noi('Luồng đặt lại mật khẩu cần máy chủ gửi thư — sẽ nối cùng lúc với hệ thống tài khoản.', true);
+  });
+  $('#dang-ky').addEventListener('click', e => {
+    e.preventDefault();
+    noi('Trang gia nhập Zen Circle sẽ mở cùng lúc với hệ thống tài khoản.', true);
+  });
+})();
+</script>
+</body>
+</html>
