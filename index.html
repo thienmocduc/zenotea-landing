@@ -26,7 +26,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Pacifico&family=Noto+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Charmonman:wght@400;700&family=Noto+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   /* VÀNG ĐỒNG CHUẨN — đo từ tệp logo, không lấy theo bảng màu cũ.
@@ -37,10 +37,10 @@
   --reu:#6B7A6F; --la:#9DB8A8; --son:#A63D2F;
   --giay:#EFE9DC;
   --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
-  /* NÉT CỌ nằm ở chính bộ chữ, không phải lớp phủ. Pacifico: nét cọ tròn đầy, mềm,
+  /* NÉT CỌ nằm ở chính bộ chữ, không phải lớp phủ. Charmonman: nét bút lông nghiêng, thanh–đậm rõ,
      và quan trọng nhất là CÓ ĐỦ DẤU TIẾNG VIỆT — phần lớn phông cọ đẹp
      đều thiếu dấu, đó là lý do không thể lấy đại một phông brush nào cũng được. */
-  --co:'Pacifico','Segoe Script',cursive;
+  --co:'Charmonman','Segoe Script',cursive;
   --title:'Noto Sans','Segoe UI',system-ui,sans-serif;
   /* ÁNH KIM LẤY TỪ CHÍNH TỆP LOGO — không phải màu tự nghĩ ra.
      Quét điểm ảnh `ZenOTea_Logo_Ngang_NenTrongSuot.png`, lấy màu trung bình từng dải ngang
@@ -81,9 +81,8 @@ h1,h2{
      28px, h2 thò 17px mỗi phía. Phần thò ra không có nền để tô nên MẤT MÀU, nhìn như bị
      cắt cụt. Nới hộp bằng padding (nền phủ cả padding) rồi kéo lại bằng lề âm để nhịp
      trang không đổi. */
-  /* Pacifico nét vươn cao và đuôi buông sâu hơn Charmonman — nới hộp rộng hơn. */
-  padding:.42em 0 .40em;
-  margin-top:-.42em;margin-bottom:calc(6px - .40em);
+  padding:.36em 0 .34em;
+  margin-top:-.36em;margin-bottom:calc(6px - .34em);
   text-align:center;
   background-image:var(--kim);
   /* Nền cao gấp ba để dải vàng có chỗ trôi qua nét chữ — ánh kim chuyển
@@ -118,7 +117,7 @@ h3{
   color:var(--kim-giua);font-weight:500;text-align:center;
 }
 .han{font-family:var(--co);color:var(--kim-giua);opacity:.92;font-size:1.08em}
-/* Chữ Hán Việt cổ đi kèm thuật ngữ. Pacifico không chứa chữ Hán nên phải
+/* Chữ Hán Việt cổ đi kèm thuật ngữ. Charmonman không chứa chữ Hán nên phải
    chỉ định riêng bộ chữ có CJK, tránh trình duyệt tự thay bằng phông lạ. */
 .han-co{font-family:var(--serif),"Noto Serif CJK SC","Songti SC",serif;
   color:var(--kim-giua);opacity:.86;font-size:.92em;letter-spacing:.02em}
@@ -221,7 +220,7 @@ nav a:hover{color:var(--kim-sang)}
 .dai-tu{
   font-family:var(--co);color:var(--kim-giua);line-height:.95;
   user-select:none;opacity:.5;
-  /* Pacifico có nét bút vươn cao và đuôi dấu buông xuống — nới hộp để
+  /* Charmonman có nét bút vươn cao và đuôi dấu buông xuống — nới hộp để
      dấu tiếng Việt không bị cắt cụt. */
   padding:.2em .1em .24em;
 }

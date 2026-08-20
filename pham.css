@@ -11,7 +11,7 @@
   --kim:linear-gradient(178deg,
     #B89C79 0%,#C2A988 14%,#D0B591 24%,#E5CEAA 33%,
     #D5B990 42%,#BA996A 50%,#9E7F58 59%,#A38264 70%,#C4A882 100%);
-  --co:'Pacifico','Segoe Script',cursive;
+  --co:'Charmonman','Segoe Script',cursive;
   --title:'Noto Sans','Segoe UI',system-ui,sans-serif;
   --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
   --sans:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
@@ -60,7 +60,7 @@ h2{
   font-family:var(--co);font-weight:700;
   font-size:clamp(27px,3vw,38px);line-height:1.42;
   background-image:var(--kim);-webkit-background-clip:text;background-clip:text;
-  color:transparent;padding:.4em 0 .38em;margin:-.4em 0 4px;
+  color:transparent;padding:.34em 0 .32em;margin:-.34em 0 4px;
 }
 h3{font-family:var(--title);font-size:17px;font-weight:600;color:var(--kim-sang);letter-spacing:-.005em}
 
