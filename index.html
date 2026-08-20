@@ -118,6 +118,10 @@ h3{
   color:var(--kim-giua);font-weight:500;text-align:center;
 }
 .han{font-family:var(--co);color:var(--kim-giua);opacity:.92;font-size:1.08em}
+/* Chữ Hán Việt cổ đi kèm thuật ngữ. Pacifico không chứa chữ Hán nên phải
+   chỉ định riêng bộ chữ có CJK, tránh trình duyệt tự thay bằng phông lạ. */
+.han-co{font-family:var(--serif),"Noto Serif CJK SC","Songti SC",serif;
+  color:var(--kim-giua);opacity:.86;font-size:.92em;letter-spacing:.02em}
 .dim{color:var(--la);opacity:.88}
 .lead{font-size:clamp(17px,1.9vw,21px);line-height:1.85;color:#DCD6C6}
 
@@ -146,7 +150,7 @@ nav a:hover{color:var(--kim-sang)}
 @media(max-width:600px){.nav-vao{padding:7px 14px;font-size:11px;margin-left:4px}}
 @media(max-width:820px){.nav-ds{gap:18px}nav a{font-size:11px;letter-spacing:.06em}}
 @media(max-width:760px){
-  .logo-hero{margin-bottom:26px;width:min(760px,88vw)}
+  .logo-hero{margin-bottom:2px;width:min(760px,88vw)}
   .hero h1{margin-bottom:24px}
   .hero .nut-hang{margin-top:38px !important}
   .hero .nhan{margin-top:30px !important}
@@ -166,11 +170,11 @@ nav a:hover{color:var(--kim-sang)}
 }
 /* Hero để nguyên LOGO ĐẦY ĐỦ. Chỉ trưng mỗi vòng Ensō thì người lần đầu vào trang
    không đọc được thương hiệu tên gì — biểu tượng chỉ có nghĩa với người đã biết. */
-.logo-hero{width:min(760px,84vw);margin:0 auto 40px;display:block;
+.logo-hero{width:min(760px,84vw);margin:0 auto 6px;display:block;
   filter:drop-shadow(0 0 46px rgba(232,200,120,.20))}
 .hero h1{
-  font-size:clamp(23px,2.5vw,38px);line-height:1.4;margin-bottom:26px;
-  opacity:.94;
+  font-size:clamp(23px,2.5vw,38px);line-height:1.4;
+  margin-top:0;margin-bottom:30px;opacity:.94;
 }
 .hero h1 em{font-style:normal}
 .gach{width:56px;height:1px;background:var(--kim-toi);margin:22px auto;opacity:.85}
@@ -408,7 +412,7 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
     <h1>Khơi thông sự sống minh triết</h1>
     <p class="lead" style="max-width:620px;margin:0 auto">
       Trà Shan tuyết cổ thụ ba trăm đến sáu trăm năm, lên men theo pháp
-      <strong class="han">khúc</strong> của Đông dược — trả lại cho người uống
+      <strong class="han">khúc</strong> <span class="han-co">麴</span> của Đông dược — trả lại cho người uống
       nội lực mà cây đã tích tụ qua nhiều thế kỷ. Không một độ cồn.
     </p>
     <div class="nut-hang" style="margin-top:52px">
@@ -539,14 +543,14 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
     <div class="doi-cot">
       <div>
         <div class="nhan">Nền tảng y sinh</div>
-        <h2 style="margin:20px 0 0">Pháp khúc của người mình</h2>
+        <h2 style="margin:20px 0 0">Pháp khúc <span class="han-co" style="font-size:.62em;opacity:.7">麴</span> của người mình</h2>
       </div>
       <div class="dai-tu">Khúc</div>
     </div>
     <p class="lead" style="margin-top:30px">
       Lên men không phải thứ chúng tôi mượn của phương Tây. Khi nói tới lên men, người ta nghĩ ngay tới vang, tới bia, tới hầm rượu châu Âu.
       Nhưng phương Đông đã có một pháp bào chế lên men dược liệu riêng, mang tên
-      <strong class="han">khúc</strong> — và nó cổ hơn nhiều.
+      <strong class="han">khúc</strong> <span class="han-co">麴</span> — và nó cổ hơn nhiều.
     </p>
     <p class="lead" style="margin-top:24px">
       <strong style="color:var(--kim-sang)">Thần khúc</strong> để kiện tỳ tiêu thực.
@@ -572,13 +576,20 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
       </div>
       <div class="o">
         <div class="han-nho">Dương</div>
-        <h3>Dương — cái sao, cái khí</h3>
-        <p>Hoả hầu khi sao lá, khí sinh ra khi men hoạt động. Đây là phần động, phần bùng lên,
+        <h3>Dương — cái men, cái khí</h3>
+        <p>Men vào cuộc là phần động. Vi sinh vật thức dậy, sinh khí, sinh nhiệt của chính nó —
            phần cho ly nước sức sống và hơi ga tự nhiên mà không cần đến cồn.</p>
       </div>
     </div>
-    <p class="dim" style="margin-top:34px;font-size:15px">
-      Một mẻ trà đi hết vòng âm–dương ấy mới thành phẩm. Đó không phải quy trình sản xuất
+    <p class="lead" style="margin-top:34px">
+      Chúng tôi gọi phương pháp của mình là
+      <strong style="color:var(--kim-sang)">y sinh đông dược lên men</strong>: lá trà cổ thụ
+      và thảo dược bản địa cùng vào một mẻ ủ, để men tự nhiên chuyển hoá cả hai. Không sao,
+      không thúc nhiệt, không chất bảo quản — vì mỗi thứ trong ba thứ đó đều giết mất phần
+      sống đang làm nên phẩm.
+    </p>
+    <p class="dim" style="margin-top:22px;font-size:15px">
+      Một mẻ đi hết vòng âm–dương ấy mới thành phẩm. Đó không phải quy trình sản xuất
       mượn tên đạo lý — đó là đạo lý được viết ra thành quy trình.
     </p>
   </div>
