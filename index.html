@@ -102,7 +102,7 @@ h3{
   font-family:var(--sans);font-size:11px;letter-spacing:.34em;text-transform:uppercase;
   color:var(--kim-giua);font-weight:500;
 }
-.han{font-family:var(--serif);color:var(--kim-giua);opacity:.85}
+.han{font-family:var(--co);color:var(--kim-giua);opacity:.92;font-size:1.08em}
 .dim{color:var(--la);opacity:.88}
 .lead{font-size:clamp(17px,1.9vw,21px);line-height:1.85;color:#DCD6C6}
 
@@ -186,6 +186,7 @@ nav a:hover{color:var(--kim-sang)}
   gap:1px;background:rgba(201,162,75,.16);margin-top:64px;
 }
 .so{background:var(--den);padding:32px 22px;text-align:center}
+.so b.tp{font-family:var(--co);padding:.14em 0 .18em;display:inline-block}
 .so b{
   display:block;font-family:var(--serif);font-size:clamp(30px,4vw,44px);
   color:var(--kim-sang);font-weight:400;line-height:1.1;
@@ -204,9 +205,14 @@ nav a:hover{color:var(--kim-sang)}
 .luoi.c2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 .luoi.c3{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
 .o{background:var(--den2);padding:clamp(28px,3.6vw,44px)}
-.o .han-nho{font-family:var(--serif);font-size:34px;color:var(--kim-giua);opacity:.5;line-height:1}
+.o .han-nho{font-family:var(--co);font-size:29px;color:var(--kim-giua);opacity:.62;line-height:1.25;padding:.1em 0 .16em}
 .o h3{margin:14px 0 12px}
 .o p{font-size:15px;color:#C9C3B4;line-height:1.8}
+/* Bốn chữ trà đạo — chữ Việt viết thư pháp thay cho chữ Hán */
+.o.tu-phap h3{
+  font-family:var(--co);font-size:clamp(34px,3.4vw,46px);line-height:1.2;
+  margin:0 0 14px;padding:.16em 0 .2em;
+}
 
 /* ── ngũ phẩm ── */
 .ngu{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;
@@ -294,7 +300,7 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
     <img src="./logo.png" alt="Zen O Tea">
     <div class="nav-ds">
       <a href="#dao">Đạo</a>
-      <a href="#khuc">Khúc 麴</a>
+      <a href="#khuc">Khúc</a>
       <a href="#nguon">Nguồn cội</a>
       <a href="#pham">Bộ phẩm</a>
       <a href="#do">Minh mẫn</a>
@@ -312,7 +318,7 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
     <h1>Khơi thông<br><em>sự sống minh triết</em></h1>
     <p class="lead" style="max-width:620px;margin:0 auto">
       Trà Shan tuyết cổ thụ ba trăm đến sáu trăm năm, lên men theo pháp
-      <strong class="han">麴</strong> của Đông dược — trả lại cho người uống
+      <strong class="han">khúc</strong> của Đông dược — trả lại cho người uống
       nội lực mà cây đã tích tụ qua nhiều thế kỷ. Không một độ cồn.
     </p>
     <div class="nut-hang" style="margin-top:52px">
@@ -351,21 +357,21 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
       <div class="so"><b>300–600</b><span>năm tuổi quần thể trà cổ</span></div>
       <div class="so"><b>1.300–2.500</b><span>mét — vùng sương phủ quanh năm</span></div>
       <div class="so"><b>0,0%</b><span>độ cồn — bản nội địa</span></div>
-      <div class="so"><b>麴</b><span>pháp bào chế lên men Đông dược</span></div>
+      <div class="so"><b class="tp">Khúc</b><span>pháp bào chế lên men Đông dược</span></div>
     </div>
   </div>
 </section>
 
 <!-- ══════════ KHÚC ══════════ -->
 <section id="khuc" class="vien" style="background:var(--den2)">
-  <div class="dai-tu">麴</div>
+  <div class="dai-tu">Khúc</div>
   <div class="hep">
     <div class="nhan">Nền tảng y sinh</div>
     <h2 style="margin:20px 0 30px">Lên men không phải thứ<br>chúng tôi mượn của phương Tây.</h2>
     <p class="lead">
       Khi nói tới lên men, người ta nghĩ ngay tới vang, tới bia, tới hầm rượu châu Âu.
       Nhưng phương Đông đã có một pháp bào chế lên men dược liệu riêng, mang tên
-      <strong class="han">khúc (麴)</strong> — và nó cổ hơn nhiều.
+      <strong class="han">khúc</strong> — và nó cổ hơn nhiều.
     </p>
     <p class="lead" style="margin-top:24px">
       <strong style="color:var(--kim-sang)">Thần khúc</strong> để kiện tỳ tiêu thực.
@@ -384,13 +390,13 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
 
     <div class="luoi c2">
       <div class="o">
-        <div class="han-nho">陰</div>
+        <div class="han-nho">Âm</div>
         <h3>Âm — cái ủ, cái đợi</h3>
         <p>Ủ và lên men là việc của tĩnh và của thời gian. Không thúc được, không rút ngắn được.
            Mọi chiều sâu trong ly đều sinh ra ở giai đoạn không ai nhìn thấy gì đang xảy ra.</p>
       </div>
       <div class="o">
-        <div class="han-nho">陽</div>
+        <div class="han-nho">Dương</div>
         <h3>Dương — cái sao, cái khí</h3>
         <p>Hoả hầu khi sao lá, khí sinh ra khi men hoạt động. Đây là phần động, phần bùng lên,
            phần cho ly nước sức sống và hơi ga tự nhiên mà không cần đến cồn.</p>
@@ -416,19 +422,19 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
     </p>
     <div class="luoi c3">
       <div class="o">
-        <div class="han-nho">清明</div>
+        <div class="han-nho">Thanh minh</div>
         <h3>Tiền Thanh minh</h3>
         <p>Búp một tôm đầu vụ, sản lượng thấp nhất trong năm, tinh khí đậm nhất.
            Dành cho phẩm khai vị của cả hệ.</p>
       </div>
       <div class="o">
-        <div class="han-nho">穀雨</div>
+        <div class="han-nho">Cốc vũ</div>
         <h3>Cốc vũ</h3>
         <p>Lá bánh tẻ giữ trọn diệp lục và sắc khí. Đây là phẩm thường nhật của
            người làm việc bằng trí.</p>
       </div>
       <div class="o">
-        <div class="han-nho">立夏</div>
+        <div class="han-nho">Lập hạ</div>
         <h3>Lập hạ về sau</h3>
         <p>Lá trưởng thành, dày và ngọt hậu. Nền cho dòng oxy hoá trọn và cho
            nhánh lên men thể lỏng.</p>
@@ -697,13 +703,13 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
   </div>
   <div class="b">
     <div class="luoi c2" style="margin-top:52px">
-      <div class="o"><div class="han-nho">和</div><h3>Hoà</h3>
+      <div class="o tu-phap"><h3>Hoà</h3>
         <p>Người với người, người với đất. Không ai ở đây để bán cho ai — cùng ngồi xuống trước một ấm trà.</p></div>
-      <div class="o"><div class="han-nho">敬</div><h3>Kính</h3>
+      <div class="o tu-phap"><h3>Kính</h3>
         <p>Kính cây ba trăm tuổi, kính bàn tay người hái, kính người ngồi đối diện. Nghi lễ bắt đầu từ chỗ đó.</p></div>
-      <div class="o"><div class="han-nho">清</div><h3>Thanh</h3>
+      <div class="o tu-phap"><h3>Thanh</h3>
         <p>Sạch trong nước, trong chén, trong ý. Không phụ gia, không hương liệu, không lời hứa quá tay.</p></div>
-      <div class="o"><div class="han-nho">寂</div><h3>Tịch</h3>
+      <div class="o tu-phap"><h3>Tịch</h3>
         <p>Cái tĩnh còn lại sau khi tiếng chuông dứt. Chỗ mà sự minh mẫn bắt đầu — và cũng là chỗ ta bán.</p></div>
     </div>
   </div>
@@ -769,7 +775,7 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
 <!-- ══════════ CTA ══════════ -->
 <section id="lien-he" class="vien" style="text-align:center">
   <div class="hep">
-    <div class="dai-tu" style="font-size:clamp(70px,13vw,150px)">圓</div>
+    <div class="dai-tu" style="font-size:clamp(60px,8vw,124px)">Viên</div>
     <h2 style="margin:20px 0 26px">Zen Circle</h2>
     <p class="lead" style="max-width:600px;margin:0 auto 40px">
       Vòng trong của những người đi cùng con đường: thiền trà riêng tư, ưu tiên các bản đánh số,
