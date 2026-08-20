@@ -146,7 +146,7 @@ nav a:hover{color:var(--kim-sang)}
 @media(max-width:600px){.nav-vao{padding:7px 14px;font-size:11px;margin-left:4px}}
 @media(max-width:820px){.nav-ds{gap:18px}nav a{font-size:11px;letter-spacing:.06em}}
 @media(max-width:760px){
-  .logo-hero{margin-bottom:34px}
+  .logo-hero{margin-bottom:26px;width:min(760px,88vw)}
   .hero h1{margin-bottom:24px}
   .hero .nut-hang{margin-top:38px !important}
   .hero .nhan{margin-top:30px !important}
@@ -166,9 +166,11 @@ nav a:hover{color:var(--kim-sang)}
 }
 /* Hero để nguyên LOGO ĐẦY ĐỦ. Chỉ trưng mỗi vòng Ensō thì người lần đầu vào trang
    không đọc được thương hiệu tên gì — biểu tượng chỉ có nghĩa với người đã biết. */
-.logo-hero{width:min(470px,64vw);margin:0 auto 58px;display:block}
+.logo-hero{width:min(760px,84vw);margin:0 auto 40px;display:block;
+  filter:drop-shadow(0 0 46px rgba(232,200,120,.20))}
 .hero h1{
-  font-size:clamp(40px,5.4vw,76px);line-height:1.34;margin-bottom:30px;
+  font-size:clamp(23px,2.5vw,38px);line-height:1.4;margin-bottom:26px;
+  opacity:.94;
 }
 .hero h1 em{font-style:normal}
 .gach{width:56px;height:1px;background:var(--kim-toi);margin:22px auto;opacity:.85}
@@ -452,56 +454,82 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
 </section>
 
 
-<!-- ══════════ TỨ ĐẠI ══════════ -->
+<!-- ══════════ TỨ ĐẠI — CHUỖI TIẾN HOÁ ══════════ -->
 <section class="vien" style="background:var(--den2)">
   <div class="hep">
     <div class="nhan">Minh triết nền tảng</div>
-    <h2 style="margin:20px 0 30px">Bốn cái lớn của trời đất</h2>
-    <p class="lead" style="text-align:center;margin:0 auto">
+    <h2 style="margin:20px 0 26px">Một dòng chảy, năm nhịp</h2>
+    <p class="lead" style="text-align:center;margin:0 auto 10px;max-width:74ch">
       <em class="han">Nhân pháp Địa · Địa pháp Thiên · Thiên pháp Đạo · Đạo pháp Tự nhiên.</em>
     </p>
-    <p class="lead" style="margin-top:26px">
-      Chữ <em class="han">pháp</em> ở đây là động từ: noi theo, lấy làm khuôn mẫu. Bốn tầng
-      không phải bốn cấp trên bảo dưới nghe, mà là bốn tầng cùng noi theo nhau để tồn tại
-      đúng bản tính của mình. Tầng trên cùng không noi theo gì cả —
-      Đạo <strong style="color:var(--kim-sang)">tự nó như vậy</strong>.
+    <p class="lead" style="margin-top:24px">
+      Bốn cái lớn của trời đất không đứng rời nhau. Chúng nối thành một dòng chảy, và
+      chiếc lá trà nằm đúng giữa dòng ấy. Từ trời đất xuống tới thân thể người uống,
+      không có bước nào bị cưỡng ép — mỗi bước chỉ
+      <strong style="color:var(--kim-sang)">chuyển hoá</strong> cái bước trước để lại.
     </p>
 
-    <div class="luoi c2">
-      <div class="o">
-        <div class="nhan" style="text-align:left;margin-bottom:10px">Nhân</div>
-        <h3>Người noi theo Đất</h3>
-        <p>Người làm trà không dạy cây điều gì. Người học của đất cách đứng yên. Bao tiêu
-        trước mùa vụ để hộ giữ rừng không phải bán vội. Ủ đủ tháng chứ không đủ chỉ tiêu.
-        Việc của người ở đây là canh — và biết lúc nào nên thôi.</p>
+    <div class="vong">
+      <div class="tang">
+        <div class="stt">Thiên</div>
+        <div><h3>Trời cho điều kiện, không cho sẵn</h3>
+        <p>Sương muối, biên độ nhiệt ngày đêm, mây mù quanh năm, và hai mươi bốn tiết khí
+        định lúc nào cây được mở lá. Trời không ưu ái ai — trời chỉ đặt ra điều kiện, rồi
+        để mọi thứ tự xoay xở trong đó.</p></div>
       </div>
-      <div class="o">
-        <div class="nhan" style="text-align:left;margin-bottom:10px">Địa</div>
-        <h3>Đất noi theo Trời</h3>
-        <p>Đất không tự quyết được mùa. Đất mở ra khi trời cho mở. Một năm chỉ có vài lần
-        đất bảo cây rằng đã đến lúc. Ba lần ấy không dời được — ai dời, người đó không còn
-        làm trà nữa.</p>
+      <div class="tang">
+        <div class="stt">Địa</div>
+        <div><h3>Đất bắt cây phải chọn</h3>
+        <p>Đá cằn, tầng đất mỏng, dốc đứng. Cây không thể lớn nhanh nên buộc phải lớn sâu:
+        rễ ăn xuống nhiều mét, thân đứng yên ba trăm đến sáu trăm năm. Cái nó không dùng
+        để vươn cao thì nó cất vào trong lá.</p></div>
       </div>
-      <div class="o">
-        <div class="nhan" style="text-align:left;margin-bottom:10px">Thiên</div>
-        <h3>Trời noi theo Đạo</h3>
-        <p>Trời không thiên vị mùa nào. Sương muối cũng là trời, nắng ấm cũng là trời. Cây
-        sống được ba trăm năm không phải vì được ưu ái, mà vì chịu được cả hai. Rễ ăn sâu,
-        gốc vững — <em class="han">thâm căn cố đế</em>, con đường của cái bền lâu.</p>
+      <div class="tang">
+        <div class="stt">Mộc</div>
+        <div><h3>Cây tích, chứ cây không tạo</h3>
+        <p>Không cây nào làm ra được thứ trời đất chưa cho. Việc của cây là nhận và giữ —
+        giữ đủ lâu để cái nhận được đổi chất. Đó là lý do một cây ba trăm tuổi không thể
+        thay bằng một vườn ba tuổi, dù cùng giống, cùng đất.</p></div>
       </div>
-      <div class="o">
-        <div class="nhan" style="text-align:left;margin-bottom:10px">Đạo</div>
-        <h3>Đạo noi theo chính nó</h3>
-        <p>Men không cần ai dạy phải làm gì — chỉ cần đừng ai xen vào. Việc của xưởng là
-        giữ đúng nhiệt, đúng ẩm, đúng ngày, rồi để yên. Cái Lão Tử gọi là
-        <em class="han">vô vi</em> không phải là không làm. Là không cưỡng làm.</p>
+      <div class="tang">
+        <div class="stt">Khúc</div>
+        <div><h3>Men sống vào cuộc — không chất bảo quản</h3>
+        <p>Đến lượt vi sinh vật làm việc của chúng: phân giải cái thô, mở cái bế, đưa hoạt
+        chất về dạng thân thể tiếp nhận được thuận hơn. Đây là lên men sinh học tự nhiên,
+        và nó đặt ra một điều kiện không thương lượng được —
+        <strong style="color:var(--kim-sang)">không chất bảo quản</strong>. Không phải vì
+        chúng tôi muốn nghe cho sạch, mà vì chất bảo quản giết chính thứ đang làm nên phẩm.
+        Muốn giữ men sống thì phải bỏ hẳn chất giết men.</p></div>
+      </div>
+      <div class="tang">
+        <div class="stt">Nhân</div>
+        <div><h3>Người nhận lại, và giữ đúng chỗ của mình</h3>
+        <p>Uống một ly là nhận lại phần thời gian cây đã đứng thay mình. Trong bốn cái lớn
+        của trời đất, Người chiếm một chỗ — không phải để đứng trên ba cái kia, mà để noi
+        theo cho đúng. Việc của người làm trà chỉ là canh, và biết lúc nào nên thôi.</p></div>
       </div>
     </div>
 
-    <p class="lead" style="margin-top:34px">
-      Trong bốn cái lớn ấy, Người chiếm một chỗ. Chiếm một chỗ lớn nghĩa là gánh một phần
-      trách nhiệm lớn — <strong style="color:var(--kim-sang)">chúng tôi đứng ở tầng thấp nhất, và đó là chỗ đúng của mình.</strong>
-    </p>
+    <div class="luoi c2" style="margin-top:52px">
+      <div class="o">
+        <h3>Chuyển hoá, không bổ sung</h3>
+        <p>Suốt năm nhịp trên, không nhịp nào thêm vào một chất lạ. Trời đất không cho thêm —
+        trời đất chuyển hoá. Pháp khúc của Đông dược đi đúng nguyên lý ấy: y gia xưa lên men
+        không phải để tạo hơi men, mà để đổi dược tính của chính vị thuốc đã có.</p>
+      </div>
+      <div class="o">
+        <h3>Điều khoa học đang đọc tiếp</h3>
+        <p>Lên men vi sinh để lại trong phẩm những hợp chất chuyển hoá mà khoa học quốc tế
+        gọi là <em class="dim">hậu sinh</em> — postbiotic. Đây là hướng nghiên cứu đang mở
+        về mối liên hệ giữa hệ vi sinh và sức khoẻ con người. Chúng tôi theo dõi nó bằng
+        kiểm nghiệm, và chỉ công bố phần đã có kết quả.</p>
+      </div>
+    </div>
+
+    <div class="chu-thich" style="margin-top:30px">
+      Sản phẩm là thực phẩm, không phải thuốc và không có tác dụng thay thế thuốc chữa bệnh.
+      Mọi công bố về thành phần và lợi ích chỉ đưa ra sau kiểm nghiệm độc lập.
+    </div>
   </div>
 </section>
 
