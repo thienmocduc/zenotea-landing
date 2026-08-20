@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đặt mua phẩm — Zen O Tea</title>
+<meta name="description" content="Đặt mua phẩm Zen O Tea. Trà cổ thụ Shan tuyết lên men theo pháp khúc của Đông dược.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E211A">
+<link rel="canonical" href="https://thienmocduc.github.io/zenotea-landing/dat-mua.html">
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Charmonman:wght@400;700&family=Noto+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./pham.css">
+</head>
+<body>
+
+<nav>
+  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <div class="lui">
+    <a href="./index.html#pham">Bộ phẩm</a>
+    <a href="./dang-nhap.html">Đăng nhập</a>
+  </div>
+</nav>
+
+<main class="b">
+
+  <section class="dau">
+    <div class="nhan">Đặt phẩm</div>
+    <h1>Đặt mua</h1>
+    <p class="lead" style="margin-top:14px">
+      Phẩm được đóng theo lô của mùa. Đơn đặt trước sẽ giao theo thứ tự ghi nhận,
+      và người đặt nhận được mã lô ZenTrace của chính chai mình khi hàng rời xưởng.
+    </p>
+  </section>
+
+  <form id="don" class="khoi" novalidate>
+
+    <h2>Phẩm và số lượng</h2>
+    <div class="form-hang" style="margin-top:20px">
+      <div class="o-nhap">
+        <label for="pham">Chọn phẩm</label>
+        <select id="pham" name="pham">
+        <option value="o-vang-bo-de">O Vang Bồ Đề — 880.000₫</option>
+        <option value="o-vang-hong-tram">O Vang Hồng Trầm — 1.180.000₫</option>
+        <option value="o-vang-mau-don">O Vang Mẫu Đơn — 1.480.000₫</option>
+        <option value="o-vang-khai-thong">O Vang Khai Thông — 1.680.000₫</option>
+        <option value="o-vang-lac-hong">O Vang Lạc Hồng — 2.500.000₫</option>
+        <option value="o-vang-lao-ky">O Vang Lão Kỳ — Theo lô</option>
+        <option value="o-beer">O Beer — Theo điểm phục vụ</option>
+        </select>
+      </div>
+      <div class="o-nhap">
+        <label for="sl">Số lượng</label>
+        <input type="number" id="sl" name="sl" min="1" max="99" value="1" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="tong">
+      <div class="dong"><span id="ten-pham">—</span><span id="don-gia">—</span></div>
+      <div class="dong"><span>Số lượng</span><span id="so-luong">1</span></div>
+      <div class="dong"><span>Phí giao</span><span>Báo sau theo địa chỉ</span></div>
+      <div class="dong cai"><span>Tổng tạm tính</span><span id="tong-tien">—</span></div>
+    </div>
+
+    <h2 style="margin-top:44px">Người nhận</h2>
+    <div class="form-hang" style="margin-top:20px">
+      <div class="o-nhap">
+        <label for="ho-ten">Họ và tên</label>
+        <input type="text" id="ho-ten" name="ho-ten" autocomplete="name" required>
+      </div>
+      <div class="o-nhap">
+        <label for="sdt">Số điện thoại</label>
+        <input type="tel" id="sdt" name="sdt" autocomplete="tel" inputmode="tel" required>
+      </div>
+    </div>
+    <div class="o-nhap">
+      <label for="email">Thư điện tử</label>
+      <input type="email" id="email" name="email" autocomplete="email">
+    </div>
+    <div class="o-nhap">
+      <label for="dia-chi">Địa chỉ nhận hàng</label>
+      <textarea id="dia-chi" name="dia-chi" autocomplete="street-address" required></textarea>
+    </div>
+    <div class="o-nhap">
+      <label for="ghi-chu">Lời dặn — dịp tặng, khắc tên, thời điểm muốn nhận</label>
+      <textarea id="ghi-chu" name="ghi-chu"></textarea>
+    </div>
+
+    <h2 style="margin-top:44px">Cách thanh toán</h2>
+    <div class="cach" style="margin-top:20px">
+      <label>
+        <input type="radio" name="thanh-toan" value="chuyen-khoan" checked>
+        <span>
+          <span class="ten-cach">Chuyển khoản toàn phần</span>
+          <span class="mo-cach">Thanh toán trọn số tiền trước khi giao. Thông tin tài khoản sẽ gửi kèm khi xác nhận đơn.</span>
+        </span>
+      </label>
+      <label>
+        <input type="radio" name="thanh-toan" value="tai-zen-house">
+        <span>
+          <span class="ten-cach">Thanh toán tại Zen House</span>
+          <span class="mo-cach">Nhận phẩm và thanh toán trực tiếp tại điểm, kèm nghi thức khui nếu đặt trước.</span>
+        </span>
+      </label>
+      <label>
+        <input type="radio" name="thanh-toan" value="cong-truc-tuyen" disabled>
+        <span>
+          <span class="ten-cach">Cổng thanh toán trực tuyến <em class="chua">chưa mở</em></span>
+          <span class="mo-cach">Thẻ, ví điện tử và mã QR ngân hàng sẽ mở khi hệ thống thanh toán hoàn tất kết nối.</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="nut-hang">
+      <button type="submit" class="nut dac">Gửi đơn đặt mua</button>
+      <a class="nut" href="./index.html#pham">Quay lại bộ phẩm</a>
+    </div>
+
+    <div class="phap-ly" id="bao"></div>
+    <div class="phap-ly canh">
+      Sản phẩm là thực phẩm, không phải thuốc và không thay thế thuốc chữa bệnh. Mọi công bố về thành phần và lợi ích chỉ đưa ra sau kiểm nghiệm độc lập. Giá niêm yết mang tính tham chiếu cho lô đầu tiên, có thể thay đổi theo trữ lượng nguyên liệu từng mùa tiết khí.
+    </div>
+
+  </form>
+
+</main>
+
+<footer>
+  <div class="b">
+    <img src="./logo.png" alt="Zen O Tea">
+    <p><strong>Zen O Tea</strong> — Khơi thông sự sống minh triết.
+    Một thành viên của hệ sinh thái phục hưng sự sống · Zeni Holdings.</p>
+  </div>
+</footer>
+
+<script>
+const PHAM = {
+  o-vang-bo-de: { ten: "O Vang Bồ Đề", phu: "Phẩm Giác", gia: 880000, giaChu: "880.000₫", dv: "chai 500ml" },
+  o-vang-hong-tram: { ten: "O Vang Hồng Trầm", phu: "Phẩm Định", gia: 1180000, giaChu: "1.180.000₫", dv: "chai 500ml" },
+  o-vang-mau-don: { ten: "O Vang Mẫu Đơn", phu: "Phẩm Viên Mãn", gia: 1480000, giaChu: "1.480.000₫", dv: "chai 750ml" },
+  o-vang-khai-thong: { ten: "O Vang Khai Thông", phu: "Phẩm Lực", gia: 1680000, giaChu: "1.680.000₫", dv: "chai 750ml · phối thảo dược" },
+  o-vang-lac-hong: { ten: "O Vang Lạc Hồng", phu: "Phẩm Nguồn Cội", gia: 2500000, giaChu: "2.500.000₫", dv: "chai 750ml · quốc lễ" },
+  o-vang-lao-ky: { ten: "O Vang Lão Kỳ", phu: "Phẩm Tuệ", gia: 0, giaChu: "Theo lô", dv: "bản đánh số · đặt trước" },
+  o-beer: { ten: "O Beer", phu: "Nhánh lỏng · tại chỗ", gia: 0, giaChu: "Theo điểm phục vụ", dv: "ủ và rót tại Zen House" }
+};
+
+const $ = id => document.getElementById(id);
+const tien = n => n.toLocaleString('vi-VN') + '₫';
+
+// Chọn sẵn phẩm theo tham số trên đường dẫn: dat-mua.html?pham=o-vang-bo-de
+const thamSo = new URLSearchParams(location.search).get('pham');
+if (thamSo && PHAM[thamSo]) $('pham').value = thamSo;
+
+function tinh() {
+  const p = PHAM[$('pham').value];
+  if (!p) return;
+  let sl = parseInt($('sl').value, 10);
+  if (!Number.isFinite(sl) || sl < 1) sl = 1;
+  if (sl > 99) sl = 99;
+
+  $('ten-pham').textContent = p.ten + ' · ' + p.dv;
+  $('so-luong').textContent = sl;
+
+  if (p.gia > 0) {
+    $('don-gia').textContent = tien(p.gia);
+    $('tong-tien').textContent = tien(p.gia * sl);
+  } else {
+    // Phẩm bán theo lô chưa có giá cố định
+    $('don-gia').textContent = p.giaChu;
+    $('tong-tien').textContent = 'Báo giá theo lô';
+  }
+}
+
+$('pham').addEventListener('change', tinh);
+$('sl').addEventListener('input', tinh);
+tinh();
+
+$('don').addEventListener('submit', e => {
+  e.preventDefault();
+  const bao = $('bao');
+  const hoTen = $('ho-ten').value.trim();
+  const sdt   = $('sdt').value.replace(/[\s.\-()]/g, '');
+  const diaChi= $('dia-chi').value.trim();
+
+  if (hoTen.length < 2)      return loi('Xin điền họ tên người nhận.');
+  if (!/^0?\d{9,10}$/.test(sdt)) return loi('Số điện thoại chưa đúng dạng — xin kiểm lại.');
+  if (diaChi.length < 8)     return loi('Xin điền địa chỉ nhận hàng đầy đủ.');
+
+  function loi(msg) {
+    bao.style.borderLeftColor = 'var(--son)';
+    bao.textContent = msg;
+    bao.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return false;
+  }
+
+  const p  = PHAM[$('pham').value];
+  const sl = Math.min(99, Math.max(1, parseInt($('sl').value, 10) || 1));
+  const cach = document.querySelector('input[name=thanh-toan]:checked').value;
+  const tenCach = { 'chuyen-khoan': 'Chuyển khoản toàn phần', 'tai-zen-house': 'Thanh toán tại Zen House' }[cach];
+
+  const than = [
+    'ĐƠN ĐẶT MUA — ZEN O TEA', '',
+    'Phẩm      : ' + p.ten + ' (' + p.phu + ')',
+    'Quy cách  : ' + p.dv,
+    'Số lượng  : ' + sl,
+    'Đơn giá   : ' + (p.gia > 0 ? tien(p.gia) : p.giaChu),
+    'Tổng      : ' + (p.gia > 0 ? tien(p.gia * sl) : 'Báo giá theo lô'),
+    'Thanh toán: ' + tenCach, '',
+    'NGƯỜI NHẬN',
+    'Họ tên    : ' + hoTen,
+    'Điện thoại: ' + $('sdt').value.trim(),
+    'Thư       : ' + ($('email').value.trim() || '(không có)'),
+    'Địa chỉ   : ' + diaChi,
+    'Lời dặn   : ' + ($('ghi-chu').value.trim() || '(không có)')
+  ].join('\n');
+
+  location.href = 'mailto:hello@zenotea.com'
+    + '?subject=' + encodeURIComponent('Đơn đặt mua — ' + p.ten + ' x' + sl)
+    + '&body=' + encodeURIComponent(than);
+
+  bao.style.borderLeftColor = 'var(--luc)';
+  bao.textContent = 'Đơn đã được soạn trong hộp thư của bạn. Xin bấm gửi để hoàn tất — '
+    + 'chúng tôi xác nhận và gửi thông tin thanh toán trong vòng một ngày làm việc.';
+});
+</script>
+
+</body>
+</html>

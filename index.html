@@ -219,6 +219,46 @@ nav a:hover{color:var(--kim-sang)}
   .doi-cot .dai-tu{font-size:clamp(54px,13vw,88px);text-align:left;opacity:.34}
 }
 
+
+/* ── lưới sản phẩm: 3 cột × 2 hàng, mỗi thẻ bấm được ── */
+.luoi-pham{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(201,162,75,.14);margin-top:40px;
+  border-top:1px solid rgba(201,162,75,.14);
+  border-bottom:1px solid rgba(201,162,75,.14);
+}
+@media (max-width:1000px){ .luoi-pham{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:640px){ .luoi-pham{grid-template-columns:1fr} }
+.the-pham{
+  display:flex;flex-direction:column;gap:10px;
+  background:var(--den2);padding:30px 26px 26px;
+  text-decoration:none;color:inherit;position:relative;
+  transition:background .3s ease, transform .3s ease;
+}
+.the-pham:hover,.the-pham:focus-visible{background:var(--rung);transform:translateY(-2px)}
+.the-pham:focus-visible{outline:2px solid var(--kim-giua);outline-offset:-2px}
+.the-pham .phu{
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--kim-toi);font-weight:500;
+}
+.the-pham .ten{
+  font-family:var(--title);font-size:clamp(19px,1.6vw,23px);line-height:1.35;
+  background-image:var(--kim);-webkit-background-clip:text;background-clip:text;
+  color:transparent;
+}
+.the-pham .gia{
+  font-family:var(--serif);font-size:23px;color:var(--kim-sang);
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+}
+.the-pham .gia small{font-family:var(--sans);font-size:12px;color:var(--reu);letter-spacing:.02em}
+.the-pham .mo{font-size:14.5px;color:#C9C3B4;line-height:1.75;flex:1}
+.the-pham .xem{
+  margin-top:6px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--kim-giua);display:flex;align-items:center;gap:8px;
+}
+.the-pham .xem span{transition:transform .3s ease}
+.the-pham:hover .xem span{transform:translateX(5px)}
+
 /* ── lưới ── */
 .luoi{display:grid;gap:1px;background:rgba(201,162,75,.14);margin-top:56px}
 .luoi.c2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
@@ -570,39 +610,55 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
       tỉnh thức — không phải một hương vị trong thực đơn.
     </p>
 
-    <div class="pham">
-      <div><span class="phu">Phẩm Giác</span><span class="ten">O Vang Bồ Đề</span></div>
-      <div class="gia">880.000₫<small>chai 500ml</small></div>
-      <p class="mo">Vị thanh khiết mở đầu con đường — khoảnh khắc ngồi xuống dưới cội cây và nhìn rõ chính mình.</p>
-    </div>
-    <div class="pham">
-      <div><span class="phu">Phẩm Định</span><span class="ten">O Vang Hồng Trầm</span></div>
-      <div class="gia">1.180.000₫<small>chai 500ml</small></div>
-      <p class="mo">Nền hồng trà oxy hoá trọn, hậu vị lắng như hương trầm trong thiền thất — cho những cuộc chuyện cần độ sâu.</p>
-    </div>
-    <div class="pham">
-      <div><span class="phu">Phẩm Viên Mãn</span><span class="ten">O Vang Mẫu Đơn</span></div>
-      <div class="gia">1.480.000₫<small>chai 750ml</small></div>
-      <p class="mo">Hương hoa khai mở như đoá mẫu đơn — phẩm của lễ mừng, của viên mãn và phú quý theo nghĩa đủ đầy từ bên trong.</p>
-    </div>
-    <div class="pham">
-      <div><span class="phu">Phẩm Lực</span><span class="ten">O Vang Khai Thông</span></div>
-      <div class="gia">1.680.000₫<small>chai 750ml · phối thảo dược</small></div>
-      <p class="mo">Khí huyết lưu thông, tâm trí khai mở — nghi thức nâng ly cho khởi đầu, cho ký kết và cho những cánh cửa mới.</p>
-    </div>
-    <div class="pham">
-      <div><span class="phu">Phẩm Nguồn Cội</span><span class="ten">O Vang Lạc Hồng</span></div>
-      <div class="gia">2.500.000₫<small>chai 750ml · quốc lễ</small></div>
-      <p class="mo">Dòng chảy con Lạc cháu Hồng trong một chai không độ — phẩm mang căn cước văn hoá Việt ra thế giới.</p>
-    </div>
-    <div class="pham">
-      <div><span class="phu">Phẩm Tuệ</span><span class="ten">O Vang Lão Kỳ</span></div>
-      <div class="gia">Theo lô<small>bản đánh số · đặt trước</small></div>
-      <p class="mo">Từ những lô lão trà tuyển mang cá tính không lặp lại giữa các mùa sương — chiều sâu của tuổi cây gặp sự hiếm của kỳ nam. Số lượng theo trữ lượng thật của mùa, không theo kế hoạch bán hàng.</p>
+    <div class="luoi-pham">
+      <a class="the-pham" href="./pham/o-vang-bo-de.html">
+        <span class="phu">Phẩm Giác</span>
+        <span class="ten">O Vang Bồ Đề</span>
+        <span class="gia">880.000₫<small>chai 500ml</small></span>
+        <span class="mo">Vị thanh khiết mở đầu con đường — khoảnh khắc ngồi xuống dưới cội cây và nhìn rõ chính mình.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
+      <a class="the-pham" href="./pham/o-vang-hong-tram.html">
+        <span class="phu">Phẩm Định</span>
+        <span class="ten">O Vang Hồng Trầm</span>
+        <span class="gia">1.180.000₫<small>chai 500ml</small></span>
+        <span class="mo">Nền hồng trà oxy hoá trọn, hậu vị lắng như hương trầm trong thiền thất — cho những cuộc chuyện cần độ sâu.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
+      <a class="the-pham" href="./pham/o-vang-mau-don.html">
+        <span class="phu">Phẩm Viên Mãn</span>
+        <span class="ten">O Vang Mẫu Đơn</span>
+        <span class="gia">1.480.000₫<small>chai 750ml</small></span>
+        <span class="mo">Hương hoa khai mở như đoá mẫu đơn — phẩm của lễ mừng, của viên mãn và phú quý theo nghĩa đủ đầy từ bên trong.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
+      <a class="the-pham" href="./pham/o-vang-khai-thong.html">
+        <span class="phu">Phẩm Lực</span>
+        <span class="ten">O Vang Khai Thông</span>
+        <span class="gia">1.680.000₫<small>chai 750ml · phối thảo dược</small></span>
+        <span class="mo">Khí huyết lưu thông, tâm trí khai mở — nghi thức nâng ly cho khởi đầu, cho ký kết và cho những cánh cửa mới.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
+      <a class="the-pham" href="./pham/o-vang-lac-hong.html">
+        <span class="phu">Phẩm Nguồn Cội</span>
+        <span class="ten">O Vang Lạc Hồng</span>
+        <span class="gia">2.500.000₫<small>chai 750ml · quốc lễ</small></span>
+        <span class="mo">Dòng chảy con Lạc cháu Hồng trong một chai không độ — phẩm mang căn cước văn hoá Việt ra thế giới.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
+      <a class="the-pham" href="./pham/o-vang-lao-ky.html">
+        <span class="phu">Phẩm Tuệ</span>
+        <span class="ten">O Vang Lão Kỳ</span>
+        <span class="gia">Theo lô<small>bản đánh số · đặt trước</small></span>
+        <span class="mo">Từ những lô lão trà tuyển mang cá tính không lặp lại giữa các mùa sương — chiều sâu của tuổi cây gặp sự hiếm của kỳ nam.</span>
+        <span class="xem">Xem chi tiết <span>→</span></span>
+      </a>
     </div>
 
     <div class="nut-hang" style="justify-content:flex-start;margin-top:44px">
-      <a class="nut dac" href="#b2b">Đặt hộp quà doanh nghiệp</a>
+      <a class="nut dac" href="./dat-mua.html">Đặt mua phẩm</a>
+      <a class="nut" href="./pham/o-beer.html">O Beer — ủ tại chỗ</a>
+      <a class="nut" href="#b2b">Hộp quà doanh nghiệp</a>
       <a class="nut" href="#lien-he">Nhận bảng giá đầy đủ</a>
     </div>
   </div>
@@ -801,7 +857,6 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
 <!-- ══════════ CTA ══════════ -->
 <section id="lien-he" class="vien" style="text-align:center">
   <div class="hep">
-    <div class="dai-tu" style="font-size:clamp(60px,8vw,124px)">Viên</div>
     <h2 style="margin:20px 0 26px">Zen Circle</h2>
     <p class="lead" style="max-width:600px;margin:0 auto 40px">
       Vòng trong của những người đi cùng con đường: thiền trà riêng tư, ưu tiên các bản đánh số,
