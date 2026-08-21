@@ -1,0 +1,117 @@
+{
+  "_ghi_chu": "Cấu hình vai trò và module. Dữ liệu nội dung từng màn nằm ở portal.json (trích từ docs/design/ZenOTea_Portal8.html). File này quyết định vai trò nào bật module nào.",
+  "_kien_truc": "Hai trục: vai trò (dọc) × lớp năng lực (ngang). Lớp AFF là mặc định của MỌI vai trò — khác nhau ở tỷ lệ hoa hồng và quyền quản lý, không phải ở việc có hay không có AFF.",
+
+  "nhom_module": {
+    "aff": {
+      "ten": "Kiếm tiền",
+      "mo": "Lớp affiliate — mọi vai trò đều có",
+      "man": ["aff-bdk", "aff-link", "aff-vi", "aff-xrm", "aff-kho", "aff-muse", "aff-hoso"]
+    },
+    "mua": {
+      "ten": "Mua sắm",
+      "mo": "Ai cũng là người mua trước khi là người bán",
+      "man": ["aff-pham", "vip-lichsu", "vip-tu", "vip-datlich"]
+    },
+    "vip": {
+      "ten": "Đặc quyền",
+      "mo": "Zen Circle — thẻ, hầm ủ, hành hương",
+      "man": ["vip-the", "vip-uudai", "vip-ham", "vip-hanhhuong"]
+    },
+    "b2b": {
+      "ten": "Doanh nghiệp",
+      "mo": "Bán cho tổ chức, khác hẳn bán lẻ",
+      "man": ["b2b-bdk", "b2b-crm", "b2b-cham", "b2b-baogia", "b2b-congno", "b2b-noidung", "b2b-social", "b2b-chiendich"]
+    },
+    "daily": {
+      "ten": "Phân phối",
+      "mo": "Nhập hàng, tồn kho, cấp dưới",
+      "man": ["dl-bdk", "dl-nhap", "dl-ton", "dl-congno", "dl-capduoi", "dl-phattrien"]
+    },
+    "center": {
+      "ten": "Vận hành center",
+      "mo": "Điểm bán thật và mạng lưới thuộc center",
+      "man": ["ch-bdk", "ch-datban", "ch-ton", "ch-kiemdinh", "ch-nhansu", "ch-mo", "ch-mangluoi"]
+    }
+  },
+
+  "vai_tro": [
+    {
+      "id": "tieu_dung",
+      "ten": "Thành viên tiêu dùng",
+      "tat": "TD",
+      "mo": "Mua, thưởng trà, và giới thiệu cho người quen. Có đủ công cụ affiliate ngay từ ngày đầu.",
+      "dang_ky_duoc": true,
+      "can_duyet": false,
+      "nhom": ["aff", "mua"],
+      "hoa_hong": { "don_dau": "8%", "tai_mua": "4%" },
+      "quan_ly": null
+    },
+    {
+      "id": "vip",
+      "ten": "Thành viên VIP · Zen Circle",
+      "tat": "VIP",
+      "mo": "Vòng trong. Suất Grand Cru, hầm ủ đứng tên, hành hương vùng trà. Mở bằng điểm chuyển hoá hoặc theo lời mời.",
+      "dang_ky_duoc": true,
+      "can_duyet": true,
+      "nhom": ["aff", "mua", "vip"],
+      "hoa_hong": { "don_dau": "12%", "tai_mua": "6%" },
+      "quan_ly": null
+    },
+    {
+      "id": "sale_aff",
+      "ten": "Sale AFF",
+      "tat": "SA",
+      "mo": "Người bán chuyên nghiệp. Đủ công cụ affiliate cộng phễu khách doanh nghiệp và bộ nội dung.",
+      "dang_ky_duoc": true,
+      "can_duyet": true,
+      "ho_so": ["Danh tính", "Mã số thuế cá nhân", "Tài khoản nhận tiền", "Cam kết nội dung"],
+      "nhom": ["aff", "mua", "b2b"],
+      "hoa_hong": { "don_dau": "15%", "tai_mua": "7%" },
+      "quan_ly": "nguoi_minh_gioi_thieu"
+    },
+    {
+      "id": "dai_ly",
+      "ten": "Đại lý phân phối",
+      "tat": "ĐL",
+      "mo": "Nhập hàng theo bậc chiết khấu, giữ tồn kho, và quản lý mạng lưới cấp dưới của mình.",
+      "dang_ky_duoc": true,
+      "can_duyet": true,
+      "ho_so": ["Giấy phép kinh doanh", "Mã số thuế", "Chứng minh vốn", "Địa điểm kho"],
+      "nhom": ["aff", "mua", "b2b", "daily"],
+      "hoa_hong": { "don_dau": "18%", "tai_mua": "9%", "quan_ly_cap_duoi": "3%" },
+      "chiet_khau_nhap": [
+        { "bac": "Bậc 1", "doanh_so_quy": "dưới 200 triệu", "chiet_khau": "12%" },
+        { "bac": "Bậc 2", "doanh_so_quy": "200 – 500 triệu", "chiet_khau": "18%" },
+        { "bac": "Bậc 3", "doanh_so_quy": "trên 500 triệu", "chiet_khau": "24%" }
+      ],
+      "quan_ly": "cap_duoi_hai_tang"
+    },
+    {
+      "id": "chu_center",
+      "ten": "Chủ center Zen House",
+      "tat": "CC",
+      "mo": "Sở hữu một điểm bán thật và toàn bộ mạng lưới đăng ký qua center đó — đại lý, sale AFF và mọi thành viên trong cây.",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "ly_do_khong_dang_ky": "Gắn với một địa điểm thật và một hợp đồng thật — không thể tự khai.",
+      "nhom": ["aff", "mua", "vip", "b2b", "daily", "center"],
+      "hoa_hong": { "don_dau": "18%", "tai_mua": "9%", "quan_ly_cap_duoi": "3%", "phi_mang_luoi": "2%" },
+      "quan_ly": "toan_bo_cay_center"
+    }
+  ],
+
+  "pham_vi_quan_ly": {
+    "nguoi_minh_gioi_thieu": "Chỉ người mình trực tiếp giới thiệu — một tầng",
+    "cap_duoi_hai_tang": "Cấp dưới trực tiếp và cấp dưới của họ — hai tầng",
+    "toan_bo_cay_center": "Toàn bộ tài khoản mang center_id của mình, không giới hạn tầng"
+  },
+
+  "hoa_hong_theo_tang": {
+    "_nguyen_tac": "Dừng ở BA tầng, mỗi tầng ứng một vai trò có thật. Quá ba tầng là mô hình đa cấp, thuộc diện phải đăng ký với Bộ Công Thương theo Nghị định 40/2018.",
+    "tang_1": { "ai": "Người trực tiếp giới thiệu", "ty_le": "theo hạng của vai trò" },
+    "tang_2": { "ai": "Đại lý cấp trên", "ty_le": "3%" },
+    "tang_3": { "ai": "Chủ center", "ty_le": "2%" }
+  }
+}

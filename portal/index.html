@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal — Zen O Tea</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E211A">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Charmonman:wght@400;700&family=Noto+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="canh" id="canh">
+  <div class="canh-dau">
+    <a href="../index.html"><img src="../logo.png" alt="Zen O Tea"></a>
+  </div>
+  <div class="tim">
+    <input id="o-tim" type="search" placeholder="Tìm màn hình" aria-label="Tìm màn hình">
+  </div>
+  <nav class="canh-nav" id="canh-nav" aria-label="Điều hướng portal"></nav>
+</aside>
+<div class="che" id="che"></div>
+
+<!-- ══════════ THÂN ══════════ -->
+<div class="than">
+  <header class="top">
+    <button class="nut-menu" id="nut-menu" aria-label="Mở menu">☰</button>
+    <h1 id="tieu-man">Bảng điều khiển</h1>
+    <div class="phai">
+      <select class="chon-vai" id="chon-vai" aria-label="Vai trò"></select>
+      <div class="avt" id="avt">TĐ</div>
+    </div>
+  </header>
+  <main class="noi" id="noi"></main>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   Portal Zen O Tea
+
+   Kiến trúc hai trục (docs/KIEN_TRUC_PORTAL.md):
+   - Vai trò (dọc): tiêu dùng · VIP · sale AFF · đại lý · chủ center
+   - Lớp năng lực (ngang): AFF · MUA · VIP · B2B · ĐẠI LÝ · CENTER
+
+   Lớp AFF là mặc định của MỌI vai trò. Khác nhau giữa các vai trò không
+   phải có hay không có AFF, mà là tỷ lệ hoa hồng và quyền quản lý ai.
+
+   Bộ chọn vai trò ở topbar là công cụ XEM THỬ cho giai đoạn dựng giao diện.
+   Khi nối backend, vai trò lấy từ phiên đăng nhập phía máy chủ — phải bỏ
+   bộ chọn này, nếu không ai cũng tự nâng mình lên chủ center được.
+   ════════════════════════════════════════════════════════════════════════ */
+(() => {
+  const $ = s => document.querySelector(s);
+  let DATA = null, CAUHINH = null, vaiHT = 'tieu_dung', manHT = null;
+
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
+    ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+  /* Gom toàn bộ màn của 8 vai trò gốc thành một từ điển phẳng, để mỗi
+     màn chỉ tồn tại MỘT bản — dùng lại cho nhiều vai trò mà không nhân đôi. */
+  function gomMan(vaiGoc) {
+    const kho = {};
+    vaiGoc.forEach(v => {
+      Object.entries(v.man || {}).forEach(([id, m]) => { kho[id] = m; });
+      (v.cay || []).forEach(thu =>
+        (thu.muc || []).forEach(muc => {
+          if (kho[muc.id]) kho[muc.id]._ten = muc.ten;
+        }));
+    });
+    return kho;
+  }
+
+  function veCanhNav() {
+    const vt = CAUHINH.vai_tro.find(v => v.id === vaiHT);
+    const nav = $('#canh-nav');
+    nav.innerHTML = vt.nhom.map(maNhom => {
+      const nhom = CAUHINH.nhom_module[maNhom];
+      const muc = nhom.man.filter(id => DATA.kho[id]).map(id => {
+        const ten = DATA.kho[id]._ten || id;
+        return `<div class="muc${id === manHT ? ' dang' : ''}" data-man="${id}"
+                     role="button" tabindex="0">${esc(ten)}</div>`;
+      }).join('');
+      return `<div class="thu-dau">${esc(nhom.ten)}</div>${muc}`;
+    }).join('');
+
+    nav.querySelectorAll('.muc').forEach(el => {
+      const mo = () => { moMan(el.dataset.man); dongCanh(); };
+      el.addEventListener('click', mo);
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mo(); }
+      });
+    });
+  }
+
+  function veBang(b) {
+    if (!b) return '';
+    const th = b.cot.map(c => `<th>${esc(c)}</th>`).join('');
+    const tr = b.hang.map(h =>
+      `<tr>${h.map(o => `<td>${o}</td>`).join('')}</tr>`).join('');
+    return `<div class="cuon"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`;
+  }
+
+  function moMan(id) {
+    manHT = id;
+    const m = DATA.kho[id];
+    const noi = $('#noi');
+
+    if (!m) {
+      noi.innerHTML = `<div class="trong"><b>Màn này chưa dựng</b>
+        Nội dung sẽ bổ sung ở đợt build kế tiếp.</div>`;
+      $('#tieu-man').textContent = 'Chưa có';
+      veCanhNav(); return;
+    }
+
+    $('#tieu-man').textContent = m._ten || id;
+
+    let html = '';
+    if (m.mo)    html += `<p class="mo-ta">${esc(m.mo)}</p>`;
+    if (m.rieng) html += `<div class="rieng">${esc(m.rieng)}</div>`;
+    if (m.so && m.so.length) {
+      html += `<div class="so-hang">${m.so.map(([gt, nhan]) =>
+        `<div class="so-o"><b>${esc(gt)}</b><span>${esc(nhan)}</span></div>`).join('')}</div>`;
+    }
+    (m.the || []).forEach(t => {
+      html += `<section class="the"><h2>${esc(t.h)}</h2>` +
+              (t.p ? `<div class="p">${esc(t.p)}</div>` : '') +
+              veBang(t.bang) + `</section>`;
+    });
+    if (m.ghi)    html += `<div class="ghi">${esc(m.ghi)}</div>`;
+    if (m.ghi_do) html += `<div class="ghi do">${esc(m.ghi_do)}</div>`;
+
+    noi.innerHTML = html;
+    noi.scrollTop = 0;
+    veCanhNav();
+  }
+
+  function doiVai(id) {
+    vaiHT = id;
+    const vt = CAUHINH.vai_tro.find(v => v.id === id);
+    $('#avt').textContent = vt.tat;
+    // vào màn đầu tiên có thật của vai trò này
+    const dau = vt.nhom.flatMap(n => CAUHINH.nhom_module[n].man).find(x => DATA.kho[x]);
+    moMan(dau);
+  }
+
+  function dongCanh() {
+    $('#canh').classList.remove('mo');
+    $('#che').classList.remove('hien');
+  }
+
+  /* Tìm kiếm — lọc theo tên màn, không phân biệt hoa thường và dấu */
+  const bo = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  $('#o-tim').addEventListener('input', e => {
+    const q = bo(e.target.value.trim());
+    document.querySelectorAll('#canh-nav .muc').forEach(el => {
+      el.style.display = !q || bo(el.textContent).includes(q) ? '' : 'none';
+    });
+    document.querySelectorAll('#canh-nav .thu-dau').forEach(h => {
+      let n = h.nextElementSibling, hien = false;
+      while (n && n.classList.contains('muc')) {
+        if (n.style.display !== 'none') hien = true;
+        n = n.nextElementSibling;
+      }
+      h.style.display = hien ? '' : 'none';
+    });
+  });
+
+  $('#nut-menu').addEventListener('click', () => {
+    $('#canh').classList.toggle('mo');
+    $('#che').classList.toggle('hien');
+  });
+  $('#che').addEventListener('click', dongCanh);
+
+  /* ── Khởi động ── */
+  Promise.all([
+    fetch('../data/portal.json').then(r => r.json()),
+    fetch('../data/vai-tro.json').then(r => r.json())
+  ]).then(([vaiGoc, cauhinh]) => {
+    DATA = { kho: gomMan(vaiGoc) };
+    CAUHINH = cauhinh;
+
+    $('#chon-vai').innerHTML = CAUHINH.vai_tro.map(v =>
+      `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
+    $('#chon-vai').addEventListener('change', e => doiVai(e.target.value));
+
+    doiVai('tieu_dung');
+  }).catch(err => {
+    $('#noi').innerHTML = `<div class="trong"><b>Không đọc được dữ liệu</b>
+      ${esc(err.message)}</div>`;
+  });
+})();
+</script>
+
+</body>
+</html>
