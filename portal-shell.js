@@ -286,6 +286,9 @@
     `<tbody>${b.hang.map(h => `<tr>${h.map(o => `<td>${o}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 
   function veNoiDung(m, id) {
+    // Màn bị giữ lại khỏi bản tĩnh — nói thẳng vì sao, không giả vờ trống
+    if (m.khoa) return `<div class="trong"><b>Cần máy chủ xác thực</b>${esc(m.khoa)}</div>`;
+
     /* Vào thẳng nội dung chính: số liệu và bảng. Dòng mô tả và pill ghi
        chú của bản gốc là chú thích cho người xem bản thiết kế, không
        phải nội dung cho người dùng thật. */
