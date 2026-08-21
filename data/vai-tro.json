@@ -73,6 +73,73 @@
         "ch-mo",
         "ch-mangluoi"
       ]
+    },
+    "vh_chung": {
+      "ten": "Tổng quan",
+      "man": [
+        "/"
+      ]
+    },
+    "vh_thuongnguon": {
+      "ten": "Thượng nguồn",
+      "man": [
+        "/vung-tra",
+        "/bao-tieu",
+        "/cong-thuc"
+      ]
+    },
+    "vh_sanxuat": {
+      "ten": "Sản xuất",
+      "man": [
+        "/me-u",
+        "/kiem-nghiem",
+        "/bo-pham",
+        "/zentrace"
+      ]
+    },
+    "vh_banhang": {
+      "ten": "Bán hàng",
+      "man": [
+        "/don-b2b",
+        "/zen-circle",
+        "/en-primeur"
+      ]
+    },
+    "vh_mangluoi": {
+      "ten": "Mạng lưới",
+      "man": [
+        "/nhuong-quyen",
+        "/xuat-khau",
+        "/affiliate"
+      ]
+    },
+    "vh_trithuc": {
+      "ten": "Tri thức",
+      "man": [
+        "/hoc-vien"
+      ]
+    },
+    "vh_von": {
+      "ten": "Vốn & tài chính",
+      "man": [
+        "/tai-chinh",
+        "/cap-table",
+        "/bao-cao-ndt"
+      ]
+    },
+    "vh_quantri": {
+      "ten": "Quản trị",
+      "man": [
+        "/phap-ly",
+        "/nhat-ky",
+        "/nguoi-dung"
+      ]
+    },
+    "vh_hoso": {
+      "ten": "Cá nhân",
+      "man": [
+        "/ho-so"
+      ]
     }
   },
   "vai_tro": [
@@ -91,7 +158,8 @@
         "don_dau": "8%",
         "tai_mua": "4%"
       },
-      "quan_ly": null
+      "quan_ly": null,
+      "khoi": "thuong_mai"
     },
     {
       "id": "vip",
@@ -109,7 +177,8 @@
         "don_dau": "12%",
         "tai_mua": "6%"
       },
-      "quan_ly": null
+      "quan_ly": null,
+      "khoi": "thuong_mai"
     },
     {
       "id": "sale_aff",
@@ -133,7 +202,8 @@
         "don_dau": "15%",
         "tai_mua": "7%"
       },
-      "quan_ly": "nguoi_minh_gioi_thieu"
+      "quan_ly": "nguoi_minh_gioi_thieu",
+      "khoi": "thuong_mai"
     },
     {
       "id": "dai_ly",
@@ -176,7 +246,8 @@
           "chiet_khau": "24%"
         }
       ],
-      "quan_ly": "cap_duoi_hai_tang"
+      "quan_ly": "cap_duoi_hai_tang",
+      "khoi": "thuong_mai"
     },
     {
       "id": "chu_center",
@@ -201,7 +272,446 @@
         "quan_ly_cap_duoi": "3%",
         "phi_mang_luoi": "2%"
       },
-      "quan_ly": "toan_bo_cay_center"
+      "quan_ly": "toan_bo_cay_center",
+      "khoi": "thuong_mai"
+    },
+    {
+      "id": "vh_chu_tich",
+      "ten": "Chủ tịch",
+      "tat": "CT",
+      "mo": "Toàn quyền. Ký nghị quyết, duyệt chi trên 100 triệu, mở được cả vùng công thức.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_thuongnguon",
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_mangluoi",
+        "vh_trithuc",
+        "vh_von",
+        "vh_quantri",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/vung-tra",
+        "/bao-tieu",
+        "/cong-thuc",
+        "/me-u",
+        "/kiem-nghiem",
+        "/bo-pham",
+        "/zentrace",
+        "/don-b2b",
+        "/zen-circle",
+        "/en-primeur",
+        "/nhuong-quyen",
+        "/xuat-khau",
+        "/affiliate",
+        "/hoc-vien",
+        "/tai-chinh",
+        "/cap-table",
+        "/bao-cao-ndt",
+        "/phap-ly",
+        "/nhat-ky",
+        "/nguoi-dung",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_hdqt",
+      "ten": "HĐQT / Ban kiểm soát",
+      "tat": "HĐ",
+      "mo": "Giám sát, không điều hành. Xem được số và nghị quyết, KHÔNG xem công thức, KHÔNG sửa dữ liệu vận hành.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_von",
+        "vh_quantri",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/tai-chinh",
+        "/cap-table",
+        "/bao-cao-ndt",
+        "/phap-ly",
+        "/nhat-ky",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_gd_khoi",
+      "ten": "Giám đốc khối",
+      "tat": "GĐ",
+      "mo": "Điều hành theo khối mình phụ trách. Thấy hầu hết vận hành — trừ công thức, cap table và phân quyền.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_thuongnguon",
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_mangluoi",
+        "vh_trithuc",
+        "vh_von",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/vung-tra",
+        "/bao-tieu",
+        "/me-u",
+        "/kiem-nghiem",
+        "/bo-pham",
+        "/zentrace",
+        "/don-b2b",
+        "/zen-circle",
+        "/nhuong-quyen",
+        "/xuat-khau",
+        "/hoc-vien",
+        "/tai-chinh",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_ke_toan",
+      "ten": "Kế toán – Tài chính",
+      "tat": "KT",
+      "mo": "Sổ sách, chốt tuần, hồ sơ kiểm toán. Thấy dòng tiền của mọi kênh bán, không thấy sản xuất.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_mangluoi",
+        "vh_von",
+        "vh_quantri",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/tai-chinh",
+        "/don-b2b",
+        "/nhuong-quyen",
+        "/xuat-khau",
+        "/bo-pham",
+        "/phap-ly",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_labs",
+      "ten": "Zen Labs",
+      "tat": "LB",
+      "mo": "Vai trò duy nhất ngoài Chủ tịch mở được công thức và men giống. Cách ly mạnh nhất hệ thống.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_thuongnguon",
+        "vh_sanxuat",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/cong-thuc",
+        "/me-u",
+        "/kiem-nghiem",
+        "/vung-tra",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_xuong",
+      "ten": "Quản lý xưởng & mẻ ủ",
+      "tat": "XU",
+      "mo": "Chạy mẻ theo thông số được giao — KHÔNG thấy công thức gốc. Gắn mã ZenTrace cho từng lô.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/me-u",
+        "/kiem-nghiem",
+        "/bo-pham",
+        "/zentrace",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_ho_dan",
+      "ten": "Hộ dân / HTX vùng trà",
+      "tat": "HD",
+      "mo": "Xem hợp đồng bao tiêu, sản lượng đã giao và tiền đã nhận CỦA MÌNH. Không thấy hộ khác.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_thuongnguon",
+        "vh_sanxuat",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/bao-tieu",
+        "/vung-tra",
+        "/zentrace",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_sales",
+      "ten": "Sales B2B",
+      "tat": "SL",
+      "mo": "Khách và đơn của mình, tồn kho để hứa đúng ngày giao. Không thấy giá vốn.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/don-b2b",
+        "/bo-pham",
+        "/zen-circle",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_outlet",
+      "ten": "Chủ outlet nhượng quyền",
+      "tat": "OL",
+      "mo": "Doanh thu quán mình, đặt hàng, điểm kiểm định chất lượng định kỳ.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_mangluoi",
+        "vh_trithuc",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/nhuong-quyen",
+        "/bo-pham",
+        "/hoc-vien",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_master",
+      "ten": "Master franchise quốc tế",
+      "tat": "MF",
+      "mo": "Cả một thị trường quốc gia và các outlet dưới quyền, kèm hồ sơ xuất khẩu vào nước đó.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_mangluoi",
+        "vh_trithuc",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/nhuong-quyen",
+        "/xuat-khau",
+        "/bo-pham",
+        "/hoc-vien",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_phan_phoi",
+      "ten": "Nhà phân phối / nhập khẩu",
+      "tat": "PP",
+      "mo": "Hạn mức, giá sỉ theo vùng, hồ sơ DPP chuẩn EU cho từng lô.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_chung",
+        "vh_sanxuat",
+        "vh_mangluoi",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/",
+        "/xuat-khau",
+        "/bo-pham",
+        "/zentrace",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_circle",
+      "ten": "Thành viên Zen Circle",
+      "tat": "ZC",
+      "mo": "Thiền trà riêng tư, lịch sử mua, truy xuất chai mình đang uống.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/zen-circle",
+        "/bo-pham",
+        "/zentrace",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_suu_tam",
+      "ten": "Nhà sưu tầm en primeur",
+      "tat": "ST",
+      "mo": "Bản Grand Cru đã đặt trước, chứng thư sở hữu, quyền dự đấu giá. Khác hẳn khách thường.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_sanxuat",
+        "vh_banhang",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/en-primeur",
+        "/zen-circle",
+        "/bo-pham",
+        "/zentrace",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_hoc_vien",
+      "ten": "Học viên Học viện",
+      "tat": "HV",
+      "mo": "Khoá đang học, tiến độ, chứng chỉ trà sư / kỹ thuật viên lên men.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_trithuc",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/hoc-vien",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_ndt",
+      "ten": "Nhà đầu tư",
+      "tat": "NĐ",
+      "mo": "Báo cáo kỳ, phần cap table của mình, tiến độ mốc. KHÔNG công thức, KHÔNG dữ liệu khách hàng.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_von",
+        "vh_quantri",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/bao-cao-ndt",
+        "/cap-table",
+        "/tai-chinh",
+        "/phap-ly",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_kiem_dinh",
+      "ten": "Kiểm nghiệm / kiểm toán",
+      "tat": "KĐ",
+      "mo": "Chỉ đúng hồ sơ được mời, có hạn dùng — hết hạn tự đóng, không cần ai nhớ thu hồi.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_sanxuat",
+        "vh_quantri",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/kiem-nghiem",
+        "/phap-ly",
+        "/ho-so"
+      ],
+      "quan_ly": null
+    },
+    {
+      "id": "vh_koc",
+      "ten": "KOC / Affiliate",
+      "tat": "KO",
+      "mo": "Link giới thiệu, lượt click, hoa hồng của mình. Không thấy khách của người khác.",
+      "khoi": "van_hanh",
+      "dang_ky_duoc": false,
+      "can_duyet": true,
+      "cap_boi": "noi_bo",
+      "nhom": [
+        "vh_sanxuat",
+        "vh_mangluoi",
+        "vh_hoso"
+      ],
+      "quyen_module": [
+        "/affiliate",
+        "/bo-pham",
+        "/ho-so"
+      ],
+      "quan_ly": null
     }
   ],
   "pham_vi_quan_ly": {

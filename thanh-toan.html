@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanh toán — Zen O Tea</title>
+<meta name="description" content="Hoàn tất đơn phẩm Zen O Tea.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E211A">
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Charmonman:wght@400;700&family=Noto+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./pham.css">
+<link rel="stylesheet" href="./gio.css">
+</head>
+<body>
+
+<nav>
+  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <div class="lui">
+    <a href="./cua-hang.html">Cửa hàng</a>
+    <a href="./dang-nhap.html">Đăng nhập</a>
+  </div>
+</nav>
+
+<main class="b">
+
+  <section class="dau">
+    <div class="nhan">Hoàn tất</div>
+    <h1>Thanh toán</h1>
+    <p class="lead" style="margin-top:14px" id="dan">
+      Xem lại giỏ, ghi người nhận, rồi quét mã chuyển đúng số tiền. Mã mang
+      sẵn số tiền và mã đơn nên không phải gõ tay.
+    </p>
+  </section>
+
+  <div id="canh-bao"></div>
+
+  <!-- ═══ Bước một: soạn đơn ═══ -->
+  <div class="bo-doi" id="soan">
+
+    <form id="don" novalidate>
+
+      <section class="khoi" style="margin-top:0">
+        <h2>Phẩm trong giỏ</h2>
+        <div id="gio-bang" style="margin-top:16px"></div>
+      </section>
+
+      <section class="khoi">
+        <h2>Người nhận</h2>
+        <div class="form-hang" style="margin-top:20px">
+          <div class="o-nhap">
+            <label for="ho-ten">Họ và tên</label>
+            <input type="text" id="ho-ten" autocomplete="name" required>
+          </div>
+          <div class="o-nhap">
+            <label for="sdt">Số điện thoại</label>
+            <input type="tel" id="sdt" autocomplete="tel" inputmode="tel" required>
+          </div>
+        </div>
+        <div class="o-nhap">
+          <label for="email">Thư điện tử — nơi nhận mã lô ZenTrace</label>
+          <input type="email" id="email" autocomplete="email">
+        </div>
+        <div class="o-nhap">
+          <label for="dia-chi">Địa chỉ nhận hàng</label>
+          <textarea id="dia-chi" autocomplete="street-address" required></textarea>
+        </div>
+        <div class="o-nhap">
+          <label for="ghi-chu">Lời dặn — dịp tặng, khắc tên, thời điểm muốn nhận</label>
+          <textarea id="ghi-chu"></textarea>
+        </div>
+      </section>
+
+      <section class="khoi">
+        <h2>Cách giao</h2>
+        <div class="cach" id="cach-giao" style="margin-top:20px"></div>
+      </section>
+
+      <section class="khoi">
+        <h2>Cách trả</h2>
+        <div class="cach" style="margin-top:20px">
+          <label>
+            <input type="radio" name="tra" value="quet-ma" checked>
+            <span>
+              <span class="ten-cach">Quét mã chuyển khoản</span>
+              <span class="mo-cach">Mã mang sẵn số tiền và mã đơn. Ngân hàng báo có thì hệ thống tự đối soát và chuyển đơn sang soạn hàng, không cần ai gọi xác nhận.</span>
+            </span>
+          </label>
+          <label>
+            <input type="radio" name="tra" value="tai-zen-house">
+            <span>
+              <span class="ten-cach">Trả tại Zen House khi nhận phẩm</span>
+              <span class="mo-cach">Chỉ áp dụng khi chọn nhận tại Zen House. Có nghi thức khui nếu hẹn trước.</span>
+            </span>
+          </label>
+          <label>
+            <input type="radio" name="tra" value="cong-the" disabled>
+            <span>
+              <span class="ten-cach">Thẻ và ví điện tử <em class="chua">chưa mở</em></span>
+              <span class="mo-cach">Mở khi cổng thanh toán của Zeni Cloud nối xong.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <div class="nut-hang">
+        <button type="submit" class="nut dac" id="nut-dat">Đặt đơn</button>
+        <a class="nut" href="./cua-hang.html">Chọn thêm phẩm</a>
+      </div>
+      <div class="phap-ly" id="bao"></div>
+
+    </form>
+
+    <aside class="tom" id="tom" aria-label="Tạm tính"></aside>
+  </div>
+
+  <!-- ═══ Bước hai: trả tiền ═══ -->
+  <section class="khoi" id="tra" hidden style="margin-top:0">
+    <h2>Quét mã để trả</h2>
+    <p class="lead" style="margin-top:10px">
+      Mở ứng dụng ngân hàng, quét mã dưới đây. Số tiền và nội dung đã điền sẵn
+      — giữ nguyên nội dung thì hệ thống đối soát nhận ra đúng đơn của anh chị.
+    </p>
+
+    <div class="qr-khoi">
+      <div class="qr-o" id="qr-o"></div>
+      <div class="qr-tin">
+        <dl>
+          <div><dt>Số tiền</dt><dd><b id="qr-tien">—</b></dd></div>
+          <div><dt>Nội dung chuyển khoản</dt>
+               <dd id="qr-nd">—<button class="sao" data-sao="qr-nd">Chép</button></dd></div>
+          <div><dt>Ngân hàng</dt><dd id="qr-nh">—</dd></div>
+          <div><dt>Số tài khoản</dt>
+               <dd id="qr-stk">—<button class="sao" data-sao="qr-stk">Chép</button></dd></div>
+          <div><dt>Chủ tài khoản</dt><dd id="qr-chu">—</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="trang-thai" id="tt">
+      <span class="cham"></span>
+      <span id="tt-chu">Đang chờ ngân hàng báo có…</span>
+    </div>
+
+    <div class="buoc">
+      <span><b>Mã đơn</b><span id="ma-don">—</span></span>
+      <span><b>Giữ chỗ đến</b><span id="han">—</span></span>
+    </div>
+
+    <div class="nut-hang">
+      <a class="nut" href="./cua-hang.html">Về cửa hàng</a>
+      <button class="nut" id="sua-don">Sửa lại đơn</button>
+    </div>
+
+    <div class="phap-ly canh" style="margin-top:26px">
+      Chưa chuyển tiền thì phẩm chưa được giữ. Quá thời hạn giữ chỗ, đơn tự huỷ
+      và phẩm trả lại kho cho người đặt sau.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="b">
+    <img src="./logo.png" alt="Zen O Tea">
+    <p><strong>Zen O Tea</strong> — Khơi thông sự sống minh triết.
+    Một thành viên của hệ sinh thái phục hưng sự sống · Zeni Holdings.</p>
+  </div>
+</footer>
+
+<script src="./qr.js"></script>
+<script src="./gio.js" data-goc="./"></script>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   Trang thanh toán
+   Tiền chỉ tính ở một chỗ là Gio.chiTiet(). Trang này không tự cộng lại,
+   kẻo hai chỗ lệch nhau thì khách trả sai số.
+   ════════════════════════════════════════════════════════════════════════ */
+(() => {
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
+    ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+  let DM = null, maGiao = 'noi-thanh', donHT = null, dongHo = null, mach = null;
+
+  /* ── Mã QR chuyển khoản theo chuẩn EMVCo ────────────────────────────── */
+  const truong = (id, gt) => id + String(gt.length).padStart(2, '0') + gt;
+
+  function crc16(s) {
+    let r = 0xFFFF;
+    for (let i = 0; i < s.length; i++) {
+      r ^= s.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) r = (r & 0x8000) ? ((r << 1) ^ 0x1021) & 0xFFFF : (r << 1) & 0xFFFF;
+    }
+    return r.toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  function payload(nh, soTien, noiDung) {
+    const taiKhoan = truong('00', nh.bin) + truong('01', nh.so_tai_khoan);
+    const nhaCungCap = truong('00', 'A000000727') + truong('01', taiKhoan) + truong('02', 'QRIBFTTA');
+    let s = truong('00', '01') + truong('01', '12') + truong('38', nhaCungCap)
+          + truong('53', '704') + truong('54', String(soTien)) + truong('58', 'VN')
+          + truong('62', truong('08', noiDung));
+    s += '6304';
+    return s + crc16(s);
+  }
+
+  /* ── Mã đơn: ngày tháng cộng bốn ký tự ngẫu nhiên ───────────────────── */
+  function taoMaDon() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    let duoi = '';
+    const bang = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const ng = new Uint8Array(4); crypto.getRandomValues(ng);
+    ng.forEach(v => duoi += bang[v % bang.length]);
+    return 'ZOT' + p(d.getFullYear() % 100) + p(d.getMonth() + 1) + p(d.getDate()) + duoi;
+  }
+
+  /* ── Vẽ giỏ, cách giao, tạm tính ────────────────────────────────────── */
+  function veGio() {
+    const ct = Gio.chiTiet(maGiao);
+    if (!ct.dong.length) {
+      $('#gio-bang').innerHTML =
+        `<div class="gio-trong"><b>Giỏ đang trống</b>
+           <span>Chưa có phẩm nào để thanh toán.</span>
+           <a class="nut" href="./cua-hang.html">Xem bộ phẩm</a></div>`;
+      $('#nut-dat').disabled = true;
+      return ct;
+    }
+    $('#gio-bang').innerHTML = ct.dong.map(d => `
+      <div class="gio-dong" data-ma="${esc(d.ma)}">
+        <div class="gio-tin">
+          <a href="./pham/${esc(d.slug)}.html">${esc(d.ten)}</a>
+          <span>${esc(d.dv)} · ${Gio.tien(d.gia)}</span>
+        </div>
+        <div class="gio-sl">
+          <button type="button" data-buoc="-1" aria-label="Bớt một">−</button>
+          <span>${d.sl}</span>
+          <button type="button" data-buoc="1" aria-label="Thêm một">+</button>
+        </div>
+        <div class="gio-tien">${Gio.tien(d.thanh)}</div>
+        <button type="button" class="gio-bo" data-bo aria-label="Bỏ khỏi giỏ">×</button>
+      </div>`).join('');
+
+    $('#gio-bang').querySelectorAll('[data-buoc]').forEach(b =>
+      b.addEventListener('click', () => {
+        const ma = b.closest('[data-ma]').dataset.ma;
+        Gio.dat(ma, Gio.doc().find(x => x.ma === ma).sl + Number(b.dataset.buoc));
+      }));
+    $('#gio-bang').querySelectorAll('[data-bo]').forEach(b =>
+      b.addEventListener('click', () => Gio.bo(b.closest('[data-ma]').dataset.ma)));
+    return ct;
+  }
+
+  function veCachGiao() {
+    $('#cach-giao').innerHTML = DM.giao_hang.map(g => `
+      <label>
+        <input type="radio" name="giao" value="${esc(g.ma)}"${g.ma === maGiao ? ' checked' : ''}>
+        <span>
+          <span class="ten-cach">${esc(g.ten)} — ${g.phi ? Gio.tien(g.phi) : 'không phí'}</span>
+          <span class="mo-cach">Nhận ${esc(g.thoi_gian)}.</span>
+        </span>
+      </label>`).join('');
+    $('#cach-giao').querySelectorAll('input').forEach(i =>
+      i.addEventListener('change', () => { maGiao = i.value; ve(); }));
+  }
+
+  function veTom(ct) {
+    $('#tom').innerHTML =
+      `<h2>Tạm tính</h2>` +
+      ct.dong.map(d => `<div class="mon"><span>${esc(d.ten)}</span>
+          <span class="sl">×${d.sl}</span><b>${Gio.tien(d.thanh)}</b></div>`).join('') +
+      `<div class="cong" style="margin-top:12px"><span>Tiền phẩm</span><b>${Gio.tien(ct.hang)}</b></div>
+       <div class="cong"><span>Phí giao</span><b>${ct.mien ? 'miễn' : Gio.tien(ct.phi)}</b></div>
+       <div class="cuoi"><span>Phải trả</span><b>${Gio.tien(ct.tong)}</b></div>`;
+  }
+
+  function ve() {
+    const ct = veGio();
+    veTom(ct);
+    return ct;
+  }
+
+  /* ── Đặt đơn ────────────────────────────────────────────────────────── */
+  function datDon(e) {
+    e.preventDefault();
+    const ct = Gio.chiTiet(maGiao);
+    const thieu = [];
+    if (!$('#ho-ten').value.trim()) thieu.push('họ và tên');
+    if (!/^[0-9+\s.()-]{9,}$/.test($('#sdt').value.trim())) thieu.push('số điện thoại');
+    if (!$('#dia-chi').value.trim()) thieu.push('địa chỉ nhận');
+    if (!ct.dong.length) thieu.push('ít nhất một phẩm');
+    if (thieu.length) {
+      $('#bao').textContent = 'Còn thiếu ' + thieu.join(', ') + '.';
+      $('#bao').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    $('#bao').textContent = '';
+
+    const cachTra = document.querySelector('[name=tra]:checked').value;
+    donHT = {
+      ma: taoMaDon(),
+      tao_luc: new Date().toISOString(),
+      nguoi_nhan: {
+        ho_ten: $('#ho-ten').value.trim(), sdt: $('#sdt').value.trim(),
+        email: $('#email').value.trim(), dia_chi: $('#dia-chi').value.trim(),
+        ghi_chu: $('#ghi-chu').value.trim()
+      },
+      giao: maGiao, tra: cachTra,
+      dong: ct.dong.map(d => ({ ma: d.ma, ten: d.ten, gia: d.gia, sl: d.sl })),
+      tien_pham: ct.hang, phi_giao: ct.phi, tong: ct.tong,
+      trang_thai: 'cho-tra'
+    };
+    localStorage.setItem('zenotea.don.' + donHT.ma, JSON.stringify(donHT));
+
+    guiLenHeThong(donHT);
+    moManTra(donHT);
+  }
+
+  /* Gửi đơn lên máy chủ. Chưa nối được thì nói thẳng, không giả vờ đã nhận. */
+  function guiLenHeThong(don) {
+    fetch('/api/don', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(don)
+    }).then(r => { if (!r.ok) throw new Error(r.status); })
+      .catch(() => { don.chua_gui = true; });
+  }
+
+  function moManTra(don) {
+    $('#soan').hidden = true;
+    $('#tra').hidden = false;
+    $('#dan').textContent = 'Đơn đã ghi nhận. Còn một bước là chuyển tiền.';
+
+    const nh = DM.ngan_hang;
+    const noiDung = don.ma;
+    $('#qr-tien').textContent = Gio.tien(don.tong);
+    $('#qr-nd').firstChild.textContent = noiDung;
+    $('#qr-nh').textContent = nh.ten_ngan_hang;
+    $('#qr-stk').firstChild.textContent = nh.so_tai_khoan;
+    $('#qr-chu').textContent = nh.ten_chu_tai_khoan;
+    $('#ma-don').textContent = don.ma;
+
+    $('#qr-o').innerHTML = ZenQR.veSVG(payload(nh, don.tong, noiDung), { mucSua: 'M' });
+
+    /* Giữ chỗ 30 phút — hết giờ thì trả phẩm về kho */
+    const han = Date.now() + 30 * 60 * 1000;
+    clearInterval(dongHo);
+    dongHo = setInterval(() => {
+      const con = han - Date.now();
+      if (con <= 0) {
+        clearInterval(dongHo); clearInterval(mach);
+        $('#han').textContent = 'đã hết hạn';
+        datTrangThai('hong', 'Quá hạn giữ chỗ. Đặt lại đơn mới nếu vẫn muốn nhận phẩm.');
+        return;
+      }
+      const p = Math.floor(con / 60000), g = Math.floor(con % 60000 / 1000);
+      $('#han').textContent = p + ' phút ' + String(g).padStart(2, '0');
+    }, 1000);
+
+    doiSoat(don.ma);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function datTrangThai(loai, chu) {
+    $('#tt').className = 'trang-thai' + (loai ? ' ' + loai : '');
+    $('#tt-chu').textContent = chu;
+  }
+
+  /* Hỏi máy chủ xem ngân hàng đã báo có chưa. Máy chủ chưa có thì nói rõ
+     là chưa đối soát được, tuyệt đối không hiện "đã nhận tiền". */
+  function doiSoat(ma) {
+    let hong = 0;
+    clearInterval(mach);
+    const hoi = () => fetch('/api/don/' + encodeURIComponent(ma) + '/trang-thai')
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(d => {
+        hong = 0;
+        if (d.trang_thai === 'da-tra') {
+          clearInterval(mach); clearInterval(dongHo);
+          Gio.xoaHet();
+          datTrangThai('xong', 'Đã nhận đủ tiền. Đơn chuyển sang soạn hàng, mã lô ZenTrace gửi vào thư điện tử khi phẩm rời xưởng.');
+        } else {
+          datTrangThai('', 'Đang chờ ngân hàng báo có…');
+        }
+      })
+      .catch(() => {
+        if (++hong >= 2) {
+          clearInterval(mach);
+          datTrangThai('hong',
+            'Chưa nối được với hệ thống đối soát, nên trang này chưa tự xác nhận được. ' +
+            'Tiền chuyển theo mã trên vẫn vào đúng tài khoản — giữ lại mã đơn ' + ma + ' để đối chiếu.');
+        }
+      });
+    hoi();
+    mach = setInterval(hoi, 5000);
+  }
+
+  /* ── Nối tay ────────────────────────────────────────────────────────── */
+  $('#don').addEventListener('submit', datDon);
+  $('#sua-don').addEventListener('click', () => {
+    clearInterval(dongHo); clearInterval(mach);
+    $('#tra').hidden = true; $('#soan').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.querySelectorAll('[data-sao]').forEach(b =>
+    b.addEventListener('click', () => {
+      const chu = document.getElementById(b.dataset.sao).firstChild.textContent.trim();
+      navigator.clipboard.writeText(chu).then(() => {
+        b.textContent = 'Đã chép';
+        setTimeout(() => { b.textContent = 'Chép'; }, 1400);
+      });
+    }));
+
+  Gio.khiDoi(() => { if (!$('#tra').hidden) return; ve(); });
+
+  Gio.sanSang.then(d => {
+    DM = d;
+    veCachGiao();
+    ve();
+    if (DM.ngan_hang._chua_chot) {
+      $('#canh-bao').innerHTML =
+        `<div class="phap-ly canh" style="margin-top:26px">
+           <b>Số tài khoản nhận tiền chưa phải số thật.</b> Trang đang chạy với số đặt chỗ
+           để dựng và thử luồng. Chưa thay bằng số thật của công ty thì không mở đặt đơn ra ngoài.
+         </div>`;
+      $('#nut-dat').disabled = true;
+      $('#nut-dat').textContent = 'Chờ số tài khoản thật';
+    }
+  }).catch(() => {
+    $('#gio-bang').innerHTML = '<p class="lead">Chưa đọc được danh mục phẩm. Tải lại trang giúp em.</p>';
+  });
+})();
+</script>
+
+</body>
+</html>

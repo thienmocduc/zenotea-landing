@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cửa hàng — Zen O Tea</title>
+<meta name="description" content="Cửa hàng Zen O Tea. Lục phẩm O Vang và O Beer — trà Shan tuyết cổ thụ lên men theo pháp khúc của Đông dược.">
+<meta name="theme-color" content="#0E211A">
+<link rel="canonical" href="https://zenotea.com/cua-hang.html">
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Charmonman:wght@400;700&family=Noto+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./pham.css">
+<link rel="stylesheet" href="./gio.css">
+</head>
+<body>
+
+<nav>
+  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <div class="lui">
+    <a href="./cua-hang.html">Cửa hàng</a>
+    <a href="./index.html#khuc">Pháp khúc</a>
+    <a href="./dang-nhap.html">Đăng nhập</a>
+  </div>
+</nav>
+
+<main class="b">
+
+  <section class="dau">
+    <div class="nhan">Cửa hàng</div>
+    <h1>Bộ phẩm Zen O Tea</h1>
+    <p class="lead" style="margin-top:14px">
+      Phẩm đóng theo lô của mùa, không đóng theo đơn đặt. Mỗi chai mang mã lô
+      ZenTrace dẫn ngược về đúng cái cây đã cho búp, đúng mẻ ủ và đúng ngày
+      ra hầm. Đặt trước thì nhận theo thứ tự ghi nhận.
+    </p>
+  </section>
+
+  <div class="loc" id="loc" role="group" aria-label="Lọc phẩm"></div>
+
+  <div class="luoi" id="luoi"></div>
+
+  <section class="khoi" style="margin-top:clamp(46px,6vw,84px)">
+    <h2>Cách một đơn đi qua</h2>
+    <div class="buoc" style="margin-top:18px">
+      <span><b>01</b>Chọn phẩm, thêm vào giỏ</span>
+      <span><b>02</b>Ghi người nhận và cách giao</span>
+      <span><b>03</b>Quét mã, chuyển đúng số tiền</span>
+      <span><b>04</b>Hệ thống đối soát rồi xuất kho</span>
+    </div>
+    <p class="lead" style="margin-top:22px">
+      Mã chuyển khoản mang sẵn số tiền và mã đơn, nên không phải gõ tay và
+      không nhầm nội dung. Đối soát xong thì đơn tự chuyển trạng thái, không
+      cần ai gọi xác nhận.
+    </p>
+  </section>
+
+  <div class="phap-ly canh" style="margin-top:34px">
+    Sản phẩm là thực phẩm, không phải thuốc và không thay thế thuốc chữa bệnh.
+    Giá niêm yết theo lô hiện hành, thay đổi theo trữ lượng nguyên liệu từng mùa tiết khí.
+  </div>
+
+</main>
+
+<footer>
+  <div class="b">
+    <img src="./logo.png" alt="Zen O Tea">
+    <p><strong>Zen O Tea</strong> — Khơi thông sự sống minh triết.
+    Một thành viên của hệ sinh thái phục hưng sự sống · Zeni Holdings.</p>
+  </div>
+</footer>
+
+<script src="./gio.js" data-goc="./"></script>
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
+    ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+  const DONG = [
+    { ma: 'tat-ca',  ten: 'Tất cả' },
+    { ma: 'o-vang',  ten: 'Lục phẩm O Vang' },
+    { ma: 'o-beer',  ten: 'O Beer' },
+    { ma: 'dat-duoc', ten: 'Đặt được ngay' }
+  ];
+  let dangLoc = 'tat-ca';
+  let DM = null;
+
+  const hop = p => dangLoc === 'tat-ca' ? true
+    : dangLoc === 'dat-duoc' ? p.ban_duoc
+    : p.dong === dangLoc;
+
+  function veLoc() {
+    $('#loc').innerHTML = DONG.map(d =>
+      `<button data-loc="${d.ma}"${d.ma === dangLoc ? ' class="dang"' : ''}>${esc(d.ten)}</button>`
+    ).join('') + `<span class="day">${DM.pham.filter(hop).length} phẩm</span>`;
+    $('#loc').querySelectorAll('[data-loc]').forEach(b =>
+      b.addEventListener('click', () => { dangLoc = b.dataset.loc; ve(); }));
+  }
+
+  function veLuoi() {
+    $('#luoi').innerHTML = DM.pham.filter(hop).map(p => `
+      <article class="the-hang">
+        <div class="phu">${esc(p.phu)}</div>
+        <h3>${esc(p.ten)}</h3>
+        <p class="cau">${esc(p.cau)}</p>
+        <div class="hang-gia">
+          <span class="gia-so">${p.ban_duoc ? Gio.tien(p.gia) : esc(p.gia_chu)}</span>
+          <span class="gia-dv">${esc(p.dv)}</span>
+        </div>
+        ${p.ban_duoc ? `
+        <div class="nut-doi">
+          <button class="nut dac" data-them-gio="${esc(p.ma)}">Thêm vào giỏ</button>
+          <a class="nut" href="./pham/${esc(p.slug)}.html">Đọc phẩm</a>
+        </div>` : `
+        <div class="chua">${esc(p.vi_sao)}</div>
+        <div class="nut-doi">
+          <a class="nut" href="./pham/${esc(p.slug)}.html">Đọc phẩm</a>
+        </div>`}
+      </article>`).join('');
+
+    /* Nút vừa dựng xong nên phải nối tay lại — gio.js chỉ quét lúc trang mở */
+    $('#luoi').querySelectorAll('[data-them-gio]').forEach(nut =>
+      nut.addEventListener('click', () => {
+        const kq = Gio.them(nut.dataset.themGio, 1);
+        const cu = nut.textContent;
+        nut.textContent = kq.ok ? 'Đã thêm vào giỏ' : kq.loi;
+        nut.classList.toggle('loi', !kq.ok);
+        setTimeout(() => { nut.textContent = cu; nut.classList.remove('loi'); }, kq.ok ? 1400 : 3200);
+        if (kq.ok) Gio.mo();
+      }));
+  }
+
+  const ve = () => { veLoc(); veLuoi(); };
+
+  Gio.sanSang.then(d => { DM = d; ve(); }).catch(() => {
+    $('#luoi').innerHTML = '<p class="lead">Chưa đọc được danh mục phẩm. Tải lại trang giúp em.</p>';
+  });
+})();
+</script>
+
+</body>
+</html>

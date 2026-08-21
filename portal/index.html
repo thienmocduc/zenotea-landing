@@ -237,15 +237,47 @@
       </section>` }
   };
 
+  /* Nhóm nào đang đóng — nhớ theo vai trò, để đổi màn không bị bung lại hết */
+  const nhomDong = new Set();
+
+  /* Vai trò vận hành mang danh sách màn được phép; vai trò thương mại
+     dùng trọn bộ màn của nhóm nên không cần chặn thêm. */
+  const duocXem = (vt, id) => !vt.quyen_module || vt.quyen_module.includes(id);
+
   function veCanhNav() {
     const vt = CAUHINH.vai_tro.find(v => v.id === vaiHT);
+
     $('#canh-nav').innerHTML = vt.nhom.map(maNhom => {
       const nhom = CAUHINH.nhom_module[maNhom];
-      const muc = nhom.man.filter(id => DATA.kho[id]).map(id =>
+      const dsMan = nhom.man.filter(id => DATA.kho[id] && duocXem(vt, id));
+      // Nhóm chứa màn đang xem thì luôn mở, kẻo người dùng mất dấu mình đang ở đâu
+      const chuaManHT = dsMan.includes(manHT);
+      const dong = nhomDong.has(maNhom) && !chuaManHT;
+
+      const muc = dsMan.map(id =>
         `<div class="muc${id === manHT ? ' dang' : ''}" data-man="${id}"
               role="button" tabindex="0">${esc(DATA.kho[id]._ten || id)}</div>`).join('');
-      return `<div class="thu-dau">${esc(nhom.ten)}</div>${muc}`;
+
+      return `<div class="thu">
+        <button class="thu-dau${dong ? ' dong' : ''}" data-nhom="${maNhom}"
+                aria-expanded="${!dong}">
+          ${esc(nhom.ten)}
+          <span class="dem">${dsMan.length}</span>
+          <span class="mui" aria-hidden="true">⌄</span>
+        </button>
+        <div class="thu-con${dong ? ' dong' : ''}"><div>${muc}</div></div>
+      </div>`;
     }).join('');
+
+    $('#canh-nav').querySelectorAll('.thu-dau').forEach(el =>
+      el.addEventListener('click', () => {
+        const ma = el.dataset.nhom;
+        nhomDong.has(ma) ? nhomDong.delete(ma) : nhomDong.add(ma);
+        const dong = nhomDong.has(ma);
+        el.classList.toggle('dong', dong);
+        el.setAttribute('aria-expanded', String(!dong));
+        el.nextElementSibling.classList.toggle('dong', dong);
+      }));
 
     $('#canh-nav').querySelectorAll('.muc').forEach(el => {
       const mo = () => { moMan(el.dataset.man); dongCanh(); };
@@ -272,6 +304,14 @@
       return;
     }
 
+    const vtHT = CAUHINH.vai_tro.find(v => v.id === vaiHT);
+    if (!duocXem(vtHT, id)) {
+      $('#tieu-man').textContent = 'Không có quyền';
+      noi.innerHTML = `<div class="trong"><b>Vai trò này không mở được màn đó</b>
+        Lượt truy cập đã được ghi vào nhật ký hoạt động.</div>`;
+      veCanhNav(); return;
+    }
+
     const m = DATA.kho[id];
     if (!m) {
       $('#tieu-man').textContent = 'Chưa có';
@@ -291,7 +331,9 @@
         `<div class="so-o"><b>${esc(gt)}</b><span>${esc(nhan)}</span></div>`).join('')}</div>`;
     }
     (m.the || []).forEach(t => {
-      html += `<section class="the"><h2>${esc(t.h)}</h2>${veBang(t.bang)}</section>`;
+      html += `<section class="the"><h2>${esc(t.h)}</h2>` +
+        (t.p ? `<div class="p">${esc(t.p)}</div>` : '') +
+        veBang(t.bang) + '</section>';
     });
     if (m.ghi_do) html += `<div class="ghi do">${esc(m.ghi_do)}</div>`;
 
@@ -300,12 +342,28 @@
     veCanhNav();
   }
 
+  /* Bảng điều khiển vận hành dựng từ khối dữ liệu của bản Portal vai trò:
+     một hàng số liệu, còn lại là các mục có tiêu đề kèm đoạn dẫn. */
+  function veBdkVanHanh(idVai) {
+    const d = DATA.bdkVH[idVai];
+    if (!d) return { _ten: 'Bảng điều khiển' };
+    return {
+      _ten: 'Bảng điều khiển',
+      so: (d.khoi.find(k => k.so) || {}).so || [],
+      the: d.khoi.filter(k => k.h).map(k => ({ h: k.h, p: k.p }))
+    };
+  }
+
   function doiVai(id) {
     vaiHT = id;
+    nhomDong.clear();
     const vt = CAUHINH.vai_tro.find(v => v.id === id);
+    if ((vt.khoi || 'thuong_mai') === 'van_hanh')
+      DATA.kho['/'] = veBdkVanHanh(id.replace(/^vh_/, ''));
     $('#avt').textContent = vt.tat;
     $('#tk-vai').textContent = vt.ten;
-    moMan(vt.nhom.flatMap(n => CAUHINH.nhom_module[n].man).find(x => DATA.kho[x]));
+    moMan(vt.nhom.flatMap(n => CAUHINH.nhom_module[n].man)
+            .find(x => DATA.kho[x] && duocXem(vt, x)));
   }
 
   const dongCanh = () => {
@@ -337,12 +395,25 @@
 
   Promise.all([
     fetch('../data/portal.json').then(r => r.json()),
-    fetch('../data/vai-tro.json').then(r => r.json())
-  ]).then(([vaiGoc, cauhinh]) => {
-    DATA = { kho: gomMan(vaiGoc) };
+    fetch('../data/vai-tro.json').then(r => r.json()),
+    fetch('../data/van-hanh.json').then(r => r.json()),
+    fetch('../data/portal17.json').then(r => r.json())
+  ]).then(([vaiGoc, cauhinh, vanHanh, p17]) => {
+    /* Kho màn dùng chung cho cả hai khối. Màn thương mại mang mã kiểu
+       `aff-bdk`, màn vận hành mang mã kiểu `/vung-tra` — không đụng nhau. */
+    DATA = { kho: Object.assign(gomMan(vaiGoc), vanHanh), bdkVH: p17.MAN };
     CAUHINH = cauhinh;
-    $('#chon-vai').innerHTML = CAUHINH.vai_tro.map(v =>
-      `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
+
+    /* Bảng điều khiển khối vận hành khác nhau theo từng vai trò nên không
+       nằm sẵn trong kho — dựng riêng rồi gắn vào lúc đổi vai. */
+    DATA.kho['/'] = { _ten: 'Bảng điều khiển' };
+
+    const nhomKhoi = { thuong_mai: 'Vai trò thương mại', van_hanh: 'Vai trò vận hành' };
+    $('#chon-vai').innerHTML = Object.entries(nhomKhoi).map(([k, ten]) =>
+      `<optgroup label="${ten}">` + CAUHINH.vai_tro
+        .filter(v => (v.khoi || 'thuong_mai') === k)
+        .map(v => `<option value="${v.id}">${esc(v.ten)}</option>`).join('') +
+      `</optgroup>`).join('');
     $('#chon-vai').addEventListener('change', e => doiVai(e.target.value));
     doiVai('tieu_dung');
   }).catch(err => {

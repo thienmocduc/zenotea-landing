@@ -1,0 +1,833 @@
+{
+ "MODULE": [
+  {
+   "id": "/",
+   "ten": "Bảng điều khiển",
+   "ico": "◈",
+   "nhom": "Chung"
+  },
+  {
+   "id": "/vung-tra",
+   "ten": "Vùng trà & cây cổ thụ",
+   "ico": "🌿",
+   "nhom": "Thượng nguồn"
+  },
+  {
+   "id": "/bao-tieu",
+   "ten": "Hợp đồng bao tiêu",
+   "ico": "🤝",
+   "nhom": "Thượng nguồn"
+  },
+  {
+   "id": "/cong-thuc",
+   "ten": "Công thức & men giống",
+   "ico": "🔒",
+   "nhom": "Thượng nguồn",
+   "mat": true
+  },
+  {
+   "id": "/me-u",
+   "ten": "Mẻ ủ & lên men",
+   "ico": "⏳",
+   "nhom": "Sản xuất"
+  },
+  {
+   "id": "/kiem-nghiem",
+   "ten": "Kiểm nghiệm & công bố",
+   "ico": "🧪",
+   "nhom": "Sản xuất"
+  },
+  {
+   "id": "/bo-pham",
+   "ten": "Bộ phẩm & tồn kho",
+   "ico": "🍶",
+   "nhom": "Sản xuất"
+  },
+  {
+   "id": "/zentrace",
+   "ten": "ZenTrace truy xuất",
+   "ico": "⛓",
+   "nhom": "Sản xuất"
+  },
+  {
+   "id": "/don-b2b",
+   "ten": "Đơn doanh nghiệp",
+   "ico": "📦",
+   "nhom": "Bán hàng"
+  },
+  {
+   "id": "/zen-circle",
+   "ten": "Zen Circle",
+   "ico": "◯",
+   "nhom": "Bán hàng"
+  },
+  {
+   "id": "/en-primeur",
+   "ten": "En primeur & sưu tầm",
+   "ico": "🏆",
+   "nhom": "Bán hàng"
+  },
+  {
+   "id": "/nhuong-quyen",
+   "ten": "Nhượng quyền & outlet",
+   "ico": "🏬",
+   "nhom": "Mạng lưới"
+  },
+  {
+   "id": "/xuat-khau",
+   "ten": "Xuất khẩu",
+   "ico": "🌏",
+   "nhom": "Mạng lưới"
+  },
+  {
+   "id": "/affiliate",
+   "ten": "Affiliate & KOC",
+   "ico": "🔗",
+   "nhom": "Mạng lưới"
+  },
+  {
+   "id": "/hoc-vien",
+   "ten": "Học viện trà sư",
+   "ico": "🎓",
+   "nhom": "Tri thức"
+  },
+  {
+   "id": "/tai-chinh",
+   "ten": "Tài chính 4 tầng",
+   "ico": "📊",
+   "nhom": "Vốn"
+  },
+  {
+   "id": "/cap-table",
+   "ten": "Cap table & gọi vốn",
+   "ico": "📈",
+   "nhom": "Vốn"
+  },
+  {
+   "id": "/bao-cao-ndt",
+   "ten": "Báo cáo nhà đầu tư",
+   "ico": "📑",
+   "nhom": "Vốn"
+  },
+  {
+   "id": "/phap-ly",
+   "ten": "Pháp lý & nghị quyết",
+   "ico": "⚖",
+   "nhom": "Quản trị"
+  },
+  {
+   "id": "/nhat-ky",
+   "ten": "Nhật ký hoạt động",
+   "ico": "📜",
+   "nhom": "Quản trị"
+  },
+  {
+   "id": "/nguoi-dung",
+   "ten": "Người dùng & phân quyền",
+   "ico": "👥",
+   "nhom": "Quản trị"
+  },
+  {
+   "id": "/ho-so",
+   "ten": "Hồ sơ của tôi",
+   "ico": "👤",
+   "nhom": "Chung"
+  }
+ ],
+ "VAI": [
+  {
+   "id": "chu_tich",
+   "ten": "Chủ tịch",
+   "nhom": "Điều hành & quản trị",
+   "nguoi": "Thiên Mộc Đức",
+   "chuc": "Nhà sáng lập",
+   "mo": "Toàn quyền. Ký nghị quyết, duyệt chi trên 100 triệu, mở được cả vùng công thức.",
+   "quyen": "*"
+  },
+  {
+   "id": "hdqt",
+   "ten": "HĐQT / Ban kiểm soát",
+   "nhom": "Điều hành & quản trị",
+   "nguoi": "Thành viên HĐQT",
+   "chuc": "Quản trị",
+   "mo": "Giám sát, không điều hành. Xem được số và nghị quyết, KHÔNG xem công thức, KHÔNG sửa dữ liệu vận hành.",
+   "quyen": [
+    "/",
+    "/tai-chinh",
+    "/cap-table",
+    "/bao-cao-ndt",
+    "/phap-ly",
+    "/nhat-ky",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "gd_khoi",
+   "ten": "Giám đốc khối",
+   "nhom": "Điều hành & quản trị",
+   "nguoi": "GĐ Sản phẩm",
+   "chuc": "Giám đốc khối",
+   "mo": "Điều hành theo khối mình phụ trách. Thấy hầu hết vận hành — trừ công thức, cap table và phân quyền.",
+   "quyen": [
+    "/",
+    "/vung-tra",
+    "/bao-tieu",
+    "/me-u",
+    "/kiem-nghiem",
+    "/bo-pham",
+    "/zentrace",
+    "/don-b2b",
+    "/zen-circle",
+    "/nhuong-quyen",
+    "/xuat-khau",
+    "/hoc-vien",
+    "/tai-chinh",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "ke_toan",
+   "ten": "Kế toán – Tài chính",
+   "nhom": "Điều hành & quản trị",
+   "nguoi": "Kế toán trưởng",
+   "chuc": "Tài chính",
+   "mo": "Sổ sách, chốt tuần, hồ sơ kiểm toán. Thấy dòng tiền của mọi kênh bán, không thấy sản xuất.",
+   "quyen": [
+    "/",
+    "/tai-chinh",
+    "/don-b2b",
+    "/nhuong-quyen",
+    "/xuat-khau",
+    "/bo-pham",
+    "/phap-ly",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "labs",
+   "ten": "Zen Labs",
+   "nhom": "Sản xuất & nguyên liệu",
+   "nguoi": "CTO Labs",
+   "chuc": "R&D lên men",
+   "mat": true,
+   "mo": "Vai trò duy nhất ngoài Chủ tịch mở được công thức và men giống. Cách ly mạnh nhất hệ thống.",
+   "quyen": [
+    "/",
+    "/cong-thuc",
+    "/me-u",
+    "/kiem-nghiem",
+    "/vung-tra",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "xuong",
+   "ten": "Quản lý xưởng & mẻ ủ",
+   "nhom": "Sản xuất & nguyên liệu",
+   "nguoi": "Quản đốc",
+   "chuc": "Xưởng",
+   "mo": "Chạy mẻ theo thông số được giao — KHÔNG thấy công thức gốc. Gắn mã ZenTrace cho từng lô.",
+   "quyen": [
+    "/",
+    "/me-u",
+    "/kiem-nghiem",
+    "/bo-pham",
+    "/zentrace",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "ho_dan",
+   "vao": "/bao-tieu",
+   "ten": "Hộ dân / HTX vùng trà",
+   "nhom": "Sản xuất & nguyên liệu",
+   "nguoi": "HTX Tà Xùa",
+   "chuc": "Vùng nguyên liệu",
+   "mo": "Xem hợp đồng bao tiêu, sản lượng đã giao và tiền đã nhận CỦA MÌNH. Không thấy hộ khác.",
+   "quyen": [
+    "/bao-tieu",
+    "/vung-tra",
+    "/zentrace",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "sales",
+   "ten": "Sales B2B",
+   "nhom": "Bán hàng & mạng lưới",
+   "nguoi": "Nhân viên kinh doanh",
+   "chuc": "Sales",
+   "mo": "Khách và đơn của mình, tồn kho để hứa đúng ngày giao. Không thấy giá vốn.",
+   "quyen": [
+    "/",
+    "/don-b2b",
+    "/bo-pham",
+    "/zen-circle",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "outlet",
+   "ten": "Chủ outlet nhượng quyền",
+   "nhom": "Bán hàng & mạng lưới",
+   "nguoi": "Chủ quán Zen House",
+   "chuc": "Nhượng quyền",
+   "mo": "Doanh thu quán mình, đặt hàng, điểm kiểm định chất lượng định kỳ.",
+   "quyen": [
+    "/",
+    "/nhuong-quyen",
+    "/bo-pham",
+    "/hoc-vien",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "master",
+   "ten": "Master franchise quốc tế",
+   "nhom": "Bán hàng & mạng lưới",
+   "nguoi": "Đối tác Hàn Quốc",
+   "chuc": "Master",
+   "mo": "Cả một thị trường quốc gia và các outlet dưới quyền, kèm hồ sơ xuất khẩu vào nước đó.",
+   "quyen": [
+    "/",
+    "/nhuong-quyen",
+    "/xuat-khau",
+    "/bo-pham",
+    "/hoc-vien",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "phan_phoi",
+   "ten": "Nhà phân phối / nhập khẩu",
+   "nhom": "Bán hàng & mạng lưới",
+   "nguoi": "Nhà nhập khẩu EU",
+   "chuc": "Phân phối",
+   "mo": "Hạn mức, giá sỉ theo vùng, hồ sơ DPP chuẩn EU cho từng lô.",
+   "quyen": [
+    "/",
+    "/xuat-khau",
+    "/bo-pham",
+    "/zentrace",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "circle",
+   "vao": "/zen-circle",
+   "ten": "Thành viên Zen Circle",
+   "nhom": "Cộng đồng & tri thức",
+   "nguoi": "Thành viên",
+   "chuc": "Zen Circle",
+   "mo": "Thiền trà riêng tư, lịch sử mua, truy xuất chai mình đang uống.",
+   "quyen": [
+    "/zen-circle",
+    "/bo-pham",
+    "/zentrace",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "suu_tam",
+   "vao": "/en-primeur",
+   "ten": "Nhà sưu tầm en primeur",
+   "nhom": "Cộng đồng & tri thức",
+   "nguoi": "Nhà sưu tầm",
+   "chuc": "En primeur",
+   "mo": "Bản Grand Cru đã đặt trước, chứng thư sở hữu, quyền dự đấu giá. Khác hẳn khách thường.",
+   "quyen": [
+    "/en-primeur",
+    "/zen-circle",
+    "/bo-pham",
+    "/zentrace",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "hoc_vien",
+   "vao": "/hoc-vien",
+   "ten": "Học viên Học viện",
+   "nhom": "Cộng đồng & tri thức",
+   "nguoi": "Học viên trà sư",
+   "chuc": "Học viện",
+   "mo": "Khoá đang học, tiến độ, chứng chỉ trà sư / kỹ thuật viên lên men.",
+   "quyen": [
+    "/hoc-vien",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "ndt",
+   "vao": "/bao-cao-ndt",
+   "ten": "Nhà đầu tư",
+   "nhom": "Vốn & bên thứ ba",
+   "nguoi": "Angel-1 / Series A",
+   "chuc": "Nhà đầu tư",
+   "mo": "Báo cáo kỳ, phần cap table của mình, tiến độ mốc. KHÔNG công thức, KHÔNG dữ liệu khách hàng.",
+   "quyen": [
+    "/bao-cao-ndt",
+    "/cap-table",
+    "/tai-chinh",
+    "/phap-ly",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "kiem_dinh",
+   "vao": "/kiem-nghiem",
+   "ten": "Kiểm nghiệm / kiểm toán",
+   "nhom": "Vốn & bên thứ ba",
+   "nguoi": "Đơn vị được mời",
+   "chuc": "Bên thứ ba",
+   "mo": "Chỉ đúng hồ sơ được mời, có hạn dùng — hết hạn tự đóng, không cần ai nhớ thu hồi.",
+   "quyen": [
+    "/kiem-nghiem",
+    "/phap-ly",
+    "/ho-so"
+   ]
+  },
+  {
+   "id": "koc",
+   "vao": "/affiliate",
+   "ten": "KOC / Affiliate",
+   "nhom": "Vốn & bên thứ ba",
+   "nguoi": "WellKOC",
+   "chuc": "Affiliate",
+   "mo": "Link giới thiệu, lượt click, hoa hồng của mình. Không thấy khách của người khác.",
+   "quyen": [
+    "/affiliate",
+    "/bo-pham",
+    "/ho-so"
+   ]
+  }
+ ],
+ "MAN": {
+  "chu_tich": {
+   "tieu": "Bảng điều khiển",
+   "khoi": [
+    {
+     "h": "Toàn cảnh 7 mốc 2026–2032",
+     "p": "Doanh thu · EBT · số outlet · tầng C theo từng năm, đối chiếu bản đồ mục tiêu."
+    },
+    {
+     "so": [
+      [
+       "6 tỷ",
+       "Angel-1 đã đóng"
+      ],
+      [
+       "3/5",
+       "Bar pilot chạy"
+      ],
+      [
+       "2",
+       "Lô ủ đang chờ"
+      ],
+      [
+       "54 tỷ",
+       "Tài sản công thức"
+      ]
+     ]
+    },
+    {
+     "h": "Việc chờ chữ ký",
+     "p": "2 nghị quyết chờ ký · 1 khoản chi trên 100 triệu chờ duyệt."
+    }
+   ]
+  },
+  "hdqt": {
+   "tieu": "Giám sát",
+   "khoi": [
+    {
+     "h": "Chỉ số & nghị quyết",
+     "p": "Doanh thu, EBT, tiến độ mốc và các nghị quyết đã ban hành. Chỉ đọc."
+    },
+    {
+     "so": [
+      [
+       "0,4tr",
+       "EBT SGD"
+      ],
+      [
+       "8",
+       "Nghị quyết 2026"
+      ],
+      [
+       "100%",
+       "Chốt sổ đúng hạn"
+      ]
+     ]
+    }
+   ]
+  },
+  "gd_khoi": {
+   "tieu": "Khối Sản phẩm",
+   "khoi": [
+    {
+     "h": "Mốc năm của khối",
+     "p": "Kiểm nghiệm + công bố BYT · lô thương mại đầu · 3 dòng khoá công thức."
+    },
+    {
+     "so": [
+      [
+       "2/3",
+       "Dòng đã công bố"
+      ],
+      [
+       "11",
+       "Phẩm trong bộ"
+      ],
+      [
+       "86%",
+       "Đạt kiểm định"
+      ]
+     ]
+    }
+   ]
+  },
+  "ke_toan": {
+   "tieu": "Tài chính",
+   "khoi": [
+    {
+     "h": "Dòng tiền theo kênh",
+     "p": "B2B quà tặng · nhượng quyền · xuất khẩu · en primeur — chốt sổ hằng tuần."
+    },
+    {
+     "so": [
+      [
+       "52 tỷ",
+       "DT năm"
+      ],
+      [
+       "24%",
+       "OPEX"
+      ],
+      [
+       "≥0",
+       "Tiền mặt cuối kỳ"
+      ]
+     ]
+    }
+   ]
+  },
+  "labs": {
+   "tieu": "Zen Labs",
+   "mat": true,
+   "khoi": [
+    {
+     "mat": true,
+     "h": "🔒 Công thức & men giống",
+     "p": "Vùng bí mật kinh doanh. Chủng men, tỷ lệ 32 thảo dược, đường cong lên men, kiểm soát cồn tự sinh. Mọi lượt mở đều ghi nhật ký."
+    },
+    {
+     "so": [
+      [
+       "3",
+       "Dòng đã khoá"
+      ],
+      [
+       "147",
+       "Mẻ thử"
+      ],
+      [
+       "0,0–0,5%",
+       "Dải cồn"
+      ]
+     ]
+    }
+   ]
+  },
+  "xuong": {
+   "tieu": "Mẻ ủ",
+   "khoi": [
+    {
+     "h": "Lô đang ủ",
+     "p": "Thông số mẻ được giao, ngày vào–ra, nhiệt độ. Không hiện công thức gốc."
+    },
+    {
+     "so": [
+      [
+       "2",
+       "Lô đang ủ"
+      ],
+      [
+       "14",
+       "Ngày còn lại"
+      ],
+      [
+       "1.240",
+       "Chai dự kiến"
+      ]
+     ]
+    }
+   ]
+  },
+  "ho_dan": {
+   "tieu": "Hợp đồng của tôi",
+   "khoi": [
+    {
+     "h": "Bao tiêu HTX Tà Xùa",
+     "p": "Giá sàn–trần ký trước mùa vụ. Sản lượng đã giao và tiền đã nhận của riêng HTX này."
+    },
+    {
+     "so": [
+      [
+       "420kg",
+       "Đã giao"
+      ],
+      [
+       "84tr",
+       "Đã nhận"
+      ],
+      [
+       "2027",
+       "Hết hạn HĐ"
+      ]
+     ]
+    }
+   ]
+  },
+  "sales": {
+   "tieu": "Đơn của tôi",
+   "khoi": [
+    {
+     "h": "Mùa quà Tết",
+     "p": "Khách của mình, tiến độ từng đơn, tồn kho để hứa đúng ngày giao."
+    },
+    {
+     "so": [
+      [
+       "14",
+       "Đơn mở"
+      ],
+      [
+       "6",
+       "Chờ chốt"
+      ],
+      [
+       "890tr",
+       "Giá trị"
+      ]
+     ]
+    }
+   ]
+  },
+  "outlet": {
+   "tieu": "Quán của tôi",
+   "khoi": [
+    {
+     "h": "Zen House Hà Nội",
+     "p": "Doanh thu quán, đặt hàng nguyên liệu, điểm kiểm định chất lượng kỳ gần nhất."
+    },
+    {
+     "so": [
+      [
+       "96",
+       "Điểm kiểm định"
+      ],
+      [
+       "38tr",
+       "DT tuần"
+      ],
+      [
+       "3",
+       "Đơn chờ giao"
+      ]
+     ]
+    }
+   ]
+  },
+  "master": {
+   "tieu": "Thị trường Hàn Quốc",
+   "khoi": [
+    {
+     "h": "Outlet dưới quyền",
+     "p": "Danh sách quán trong nước mình, hồ sơ nhập khẩu, tiến độ mở điểm mới."
+    },
+    {
+     "so": [
+      [
+       "7",
+       "Outlet"
+      ],
+      [
+       "2",
+       "Sắp khai trương"
+      ],
+      [
+       "DPP",
+       "Hồ sơ EU"
+      ]
+     ]
+    }
+   ]
+  },
+  "phan_phoi": {
+   "tieu": "Xuất khẩu",
+   "khoi": [
+    {
+     "h": "Hạn mức & hồ sơ lô",
+     "p": "Giá sỉ theo vùng, hồ sơ DPP từng lô, truy xuất tới thân cây."
+    },
+    {
+     "so": [
+      [
+       "1.800",
+       "Chai/quý"
+      ],
+      [
+       "0,5%",
+       "Bản xuất khẩu"
+      ],
+      [
+       "3",
+       "Thị trường"
+      ]
+     ]
+    }
+   ]
+  },
+  "circle": {
+   "tieu": "Zen Circle",
+   "khoi": [
+    {
+     "h": "Vòng trong",
+     "p": "Buổi thiền trà sắp tới, phẩm ưu tiên, lịch sử mua và truy xuất chai đang uống."
+    },
+    {
+     "so": [
+      [
+       "4",
+       "Buổi đã dự"
+      ],
+      [
+       "2",
+       "Phẩm ưu tiên"
+      ]
+     ]
+    }
+   ]
+  },
+  "suu_tam": {
+   "tieu": "Bộ sưu tập",
+   "khoi": [
+    {
+     "h": "En primeur & Grand Cru",
+     "p": "Bản đã đặt trước, chứng thư sở hữu, quyền tham dự phiên đấu giá."
+    },
+    {
+     "so": [
+      [
+       "3",
+       "Chai đánh số"
+      ],
+      [
+       "#012",
+       "Grand Cru"
+      ],
+      [
+       "2029",
+       "Năm nhận"
+      ]
+     ]
+    }
+   ]
+  },
+  "hoc_vien": {
+   "tieu": "Học viện",
+   "khoi": [
+    {
+     "h": "Khoá trà sư",
+     "p": "Bài đang học, tiến độ, lịch thực hành tại xưởng, chứng chỉ sau tốt nghiệp."
+    },
+    {
+     "so": [
+      [
+       "62%",
+       "Tiến độ"
+      ],
+      [
+       "8/14",
+       "Bài xong"
+      ]
+     ]
+    }
+   ]
+  },
+  "ndt": {
+   "tieu": "Báo cáo nhà đầu tư",
+   "khoi": [
+    {
+     "h": "Kỳ gần nhất",
+     "p": "Doanh thu, EBT, tiến độ mốc, phần sở hữu của bạn sau các vòng."
+    },
+    {
+     "so": [
+      [
+       "6 tỷ",
+       "Đã rót"
+      ],
+      [
+       "9,1%",
+       "Sở hữu"
+      ],
+      [
+       "60 tỷ",
+       "Định giá"
+      ]
+     ]
+    },
+    {
+     "h": "Không nằm trong quyền xem",
+     "p": "Công thức lên men và dữ liệu khách hàng — hai vùng nhà đầu tư không truy cập."
+    }
+   ]
+  },
+  "kiem_dinh": {
+   "tieu": "Hồ sơ được mời",
+   "khoi": [
+    {
+     "h": "Phạm vi có hạn",
+     "p": "Chỉ hồ sơ được mời, kèm ngày hết hạn. Hết hạn cửa tự đóng, không cần ai nhớ thu hồi."
+    },
+    {
+     "so": [
+      [
+       "4",
+       "Hồ sơ"
+      ],
+      [
+       "12",
+       "Ngày còn lại"
+      ]
+     ]
+    }
+   ]
+  },
+  "koc": {
+   "tieu": "Affiliate",
+   "khoi": [
+    {
+     "h": "Link & hoa hồng",
+     "p": "Lượt click qua link của bạn, đơn phát sinh và hoa hồng đã ghi sổ."
+    },
+    {
+     "so": [
+      [
+       "1.204",
+       "Click"
+      ],
+      [
+       "18",
+       "Đơn"
+      ],
+      [
+       "4,2tr",
+       "Hoa hồng"
+      ]
+     ]
+    }
+   ]
+  }
+ }
+}

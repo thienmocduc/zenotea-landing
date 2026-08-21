@@ -1,0 +1,244 @@
+/* ============================================================
+   ZenOTea — Giỏ phẩm, cửa hàng, trang thanh toán
+   Dùng lại token màu và chữ của pham.css. Không đặt màu mới.
+   ============================================================ */
+
+/* ── nút giỏ nổi ── */
+.gio-nut{
+  position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:60;
+  width:56px;height:56px;border-radius:50%;border:1px solid rgba(201,162,75,.34);
+  background:rgba(18,41,31,.94);backdrop-filter:blur(10px);color:var(--kim-sang);
+  display:grid;place-items:center;cursor:pointer;
+  box-shadow:0 12px 34px rgba(0,0,0,.44);
+  transition:transform .26s cubic-bezier(.22,.61,.36,1),border-color .26s;
+}
+.gio-nut:hover{transform:translateY(-2px);border-color:rgba(201,162,75,.6)}
+.gio-nut.co{border-color:rgba(201,162,75,.62)}
+.gio-dem{
+  position:absolute;top:-3px;right:-3px;min-width:21px;height:21px;padding:0 5px;
+  border-radius:11px;background:var(--son);color:#fff;
+  font:600 11px/21px var(--sans);text-align:center;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+
+/* ── màn che ── */
+.gio-che{
+  position:fixed;inset:0;z-index:70;background:rgba(6,15,11,.6);
+  opacity:0;transition:opacity .28s;backdrop-filter:blur(2px);
+}
+.gio-che.mo{opacity:1}
+
+/* ── ngăn kéo ── */
+.gio-ngan{
+  position:fixed;top:0;right:0;bottom:0;z-index:71;
+  width:min(420px,100vw);display:flex;flex-direction:column;
+  background:var(--den2);border-left:1px solid rgba(201,162,75,.18);
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.61,.36,1);
+}
+.gio-ngan.mo{transform:none}
+.gio-ngan header{
+  display:flex;align-items:center;gap:14px;padding:22px clamp(18px,4vw,28px);
+  border-bottom:1px solid rgba(201,162,75,.13);
+}
+.gio-ngan h3{
+  font-family:var(--co);font-weight:700;font-size:27px;line-height:1.3;
+  background-image:var(--kim);-webkit-background-clip:text;background-clip:text;color:transparent;
+  padding:.14em 0 .18em;margin:-.14em 0 0;
+}
+.gio-ngan header .gio-tat{
+  margin-left:auto;width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(201,162,75,.22);background:none;color:var(--la);
+  font-size:20px;line-height:1;cursor:pointer;transition:color .22s,border-color .22s;
+}
+.gio-ngan header .gio-tat:hover{color:var(--kim-sang);border-color:rgba(201,162,75,.5)}
+
+.gio-than{flex:1;min-height:0;overflow-y:auto;padding:8px clamp(18px,4vw,28px)}
+
+.gio-than .gio-dong{
+  display:grid;grid-template-columns:1fr auto auto 26px;align-items:center;gap:12px;
+  padding:17px 0;border-bottom:1px solid rgba(201,162,75,.09);
+}
+.gio-tin{min-width:0}
+.gio-tin a{
+  display:block;font-family:var(--serif);font-size:19px;color:var(--giay);
+  text-decoration:none;transition:color .22s;
+}
+.gio-tin a:hover{color:var(--kim-sang)}
+.gio-tin span{display:block;font-size:12px;color:var(--reu);letter-spacing:.03em}
+
+.gio-sl{display:flex;align-items:center;gap:2px}
+.gio-sl button{
+  width:27px;height:27px;border:1px solid rgba(201,162,75,.2);background:none;
+  color:var(--la);font-size:14px;line-height:1;cursor:pointer;border-radius:4px;
+  transition:color .2s,border-color .2s;
+}
+.gio-sl button:hover{color:var(--kim-sang);border-color:rgba(201,162,75,.48)}
+.gio-sl span{
+  min-width:30px;text-align:center;font-size:14px;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.gio-tien{
+  font-size:14px;color:var(--kim-sang);white-space:nowrap;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.gio-bo{
+  width:24px;height:24px;border:none;background:none;color:var(--reu);
+  font-size:17px;line-height:1;cursor:pointer;transition:color .2s;
+}
+.gio-bo:hover{color:var(--son)}
+
+.gio-trong{
+  padding:56px 0;text-align:center;display:grid;gap:11px;justify-items:center;
+}
+.gio-trong b{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--giay)}
+.gio-trong span{font-size:14px;color:var(--reu);max-width:24ch;line-height:1.7}
+.gio-trong .nut{margin-top:9px}
+
+.gio-ngan footer{
+  padding:20px clamp(18px,4vw,28px) clamp(20px,4vw,28px);
+  border-top:1px solid rgba(201,162,75,.13);
+}
+.gio-cong{display:flex;align-items:baseline;gap:14px;font-size:14px;color:var(--reu)}
+.gio-cong b{
+  margin-left:auto;font-family:var(--serif);font-size:26px;font-weight:500;
+  color:var(--kim-sang);font-variant-numeric:lining-nums tabular-nums;
+}
+.gio-ghi{margin-top:6px;font-size:12.5px;color:var(--reu);line-height:1.6}
+.gio-ngan footer .nut{margin-top:15px;width:100%;text-align:center}
+
+/* ── lưới cửa hàng ── */
+.loc{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin-top:30px;padding-bottom:26px;border-bottom:1px solid rgba(201,162,75,.12);
+}
+.loc button{
+  padding:8px 17px;border-radius:999px;border:1px solid rgba(201,162,75,.2);
+  background:none;color:var(--la);font-family:var(--sans);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  transition:color .22s,border-color .22s,background .22s;
+}
+.loc button:hover{color:var(--kim-sang);border-color:rgba(201,162,75,.45)}
+.loc button.dang{
+  color:var(--den);border-color:transparent;
+  background-image:var(--kim);font-weight:600;
+}
+.loc .day{margin-left:auto;font-size:12.5px;color:var(--reu)}
+
+.luoi{
+  display:grid;gap:clamp(16px,2.2vw,26px);margin-top:clamp(26px,4vw,40px);
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));
+}
+.the-hang{
+  display:flex;flex-direction:column;
+  border:1px solid rgba(201,162,75,.15);border-radius:3px;
+  background:linear-gradient(168deg,rgba(30,58,47,.42),rgba(10,25,19,.3));
+  padding:clamp(22px,2.6vw,30px);
+  transition:border-color .3s,transform .3s cubic-bezier(.22,.61,.36,1);
+}
+.the-hang:hover{border-color:rgba(201,162,75,.4);transform:translateY(-3px)}
+.the-hang .phu{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--kim-toi);
+}
+.the-hang h3{
+  margin-top:9px;font-family:var(--serif);font-weight:500;
+  font-size:clamp(23px,2.5vw,28px);line-height:1.24;color:var(--giay);
+}
+.the-hang .cau{margin-top:9px;font-size:14.5px;line-height:1.72;color:var(--reu)}
+.the-hang .hang-gia{
+  margin-top:auto;padding-top:22px;display:flex;align-items:baseline;gap:9px;
+}
+.the-hang .gia-so{
+  font-family:var(--serif);font-size:25px;color:var(--kim-sang);
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.the-hang .gia-dv{font-size:12px;color:var(--reu)}
+.the-hang .nut-doi{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+.the-hang .nut-doi .nut{padding:10px 18px;font-size:11.5px}
+.the-hang .nut.loi{color:var(--son);border-color:rgba(166,61,47,.5)}
+.the-hang .chua{
+  margin-top:16px;font-size:12.5px;line-height:1.65;color:var(--kim-toi);
+  border-left:2px solid rgba(201,162,75,.28);padding-left:12px;
+}
+
+/* ── trang thanh toán ── */
+.bo-doi{
+  display:grid;gap:clamp(26px,4vw,52px);align-items:start;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  margin-top:clamp(26px,4vw,44px);
+}
+@media(max-width:900px){.bo-doi{grid-template-columns:1fr}}
+
+.tom{
+  position:sticky;top:96px;
+  border:1px solid rgba(201,162,75,.17);border-radius:3px;
+  background:linear-gradient(168deg,rgba(30,58,47,.4),rgba(10,25,19,.28));
+  padding:clamp(22px,2.6vw,30px);
+}
+@media(max-width:900px){.tom{position:static}}
+.tom h2{margin-bottom:6px}
+.tom .mon{
+  display:flex;align-items:baseline;gap:12px;padding:13px 0;
+  border-bottom:1px solid rgba(201,162,75,.09);font-size:14.5px;
+}
+.tom .mon span:first-child{flex:1;min-width:0;color:var(--giay)}
+.tom .mon .sl{color:var(--reu);font-size:13px}
+.tom .mon b{
+  font-weight:500;color:var(--kim-sang);white-space:nowrap;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.tom .cong{display:flex;gap:12px;padding:9px 0;font-size:14px;color:var(--reu)}
+.tom .cong b{margin-left:auto;font-weight:400;color:var(--giay)}
+.tom .cuoi{
+  display:flex;align-items:baseline;gap:12px;margin-top:12px;padding-top:16px;
+  border-top:1px solid rgba(201,162,75,.2);
+}
+.tom .cuoi span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--reu)}
+.tom .cuoi b{
+  margin-left:auto;font-family:var(--serif);font-size:31px;font-weight:500;
+  color:var(--kim-sang);font-variant-numeric:lining-nums tabular-nums;
+}
+
+/* ── khối mã QR ── */
+.qr-khoi{
+  display:grid;gap:clamp(20px,3vw,34px);align-items:start;
+  grid-template-columns:auto minmax(0,1fr);margin-top:24px;
+}
+@media(max-width:640px){.qr-khoi{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.qr-o{
+  width:clamp(190px,26vw,236px);padding:13px;border-radius:6px;background:#fff;
+  box-shadow:0 14px 40px rgba(0,0,0,.42);
+}
+.qr-o svg{display:block;width:100%;height:auto}
+.qr-tin dl{display:grid;gap:13px;margin-top:4px}
+.qr-tin dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--reu)}
+.qr-tin dd{
+  font-family:var(--serif);font-size:20px;color:var(--giay);
+  font-variant-numeric:lining-nums tabular-nums;word-break:break-word;
+}
+.qr-tin dd b{color:var(--kim-sang);font-weight:500}
+.sao{
+  margin-left:9px;padding:3px 10px;border-radius:3px;vertical-align:middle;
+  border:1px solid rgba(201,162,75,.24);background:none;color:var(--la);
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:color .2s,border-color .2s;
+}
+.sao:hover{color:var(--kim-sang);border-color:rgba(201,162,75,.5)}
+
+.trang-thai{
+  display:flex;align-items:center;gap:11px;margin-top:26px;padding:15px 19px;
+  border:1px solid rgba(201,162,75,.18);border-radius:3px;
+  background:rgba(10,25,19,.4);font-size:14px;line-height:1.68;color:var(--la);
+}
+.trang-thai .cham{
+  width:9px;height:9px;border-radius:50%;background:var(--kim-giua);flex:none;
+  animation:tho 1.9s ease-in-out infinite;
+}
+.trang-thai.xong .cham{background:var(--luc);animation:none}
+.trang-thai.hong .cham{background:var(--son);animation:none}
+@keyframes tho{0%,100%{opacity:.32;transform:scale(.86)}50%{opacity:1;transform:scale(1)}}
+
+.buoc{
+  display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--reu);
+}
+.buoc b{color:var(--kim-sang);font-weight:600;margin-right:7px}
