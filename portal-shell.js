@@ -67,11 +67,16 @@
     return fetch(KHOI.duLieu + 'bang/' + ma + '.json')
       .then(r => r.ok ? r.json() : null)
       .then(d => {
-        KHO['/'] = !d ? { _ten: 'Bảng điều khiển' } : {
-          _ten: 'Bảng điều khiển',
-          so: (d.khoi.find(k => k.so) || {}).so || [],
-          the: d.khoi.filter(k => k.h).map(k => ({ h: k.h, p: k.p }))
-        };
+        if (!d) { KHO['/'] = { _ten: 'Bảng điều khiển' }; return; }
+        /* Hai khuôn cùng tồn tại: khuôn mới mang thẳng `so` và `the` nên
+           dùng được ngay; khuôn cũ gói mọi thứ trong `khoi` và không có
+           bảng, phải chuyển. Giữ cả hai để không phải viết lại một lượt
+           mười ba bảng điều khiển. */
+        KHO['/'] = d.khoi
+          ? { _ten: 'Bảng điều khiển',
+              so: (d.khoi.find(k => k.so) || {}).so || [],
+              the: d.khoi.filter(k => k.h).map(k => ({ h: k.h, p: k.p })) }
+          : { ...d, _ten: 'Bảng điều khiển' };
       })
       .catch(() => { KHO['/'] = { _ten: 'Bảng điều khiển' }; });
   }
