@@ -1,0 +1,162 @@
+/* ============================================================================
+   ZEN O TEA — CỔNG PORTAL
+   Cửa vào vùng nội bộ. Cố ý KHÁC HẲN trang đăng nhập của khách:
+
+   Khách bước vào một bức thư — nét cọ Charmonman, hai mặt thiệp, giấy ấm.
+   Người vận hành bước vào một cánh cửa có sổ ghi — một cột hẹp, chữ khắc,
+   và một dòng nói rõ mọi lượt mở đều để lại dấu.
+
+   Dùng chung bộ token với portal.css, không định nghĩa màu mới.
+   ============================================================================ */
+
+:root{
+  --kim-sang:#E5CEAA; --kim-giua:#C5A980; --kim-toi:#9E7F58;
+  --den:#0E211A; --den2:#12291F; --rung:#1E3A2F; --sau:#0A1913;
+  --giay:#EFE9DC; --reu:#6B7A6F; --la:#9DB8A8;
+  --son:#A63D2F; --luc:#7FA88C;
+  --kim:linear-gradient(178deg,#B89C79 0%,#C2A988 14%,#D0B591 24%,#E5CEAA 33%,
+        #D5B990 42%,#BA996A 50%,#9E7F58 59%,#A38264 70%,#C4A882 100%);
+  --title:'Noto Sans','Segoe UI',system-ui,sans-serif;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:var(--sau);color:var(--giay);
+  font-family:var(--sans);font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:lining-nums tabular-nums;
+  min-height:100svh;
+  display:grid;place-items:center;
+  padding:clamp(20px,5vh,56px) 20px;
+  position:relative;overflow-x:hidden;
+}
+
+/* Một quầng sáng rất mờ sau cánh cửa — đủ để nền không phẳng lì */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 45% at 50% 0%,rgba(197,169,128,.10),transparent 70%),
+    radial-gradient(50% 40% at 50% 100%,rgba(30,58,47,.55),transparent 70%);
+}
+
+.cong{
+  position:relative;width:100%;max-width:404px;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* ══ Dấu hiệu ══ */
+.dau{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:34px}
+.dau img{width:60px;height:auto;opacity:.94}
+.brand{
+  font-family:var(--title);font-weight:600;
+  font-size:12px;letter-spacing:.42em;text-indent:.42em;
+  color:var(--kim-giua);text-transform:uppercase;
+}
+
+/* ══ Cánh cửa ══ */
+.canh-cua{
+  width:100%;background:var(--den2);
+  border:1px solid rgba(201,162,75,.16);border-radius:3px;
+  padding:clamp(26px,5vw,38px) clamp(22px,5vw,34px) 30px;
+  box-shadow:0 24px 70px -30px rgba(0,0,0,.85);
+}
+
+.ten-cong{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(25px,6vw,31px);line-height:1.2;
+  color:var(--kim-sang);text-align:center;
+}
+.phu-de{
+  margin-top:9px;text-align:center;
+  font-size:12.5px;color:var(--reu);line-height:1.6;
+}
+
+.gach{
+  width:38px;height:1px;margin:22px auto 24px;
+  background:var(--kim);opacity:.6;
+}
+
+/* ══ Biểu mẫu ══ */
+.hang{margin-bottom:16px}
+.hang label{
+  display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--reu);margin-bottom:7px;font-weight:500;
+}
+.o-nhap{
+  width:100%;background:var(--sau);color:var(--giay);
+  border:1px solid rgba(201,162,75,.16);border-radius:2px;
+  padding:11px 13px;font-family:var(--sans);font-size:14.5px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.o-nhap::placeholder{color:rgba(107,122,111,.7)}
+.o-nhap:focus{
+  outline:none;border-color:var(--kim-toi);
+  box-shadow:0 0 0 3px rgba(158,127,88,.13);
+}
+
+.o-ma{letter-spacing:.34em;text-align:center;font-size:17px}
+
+.quen{
+  display:block;text-align:right;margin-top:-8px;margin-bottom:18px;
+  font-size:11.5px;color:var(--reu);
+}
+.quen:hover{color:var(--kim-giua)}
+
+.nut-vao{
+  width:100%;margin-top:6px;
+  background:var(--kim);color:#1A1109;
+  border:none;border-radius:2px;cursor:pointer;
+  padding:12px 18px;
+  font-family:var(--title);font-weight:600;
+  font-size:12.5px;letter-spacing:.15em;text-transform:uppercase;
+  transition:filter .2s,transform .1s;
+}
+.nut-vao:hover{filter:brightness(1.07)}
+.nut-vao:active{transform:translateY(1px)}
+.nut-vao:disabled{filter:grayscale(.6) brightness(.8);cursor:not-allowed}
+
+/* ══ Lời nhắc trạng thái ══ */
+.bao{
+  margin-top:18px;padding:11px 13px;border-radius:2px;
+  font-size:12.5px;line-height:1.6;
+  background:rgba(166,61,47,.09);border:1px solid rgba(166,61,47,.28);
+  color:#E8B4AA;
+}
+.bao.tin{
+  background:rgba(127,168,140,.09);border-color:rgba(127,168,140,.28);
+  color:var(--la);
+}
+
+/* ══ Sổ ghi — thứ phân biệt cổng này với cửa khách ══ */
+.so-ghi{
+  margin-top:26px;padding-top:20px;
+  border-top:1px solid rgba(201,162,75,.10);
+  display:flex;gap:11px;align-items:flex-start;
+}
+.so-ghi .dau-cham{
+  flex:none;width:6px;height:6px;margin-top:7px;border-radius:50%;
+  background:var(--kim-toi);box-shadow:0 0 0 3px rgba(158,127,88,.16);
+}
+.so-ghi p{font-size:11.5px;line-height:1.65;color:var(--reu)}
+.so-ghi b{color:var(--la);font-weight:500}
+
+/* ══ Chân ══ */
+.chan{
+  margin-top:26px;text-align:center;
+  font-size:11.5px;color:var(--reu);line-height:1.8;
+}
+.chan a{color:var(--kim-toi);border-bottom:1px solid rgba(158,127,88,.3)}
+.chan a:hover{color:var(--kim-giua)}
+.chan .cach{margin:0 9px;opacity:.4}
+
+@media (max-width:420px){
+  .cong{max-width:100%}
+  .dau{margin-bottom:26px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}

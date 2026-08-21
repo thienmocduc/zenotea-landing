@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cổng vận hành — Zen O Tea</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A1913">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../portal-cong.css">
+</head>
+<body>
+
+<main class="cong">
+  <div class="dau">
+    <img src="../logo.png" alt="Zen O Tea">
+    <div class="brand">Zen O Tea</div>
+  </div>
+
+  <div class="canh-cua">
+    <h1 class="ten-cong" id="ten-cong">Cổng vận hành</h1>
+    <p class="phu-de" id="phu-de">Dành cho nội bộ, đối tác có hợp đồng và nhà đầu tư.</p>
+    <div class="gach" aria-hidden="true"></div>
+
+    <form id="form-vao" novalidate>
+      <div class="hang">
+        <label for="tk">Tài khoản hoặc thư điện tử</label>
+        <input class="o-nhap" id="tk" name="tk" autocomplete="username"
+               inputmode="email" spellcheck="false" required>
+      </div>
+      <div class="hang">
+        <label for="mk">Mật khẩu</label>
+        <input class="o-nhap" id="mk" name="mk" type="password"
+               autocomplete="current-password" required>
+      </div>
+      <div class="hang" id="hang-ma" style="display:none">
+        <label for="ma">Mã xác thực hai lớp</label>
+        <input class="o-nhap o-ma" id="ma" name="ma" inputmode="numeric"
+               maxlength="6" autocomplete="one-time-code" placeholder="······">
+      </div>
+      <a class="quen" href="#">Quên mật khẩu</a>
+      <button class="nut-vao" id="nut-vao" type="submit">Vào hệ thống</button>
+    </form>
+
+    <div class="bao" id="bao" role="status" style="display:none"></div>
+
+    <div class="so-ghi">
+      <span class="dau-cham" aria-hidden="true"></span>
+      <p>Mọi lượt đăng nhập, kể cả lượt sai, đều ghi vào <b>nhật ký hoạt động</b>
+         không xoá được. Vùng công thức và men giống ghi nhật ký riêng cho từng
+         lượt mở — kể cả của Chủ tịch.</p>
+    </div>
+  </div>
+
+  <p class="chan">
+    Không tự đăng ký được. Tài khoản do nội bộ cấp.
+    <br>
+    <a href="../index.html">Về trang chủ</a>
+    <span class="cach">·</span>
+    <a href="../portal/dang-nhap.html">Cổng thương mại</a>
+  </p>
+</main>
+
+<script>
+  window.CONG = {
+    ten: 'Cổng vận hành',
+    mo: 'Dành cho nội bộ, đối tác có hợp đồng và nhà đầu tư.',
+    vao: 'index.html',
+    be_mat: 'os'
+  };
+</script>
+<script src="../portal-cong.js"></script>
+
+</body>
+</html>

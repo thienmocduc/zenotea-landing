@@ -46,6 +46,34 @@
   const KHO = {};                  // mã màn → nội dung, tải tới đâu giữ tới đó
   const dangTai = new Map();       // mã nhóm → lời hứa, tránh tải trùng
 
+  /* ══ HAI NGUỒN DỮ LIỆU ═══════════════════════════════════════════════
+     Có phiên đăng nhập  → gọi máy chủ, dữ liệu đã cắt theo vai trò ngay từ
+                           câu trả lời; màn không được phép thì KHÔNG có mặt.
+     Không có phiên      → đọc file tĩnh, chỉ là bản trình bày với dữ liệu
+                           mẫu. Trạng thái này phải nói ra, không được để
+                           người xem tưởng là dữ liệu sống.
+     ═════════════════════════════════════════════════════════════════════ */
+  const API = window.KHOI.api || 'http://127.0.0.1:8000/api/v1';
+  let PHIEN = null;
+  try {
+    const p = JSON.parse(sessionStorage.getItem('zen_phien') || 'null');
+    if (p && p.het > Date.now()) PHIEN = p;
+    else sessionStorage.removeItem('zen_phien');
+  } catch { sessionStorage.removeItem('zen_phien'); }
+
+  const dauThe = () => ({ Authorization: 'Bearer ' + PHIEN.the });
+
+  /* Máy chủ từ chối thẻ giữa chừng thì đưa về cổng, không để người dùng
+     ngồi trước một màn trống mà không hiểu vì sao. */
+  function kiemPhien(r) {
+    if (r.status === 401) {
+      sessionStorage.removeItem('zen_phien');
+      location.replace('dang-nhap.html');
+      throw new Error('het phien');
+    }
+    return r;
+  }
+
   const nhomChua = id =>
     Object.keys(MUC_LUC.nhom_module).find(ma =>
       MUC_LUC.nhom_module[ma].man.some(m => m.id === id));
@@ -53,7 +81,10 @@
   function taiNhom(maNhom) {
     if (!maNhom) return Promise.resolve();
     if (!dangTai.has(maNhom)) {
-      dangTai.set(maNhom, fetch(KHOI.duLieu + 'nhom/' + maNhom + '.json')
+      const nguon = PHIEN
+        ? fetch(API + '/portal/nhom/' + maNhom, { headers: dauThe() }).then(kiemPhien)
+        : fetch(KHOI.duLieu + 'nhom/' + maNhom + '.json');
+      dangTai.set(maNhom, nguon
         .then(r => r.ok ? r.json() : {})
         .then(goi => { Object.assign(KHO, goi); })
         .catch(() => { dangTai.delete(maNhom); }));
@@ -64,7 +95,10 @@
   /* Bảng điều khiển khác nhau theo từng vai trò vận hành nên tải riêng */
   function taiBang(idVai) {
     const ma = idVai.replace(/^vh_/, '');
-    return fetch(KHOI.duLieu + 'bang/' + ma + '.json')
+    const nguon = PHIEN
+      ? fetch(API + '/portal/bang', { headers: dauThe() }).then(kiemPhien)
+      : fetch(KHOI.duLieu + 'bang/' + ma + '.json');
+    return nguon
       .then(r => r.ok ? r.json() : null)
       .then(d => {
         if (!d) { KHO['/'] = { _ten: 'Bảng điều khiển' }; return; }
@@ -238,6 +272,21 @@
      dùng trọn bộ màn của nhóm nên không cần chặn thêm. */
   const duocXem = (vt, id) => !vt.quyen_module || vt.quyen_module.includes(id);
 
+  /* Nói thẳng người xem đang ở chế độ nào. Bản trình bày mang dữ liệu mẫu
+     mà không ghi rõ là thứ dễ gây hiểu nhầm nhất trong một buổi trình vốn. */
+  function veTrangThai() {
+    const cu = $('#dai-tt');
+    if (cu) cu.remove();
+    const d = document.createElement('div');
+    d.id = 'dai-tt';
+    d.className = 'dai-tt' + (PHIEN ? ' that' : '');
+    d.innerHTML = PHIEN
+      ? `Đang xem bằng tài khoản <b>${esc(PHIEN.ten)}</b> · vai trò do máy chủ cấp`
+      : 'Bản trình bày — <b>dữ liệu mẫu</b>, chưa đăng nhập. ' +
+        '<a href="dang-nhap.html">Vào bằng tài khoản thật</a>';
+    $('#noi').parentElement.insertBefore(d, $('#noi'));
+  }
+
   function veCanhNav() {
     const vt = MUC_LUC.vai_tro.find(v => v.id === vaiHT);
 
@@ -391,7 +440,10 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') dongTk(); });
   tkMenu.querySelectorAll('[data-mo]').forEach(b =>
     b.addEventListener('click', () => { moMan(b.dataset.mo); dongTk(); }));
-  $('#thoat').addEventListener('click', () => { location.href = '../dang-nhap.html'; });
+  $('#thoat').addEventListener('click', () => {
+    sessionStorage.removeItem('zen_phien');
+    location.href = 'dang-nhap.html';
+  });
 
   $('#nut-menu').addEventListener('click', () => {
     $('#canh').classList.toggle('mo');
@@ -399,16 +451,24 @@
   });
   $('#che').addEventListener('click', dongCanh);
 
-  fetch(KHOI.duLieu + 'muc-luc.json')
-    .then(r => r.json())
+  (PHIEN
+    ? fetch(API + '/portal/muc-luc', { headers: dauThe() }).then(kiemPhien).then(r => r.json())
+        .then(d => ({ ...d, vai_tro: [{ ...d.vai_tro, nhom: Object.keys(d.nhom_module) }],
+                      mac_dinh: d.vai_tro.id }))
+    : fetch(KHOI.duLieu + 'muc-luc.json').then(r => r.json()))
     .then(mucLuc => {
       MUC_LUC = mucLuc;
+      veTrangThai();
 
       /* Danh sách phẳng — mỗi portal chỉ có vai trò của mình. Trước đây
          một bộ chọn gộp cả thương mại lẫn vận hành, vừa rối vừa để lộ
          cơ cấu nội bộ cho người ngoài. */
       $('#chon-vai').innerHTML = MUC_LUC.vai_tro.map(v =>
         `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
+      /* Đăng nhập thật thì vai trò do máy chủ quyết — khoá bộ chọn lại.
+         Để mở là mời người ta thử đổi vai, và tuy máy chủ vẫn chặn nhưng
+         một ô bấm được mà không có tác dụng là giao diện nói dối. */
+      $('#chon-vai').disabled = !!PHIEN;
       $('#chon-vai').addEventListener('change', e => doiVai(e.target.value));
       doiVai(MUC_LUC.mac_dinh || MUC_LUC.vai_tro[0].id);
     })
