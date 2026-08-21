@@ -14,26 +14,41 @@
 </head>
 <body>
 
-<!-- ══════════ SIDEBAR ══════════ -->
 <aside class="canh" id="canh">
   <div class="canh-dau">
     <a href="../index.html"><img src="../logo.png" alt="Zen O Tea"></a>
-  </div>
-  <div class="tim">
-    <input id="o-tim" type="search" placeholder="Tìm màn hình" aria-label="Tìm màn hình">
   </div>
   <nav class="canh-nav" id="canh-nav" aria-label="Điều hướng portal"></nav>
 </aside>
 <div class="che" id="che"></div>
 
-<!-- ══════════ THÂN ══════════ -->
 <div class="than">
   <header class="top">
     <button class="nut-menu" id="nut-menu" aria-label="Mở menu">☰</button>
     <h1 id="tieu-man">Bảng điều khiển</h1>
     <div class="phai">
       <select class="chon-vai" id="chon-vai" aria-label="Vai trò"></select>
-      <div class="avt" id="avt">TĐ</div>
+
+      <div class="tk">
+        <button class="tk-nut" id="tk-nut" aria-haspopup="true" aria-expanded="false"
+                aria-label="Tài khoản">
+          <span class="avt" id="avt">TĐ</span>
+        </button>
+        <div class="tk-menu" id="tk-menu" role="menu">
+          <div class="tk-dau">
+            <b id="tk-ten">Trần Minh Đức</b>
+            <span id="tk-vai">Thành viên tiêu dùng</span>
+          </div>
+          <button class="tk-muc" data-mo="cai-hoso"  role="menuitem">Hồ sơ &amp; ảnh đại diện</button>
+          <button class="tk-muc" data-mo="cai-xacminh" role="menuitem">Xác minh chính chủ
+            <span class="canh-bao" id="bao-xacminh">chưa xong</span></button>
+          <button class="tk-muc" data-mo="cai-bank"  role="menuitem">Tài khoản ngân hàng
+            <span class="canh-bao" id="bao-bank">chưa có</span></button>
+          <button class="tk-muc" data-mo="cai-thue"  role="menuitem">Mã số thuế</button>
+          <button class="tk-muc" data-mo="cai-baomat" role="menuitem">Bảo mật</button>
+          <button class="tk-muc" id="thoat" role="menuitem">Đăng xuất</button>
+        </div>
+      </div>
     </div>
   </header>
   <main class="noi" id="noi"></main>
@@ -44,15 +59,13 @@
    Portal Zen O Tea
 
    Kiến trúc hai trục (docs/KIEN_TRUC_PORTAL.md):
-   - Vai trò (dọc): tiêu dùng · VIP · sale AFF · đại lý · chủ center
-   - Lớp năng lực (ngang): AFF · MUA · VIP · B2B · ĐẠI LÝ · CENTER
+   vai trò (dọc) × lớp năng lực (ngang). Lớp AFF là mặc định của MỌI vai
+   trò — khác nhau ở tỷ lệ hoa hồng và quyền quản lý, không phải ở việc
+   có hay không có AFF.
 
-   Lớp AFF là mặc định của MỌI vai trò. Khác nhau giữa các vai trò không
-   phải có hay không có AFF, mà là tỷ lệ hoa hồng và quyền quản lý ai.
-
-   Bộ chọn vai trò ở topbar là công cụ XEM THỬ cho giai đoạn dựng giao diện.
-   Khi nối backend, vai trò lấy từ phiên đăng nhập phía máy chủ — phải bỏ
-   bộ chọn này, nếu không ai cũng tự nâng mình lên chủ center được.
+   Bộ chọn vai trò ở topbar chỉ để XEM THỬ khi dựng giao diện. Nối backend
+   thì phải bỏ — vai trò lấy từ phiên đăng nhập phía máy chủ, nếu không ai
+   cũng tự nâng mình lên chủ center được.
    ════════════════════════════════════════════════════════════════════════ */
 (() => {
   const $ = s => document.querySelector(s);
@@ -61,34 +74,180 @@
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c =>
     ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
 
-  /* Gom toàn bộ màn của 8 vai trò gốc thành một từ điển phẳng, để mỗi
-     màn chỉ tồn tại MỘT bản — dùng lại cho nhiều vai trò mà không nhân đôi. */
+  /* Gom màn của mọi vai trò gốc thành một từ điển phẳng — mỗi màn chỉ tồn
+     tại một bản, dùng lại cho nhiều vai trò mà không nhân đôi dữ liệu. */
   function gomMan(vaiGoc) {
     const kho = {};
     vaiGoc.forEach(v => {
       Object.entries(v.man || {}).forEach(([id, m]) => { kho[id] = m; });
-      (v.cay || []).forEach(thu =>
-        (thu.muc || []).forEach(muc => {
-          if (kho[muc.id]) kho[muc.id]._ten = muc.ten;
-        }));
+      (v.cay || []).forEach(thu => (thu.muc || []).forEach(muc => {
+        if (kho[muc.id]) kho[muc.id]._ten = muc.ten;
+      }));
     });
     return kho;
   }
 
+  /* ── Màn cài đặt tài khoản ── */
+  const CAI_DAT = {
+    'cai-hoso': { ten: 'Hồ sơ & ảnh đại diện', ve: () => `
+      <section class="the">
+        <h2>Ảnh đại diện</h2>
+        <div class="avt-hang" style="margin-top:16px">
+          <div class="avt-lon" id="avt-lon">TĐ</div>
+          <div>
+            <button class="nut">Tải ảnh lên</button>
+            <div class="goi-y" style="margin-top:9px">Ảnh vuông, tối thiểu 200×200, dưới 2MB.</div>
+          </div>
+        </div>
+      </section>
+      <section class="the">
+        <h2>Thông tin cá nhân</h2>
+        <div class="doi" style="margin-top:16px">
+          <div class="hang-nhap"><label for="ht">Họ và tên</label>
+            <input id="ht" value="Trần Minh Đức"></div>
+          <div class="hang-nhap"><label for="sd">Số điện thoại</label>
+            <input id="sd" value="0912 345 678" inputmode="tel"></div>
+        </div>
+        <div class="hang-nhap"><label for="em">Thư điện tử</label>
+          <input id="em" type="email" value="minhduc@example.com"></div>
+        <div class="hang-nhap"><label for="dc">Địa chỉ nhận hàng</label>
+          <input id="dc" value="12 Nguyễn Du, Hai Bà Trưng, Hà Nội"></div>
+        <div class="nut-hang"><button class="nut dac">Lưu thay đổi</button></div>
+      </section>` },
+
+    'cai-xacminh': { ten: 'Xác minh chính chủ', ve: () => `
+      <section class="the">
+        <h2>Trạng thái xác minh</h2>
+        <div class="p">Xác minh xong mới rút được hoa hồng và mới mở được vai trò đại lý trở lên.</div>
+        <div class="xac-minh da">
+          <div class="bieu">✓</div>
+          <div class="noi-dung"><b>Số điện thoại</b>
+            <span>0912 345 678 — đã xác thực bằng mã một lần</span></div>
+        </div>
+        <div class="xac-minh da">
+          <div class="bieu">✓</div>
+          <div class="noi-dung"><b>Thư điện tử</b>
+            <span>minhduc@example.com — đã xác thực</span></div>
+        </div>
+        <div class="xac-minh chua">
+          <div class="bieu">○</div>
+          <div class="noi-dung"><b>Định danh VNeID</b>
+            <span>Liên kết tài khoản định danh điện tử của Bộ Công an để xác minh chính chủ</span></div>
+        </div>
+        <div class="xac-minh chua">
+          <div class="bieu">○</div>
+          <div class="noi-dung"><b>Căn cước công dân</b>
+            <span>Ảnh hai mặt, hoặc bỏ qua nếu đã liên kết VNeID</span></div>
+        </div>
+        <div class="nut-hang">
+          <button class="nut dac">Liên kết VNeID</button>
+          <button class="nut">Tải ảnh căn cước</button>
+        </div>
+      </section>
+      <section class="the">
+        <h2>Vì sao cần xác minh</h2>
+        <div class="p" style="margin:0">Tiền hoa hồng chỉ chuyển vào tài khoản mang đúng tên
+        người đã xác minh. Đây là cách duy nhất để không ai rút nhầm tiền của người khác, và
+        cũng là yêu cầu khi kê khai thuế thu nhập cá nhân.</div>
+      </section>` },
+
+    'cai-bank': { ten: 'Tài khoản ngân hàng', ve: () => `
+      <section class="the">
+        <h2>Tài khoản nhận hoa hồng</h2>
+        <div class="p">Tên chủ tài khoản phải trùng với tên đã xác minh chính chủ.</div>
+        <div class="doi" style="margin-top:16px">
+          <div class="hang-nhap"><label for="nh">Ngân hàng</label>
+            <select id="nh">
+              <option>Chọn ngân hàng</option>
+              <option>Vietcombank</option><option>Techcombank</option>
+              <option>VietinBank</option><option>BIDV</option>
+              <option>MB Bank</option><option>ACB</option>
+              <option>VPBank</option><option>Agribank</option>
+              <option>Sacombank</option><option>TPBank</option>
+            </select></div>
+          <div class="hang-nhap"><label for="cn">Chi nhánh</label>
+            <input id="cn" placeholder="Không bắt buộc"></div>
+        </div>
+        <div class="hang-nhap"><label for="stk">Số tài khoản</label>
+          <input id="stk" inputmode="numeric" placeholder="Chỉ nhập chữ số"></div>
+        <div class="hang-nhap"><label for="ctk">Tên chủ tài khoản</label>
+          <input id="ctk" placeholder="TRAN MINH DUC" style="text-transform:uppercase">
+          <div class="goi-y">Viết không dấu, in hoa, đúng như trên thẻ ngân hàng.</div></div>
+        <div class="xac-minh chua" style="margin-top:6px">
+          <div class="bieu">!</div>
+          <div class="noi-dung"><b>Chưa đối chiếu được tên</b>
+            <span>Tên chủ tài khoản phải khớp tên trên giấy tờ tuỳ thân. Lệch một chữ là
+            ngân hàng trả lại tiền.</span></div>
+        </div>
+        <div class="nut-hang"><button class="nut dac">Lưu và đối chiếu</button></div>
+      </section>` },
+
+    'cai-thue': { ten: 'Mã số thuế', ve: () => `
+      <section class="the">
+        <h2>Mã số thuế thu nhập cá nhân</h2>
+        <div class="p">Hoa hồng mỗi lần chi trả trên 2 triệu đồng bị khấu trừ 10% thuế thu nhập
+        cá nhân. Có mã số thuế thì phần khấu trừ được ghi nhận đúng tên bạn.</div>
+        <div class="hang-nhap" style="margin-top:16px"><label for="mst">Mã số thuế</label>
+          <input id="mst" inputmode="numeric" placeholder="10 hoặc 13 chữ số">
+          <div class="goi-y">Chưa có thì tra cứu hoặc đăng ký tại Cổng thông tin điện tử
+          Tổng cục Thuế.</div></div>
+        <div class="hang-nhap"><label for="ptt">Hình thức</label>
+          <select id="ptt">
+            <option>Cá nhân</option>
+            <option>Hộ kinh doanh</option>
+            <option>Doanh nghiệp</option>
+          </select></div>
+        <div class="nut-hang"><button class="nut dac">Lưu mã số thuế</button></div>
+      </section>` },
+
+    'cai-baomat': { ten: 'Bảo mật', ve: () => `
+      <section class="the">
+        <h2>Mật khẩu</h2>
+        <div class="hang-nhap" style="margin-top:16px"><label for="mkc">Mật khẩu hiện tại</label>
+          <input id="mkc" type="password"></div>
+        <div class="doi">
+          <div class="hang-nhap"><label for="mkm">Mật khẩu mới</label>
+            <input id="mkm" type="password"></div>
+          <div class="hang-nhap"><label for="mkl">Nhập lại</label>
+            <input id="mkl" type="password"></div>
+        </div>
+        <div class="nut-hang"><button class="nut dac">Đổi mật khẩu</button></div>
+      </section>
+      <section class="the">
+        <h2>Xác thực hai lớp</h2>
+        <div class="p">Bắt buộc với tài khoản có ví hoa hồng hoặc quyền quản lý mạng lưới.</div>
+        <div class="xac-minh chua" style="margin-top:14px">
+          <div class="bieu">○</div>
+          <div class="noi-dung"><b>Chưa bật</b>
+            <span>Dùng ứng dụng sinh mã trên điện thoại</span></div>
+        </div>
+        <div class="nut-hang"><button class="nut dac">Bật xác thực hai lớp</button></div>
+      </section>
+      <section class="the">
+        <h2>Phiên đăng nhập</h2>
+        <div class="cuon"><table>
+          <thead><tr><th>Thiết bị</th><th>Nơi truy cập</th><th>Lần cuối</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Chrome · Windows</td><td>Hà Nội</td><td>Đang dùng</td>
+                <td><span class="nh ok">Hiện tại</span></td></tr>
+            <tr><td>Safari · iPhone</td><td>Hà Nội</td><td>2 ngày trước</td>
+                <td><button class="nut" style="padding:5px 13px;font-size:10.5px">Đăng xuất</button></td></tr>
+          </tbody>
+        </table></div>
+      </section>` }
+  };
+
   function veCanhNav() {
     const vt = CAUHINH.vai_tro.find(v => v.id === vaiHT);
-    const nav = $('#canh-nav');
-    nav.innerHTML = vt.nhom.map(maNhom => {
+    $('#canh-nav').innerHTML = vt.nhom.map(maNhom => {
       const nhom = CAUHINH.nhom_module[maNhom];
-      const muc = nhom.man.filter(id => DATA.kho[id]).map(id => {
-        const ten = DATA.kho[id]._ten || id;
-        return `<div class="muc${id === manHT ? ' dang' : ''}" data-man="${id}"
-                     role="button" tabindex="0">${esc(ten)}</div>`;
-      }).join('');
+      const muc = nhom.man.filter(id => DATA.kho[id]).map(id =>
+        `<div class="muc${id === manHT ? ' dang' : ''}" data-man="${id}"
+              role="button" tabindex="0">${esc(DATA.kho[id]._ten || id)}</div>`).join('');
       return `<div class="thu-dau">${esc(nhom.ten)}</div>${muc}`;
     }).join('');
 
-    nav.querySelectorAll('.muc').forEach(el => {
+    $('#canh-nav').querySelectorAll('.muc').forEach(el => {
       const mo = () => { moMan(el.dataset.man); dongCanh(); };
       el.addEventListener('click', mo);
       el.addEventListener('keydown', e => {
@@ -97,44 +256,46 @@
     });
   }
 
-  function veBang(b) {
-    if (!b) return '';
-    const th = b.cot.map(c => `<th>${esc(c)}</th>`).join('');
-    const tr = b.hang.map(h =>
-      `<tr>${h.map(o => `<td>${o}</td>`).join('')}</tr>`).join('');
-    return `<div class="cuon"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`;
-  }
+  const veBang = b => !b ? '' :
+    `<div class="cuon"><table><thead><tr>${b.cot.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead>` +
+    `<tbody>${b.hang.map(h => `<tr>${h.map(o => `<td>${o}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 
   function moMan(id) {
     manHT = id;
-    const m = DATA.kho[id];
     const noi = $('#noi');
 
+    if (CAI_DAT[id]) {
+      $('#tieu-man').textContent = CAI_DAT[id].ten;
+      noi.innerHTML = CAI_DAT[id].ve();
+      noi.scrollTop = 0;
+      $('#canh-nav').querySelectorAll('.muc').forEach(e => e.classList.remove('dang'));
+      return;
+    }
+
+    const m = DATA.kho[id];
     if (!m) {
+      $('#tieu-man').textContent = 'Chưa có';
       noi.innerHTML = `<div class="trong"><b>Màn này chưa dựng</b>
         Nội dung sẽ bổ sung ở đợt build kế tiếp.</div>`;
-      $('#tieu-man').textContent = 'Chưa có';
       veCanhNav(); return;
     }
 
     $('#tieu-man').textContent = m._ten || id;
 
+    /* Vào thẳng nội dung chính: số liệu và bảng.
+       Dòng mô tả và pill ghi chú của bản gốc là chú thích cho người xem
+       bản thiết kế, không phải nội dung cho người dùng thật. */
     let html = '';
-    if (m.mo)    html += `<p class="mo-ta">${esc(m.mo)}</p>`;
-    if (m.rieng) html += `<div class="rieng">${esc(m.rieng)}</div>`;
     if (m.so && m.so.length) {
       html += `<div class="so-hang">${m.so.map(([gt, nhan]) =>
         `<div class="so-o"><b>${esc(gt)}</b><span>${esc(nhan)}</span></div>`).join('')}</div>`;
     }
     (m.the || []).forEach(t => {
-      html += `<section class="the"><h2>${esc(t.h)}</h2>` +
-              (t.p ? `<div class="p">${esc(t.p)}</div>` : '') +
-              veBang(t.bang) + `</section>`;
+      html += `<section class="the"><h2>${esc(t.h)}</h2>${veBang(t.bang)}</section>`;
     });
-    if (m.ghi)    html += `<div class="ghi">${esc(m.ghi)}</div>`;
     if (m.ghi_do) html += `<div class="ghi do">${esc(m.ghi_do)}</div>`;
 
-    noi.innerHTML = html;
+    noi.innerHTML = html || `<div class="trong"><b>Chưa có dữ liệu</b>Màn này chưa có nội dung.</div>`;
     noi.scrollTop = 0;
     veCanhNav();
   }
@@ -143,32 +304,30 @@
     vaiHT = id;
     const vt = CAUHINH.vai_tro.find(v => v.id === id);
     $('#avt').textContent = vt.tat;
-    // vào màn đầu tiên có thật của vai trò này
-    const dau = vt.nhom.flatMap(n => CAUHINH.nhom_module[n].man).find(x => DATA.kho[x]);
-    moMan(dau);
+    $('#tk-vai').textContent = vt.ten;
+    moMan(vt.nhom.flatMap(n => CAUHINH.nhom_module[n].man).find(x => DATA.kho[x]));
   }
 
-  function dongCanh() {
+  const dongCanh = () => {
     $('#canh').classList.remove('mo');
     $('#che').classList.remove('hien');
-  }
+  };
 
-  /* Tìm kiếm — lọc theo tên màn, không phân biệt hoa thường và dấu */
-  const bo = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  $('#o-tim').addEventListener('input', e => {
-    const q = bo(e.target.value.trim());
-    document.querySelectorAll('#canh-nav .muc').forEach(el => {
-      el.style.display = !q || bo(el.textContent).includes(q) ? '' : 'none';
-    });
-    document.querySelectorAll('#canh-nav .thu-dau').forEach(h => {
-      let n = h.nextElementSibling, hien = false;
-      while (n && n.classList.contains('muc')) {
-        if (n.style.display !== 'none') hien = true;
-        n = n.nextElementSibling;
-      }
-      h.style.display = hien ? '' : 'none';
-    });
+  /* ── Menu tài khoản ── */
+  const tkMenu = $('#tk-menu'), tkNut = $('#tk-nut');
+  const dongTk = () => { tkMenu.classList.remove('mo'); tkNut.setAttribute('aria-expanded','false'); };
+  tkNut.addEventListener('click', e => {
+    e.stopPropagation();
+    const mo = tkMenu.classList.toggle('mo');
+    tkNut.setAttribute('aria-expanded', String(mo));
   });
+  document.addEventListener('click', e => {
+    if (!tkMenu.contains(e.target) && !tkNut.contains(e.target)) dongTk();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') dongTk(); });
+  tkMenu.querySelectorAll('[data-mo]').forEach(b =>
+    b.addEventListener('click', () => { moMan(b.dataset.mo); dongTk(); }));
+  $('#thoat').addEventListener('click', () => { location.href = '../dang-nhap.html'; });
 
   $('#nut-menu').addEventListener('click', () => {
     $('#canh').classList.toggle('mo');
@@ -176,22 +335,18 @@
   });
   $('#che').addEventListener('click', dongCanh);
 
-  /* ── Khởi động ── */
   Promise.all([
     fetch('../data/portal.json').then(r => r.json()),
     fetch('../data/vai-tro.json').then(r => r.json())
   ]).then(([vaiGoc, cauhinh]) => {
     DATA = { kho: gomMan(vaiGoc) };
     CAUHINH = cauhinh;
-
     $('#chon-vai').innerHTML = CAUHINH.vai_tro.map(v =>
       `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
     $('#chon-vai').addEventListener('change', e => doiVai(e.target.value));
-
     doiVai('tieu_dung');
   }).catch(err => {
-    $('#noi').innerHTML = `<div class="trong"><b>Không đọc được dữ liệu</b>
-      ${esc(err.message)}</div>`;
+    $('#noi').innerHTML = `<div class="trong"><b>Không đọc được dữ liệu</b>${esc(err.message)}</div>`;
   });
 })();
 </script>
