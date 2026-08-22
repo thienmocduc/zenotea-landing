@@ -63,6 +63,23 @@
 
   const dauThe = () => ({ Authorization: 'Bearer ' + PHIEN.the });
 
+  /* Không có phiên mà máy chủ vẫn sống thì bắt đăng nhập, không cho vào
+     xem dữ liệu mẫu. Trước đây gõ thẳng /os/index.html là thấy đủ 33 màn —
+     dải cảnh báo có nói là bản trình bày, nhưng một cái cổng đi vòng qua
+     được thì không còn là cổng.
+
+     Máy chủ KHÔNG với tới được thì mới rơi về bản tĩnh — đó là bản trên
+     GitHub Pages, nơi vốn không có máy chủ nào để mà đăng nhập. */
+  async function canhCong() {
+    if (PHIEN) return true;
+    try {
+      const r = await fetch(API.replace(/\/api\/v1$/, '') + '/health',
+                            { cache: 'no-store' });
+      if (r.ok) { location.replace('dang-nhap.html'); return false; }
+    } catch { /* không nối được — bản tĩnh, cho xem bản trình bày */ }
+    return true;
+  }
+
   /* Góc nhìn đang mượn. Chỉ Chủ tịch mới đặt được, và máy chủ vẫn kiểm
      lại mỗi lần gọi — giá trị ở đây chỉ để vẽ giao diện. */
   let XEM_NHU = null;
@@ -351,7 +368,110 @@
     `<div class="cuon"><table><thead><tr>${b.cot.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead>` +
     `<tbody>${b.hang.map(h => `<tr>${h.map(o => `<td>${o}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 
+  /* ══ MÀN ĐỘNG — nội dung do máy chủ tính, không nằm trong file tĩnh ══
+     Ba màn dưới đây khác mọi màn khác ở chỗ chúng KHÔNG có nội dung viết
+     sẵn. Chúng hỏi máy chủ, và máy chủ trả về khác nhau cho từng người tuỳ
+     địa bàn. Đây là chỗ dữ liệu thật sự chuyển động. */
+  const so = n => (n ?? 0).toLocaleString('vi-VN');
+  const KY = () => {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  };
+
+  const MAN_DONG = {
+    '/mang-luoi': async () => {
+      const d = await (await fetch(API + '/portal/mang-luoi',
+                                   { headers: dauThe() }).then(kiemPhien)).json();
+      const hang = d.don_vi.map(x => [
+        '&nbsp;'.repeat(x.sau * 4) + esc(x.ten),
+        { quoc_gia: 'Quốc gia', tinh: 'Tỉnh', co_so: 'Cơ sở' }[x.cap] || x.cap,
+        x.id,
+      ]);
+      return { _ten: 'Mạng lưới địa bàn',
+        so: [[String(d.don_vi.length), 'Đơn vị thấy được'], [esc(d.pham_vi), 'Phạm vi của bạn']],
+        the: [{ h: 'Địa bàn bạn quản',
+                p: 'Máy chủ cắt theo địa bàn của tài khoản ngay trong truy vấn — người khác gọi cùng endpoint này sẽ nhận danh sách khác.',
+                bang: { cot: ['Đơn vị', 'Cấp', 'Mã'], hang } }] };
+    },
+
+    '/nhap-so': async () => {
+      const ct = await (await fetch(API + '/so-lieu/chi-tieu',
+                                    { headers: dauThe() }).then(kiemPhien)).json();
+      if (!ct.nhap_duoc) {
+        return { _ten: 'Nhập số liệu', khoa:
+          'Tài khoản này không gắn đơn vị nào nên không nhập số được. Số liệu đi từ cơ sở lên, không đi ngược lại.' };
+      }
+      const o = ct.chi_tieu.map(x =>
+        `<div class="hang-nhap"><label for="ns-${x.ma}">${esc(x.ten)} <span style="opacity:.6">(${esc(x.don_vi_tinh)})</span></label>
+         <input id="ns-${x.ma}" inputmode="decimal" data-ct="${x.ma}" placeholder="0"></div>`).join('');
+      return { _ten: 'Nhập số liệu', _tho: `
+        <section class="the">
+          <h2>Số liệu kỳ ${KY()} — ${esc(ct.don_vi)}</h2>
+          <div class="p">Nhập xong bấm gửi. Số của tỉnh, quốc gia và Chủ tịch đổi ngay — họ không lưu số riêng, số của họ là tổng của các đơn vị bên dưới.</div>
+          <div class="doi" style="margin-top:16px">${o}</div>
+          <div class="nut-hang"><button class="nut dac" id="nut-gui-so">Gửi số liệu</button></div>
+          <div class="ghi" id="bao-so" style="display:none;margin-top:12px"></div>
+        </section>` };
+    },
+
+    '/tong-hop': async () => {
+      const d = await (await fetch(API + '/so-lieu/tong-hop?ky=' + KY(),
+                                   { headers: dauThe() }).then(kiemPhien)).json();
+      const t = d.tong;
+      const cot = Object.keys(t);
+      return { _ten: 'Tổng hợp số liệu',
+        so: cot.slice(0, 4).map(k => [so(t[k].gia_tri), t[k].ten]),
+        the: [
+          { h: `Kỳ ${d.ky} · phạm vi ${esc(d.pham_vi)}`,
+            p: 'Cấp trên không lưu số riêng. Con số dưới đây là phép cộng trên cây địa bàn, tính đúng lúc bạn mở màn này.',
+            bang: { cot: ['Chỉ tiêu', 'Giá trị', 'Đơn vị tính', 'Số đơn vị đã nhập'],
+                    hang: cot.map(k => [t[k].ten, `<b>${so(t[k].gia_tri)}</b>`,
+                                        t[k].don_vi_tinh, String(t[k].so_don_vi)]) } },
+          { h: 'Tổng này đến từ đâu',
+            p: d.theo_don_vi.length ? '' : 'Chưa đơn vị nào trong địa bàn của bạn nhập số cho kỳ này.',
+            bang: d.theo_don_vi.length ? {
+              cot: ['Đơn vị', 'Cấp', ...cot.map(k => t[k].ten)],
+              hang: d.theo_don_vi.map(x => [esc(x.ten),
+                { quoc_gia: 'Quốc gia', tinh: 'Tỉnh', co_so: 'Cơ sở' }[x.cap] || x.cap,
+                ...cot.map(k => so(x.so[k]))]) } : null },
+        ] };
+    },
+  };
+
+  function noiGuiSo() {
+    const nut = $('#nut-gui-so'), bao = $('#bao-so');
+    if (!nut) return;
+    nut.addEventListener('click', async () => {
+      const o = [...document.querySelectorAll('[data-ct]')]
+        .map(x => [x.dataset.ct, x.value.trim().replace(/[^\d.]/g, '')])
+        .filter(([, v]) => v !== '');
+      if (!o.length) {
+        bao.className = 'ghi do'; bao.textContent = 'Chưa nhập số nào.';
+        bao.style.display = 'block'; return;
+      }
+      nut.disabled = true;
+      try {
+        for (const [ma, gt] of o) {
+          const r = await fetch(API + '/so-lieu', {
+            method: 'POST',
+            headers: { ...dauThe(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ky: KY(), chi_tieu: ma, gia_tri: Number(gt) }),
+          });
+          if (!r.ok) throw new Error('chỉ tiêu ' + ma + ' — máy chủ trả ' + r.status);
+        }
+        bao.className = 'ghi';
+        bao.innerHTML = 'Đã gửi ' + o.length + ' chỉ tiêu. ' +
+          'Mở <b>Tổng hợp số liệu</b> để thấy con số đã cộng lên các cấp trên.';
+        bao.style.display = 'block';
+      } catch (e) {
+        bao.className = 'ghi do'; bao.textContent = 'Không gửi được: ' + e.message;
+        bao.style.display = 'block';
+      } finally { nut.disabled = false; }
+    });
+  }
+
   function veNoiDung(m, id) {
+    if (m._tho) return m._tho;
     // Màn bị giữ lại khỏi bản tĩnh — nói thẳng vì sao, không giả vờ trống
     if (m.khoa) return `<div class="trong"><b>Cần máy chủ xác thực</b>${esc(m.khoa)}</div>`;
 
@@ -399,6 +519,22 @@
     const mucLuc = maNhom && MUC_LUC.nhom_module[maNhom].man.find(m => m.id === id);
     $('#tieu-man').textContent = (mucLuc && mucLuc.ten) || id;
     veCanhNav();
+
+    /* Màn động: hỏi máy chủ mỗi lần mở, không giữ lại. Số liệu thay đổi
+       theo từng lượt nhập nên giữ lại là hiện số cũ. */
+    if (PHIEN && MAN_DONG[id]) {
+      noi.innerHTML = '<div class="trong"><b>Đang tính…</b></div>';
+      try {
+        const m = await MAN_DONG[id]();
+        if (manHT !== id) return;
+        noi.innerHTML = veNoiDung(m, id);
+        noi.scrollTop = 0;
+        if (id === '/nhap-so') noiGuiSo();
+      } catch (e) {
+        noi.innerHTML = `<div class="trong"><b>Không lấy được số liệu</b>${esc(e.message)}</div>`;
+      }
+      return;
+    }
 
     if (!KHO[id]) {
       noi.innerHTML = '<div class="trong"><b>Đang mở…</b></div>';
@@ -544,16 +680,21 @@
   }
 
   $('#chon-vai').addEventListener('change', e => {
-    if (PHIEN) {
-      XEM_NHU = e.target.value === PHIEN.vai ? null : e.target.value;
-      napLai().catch(err => {
-        $('#noi').innerHTML = `<div class="trong"><b>Không mở được</b>${esc(err.message)}</div>`;
-      });
-    } else doiVai(e.target.value);
+    if (!PHIEN) return doiVai(e.target.value);
+    XEM_NHU = e.target.value === PHIEN.vai ? null : e.target.value;
+    napLai().catch(err => {
+      $('#noi').innerHTML =
+        `<div class="trong"><b>Không mở được</b>${esc(err.message)}</div>`;
+    });
   });
 
-  napLai().catch(err => {
-    $('#noi').innerHTML =
-      `<div class="trong"><b>Không đọc được mục lục</b>${esc(err.message)}</div>`;
+  /* Cửa vào: có phiên thì dựng khung; không có mà máy chủ còn sống thì
+     đưa về cổng đăng nhập. */
+  canhCong().then(vao => {
+    if (!vao) return;
+    napLai().catch(err => {
+      $('#noi').innerHTML =
+        `<div class="trong"><b>Không đọc được mục lục</b>${esc(err.message)}</div>`;
+    });
   });
 })();
