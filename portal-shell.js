@@ -63,6 +63,11 @@
 
   const dauThe = () => ({ Authorization: 'Bearer ' + PHIEN.the });
 
+  /* Góc nhìn đang mượn. Chỉ Chủ tịch mới đặt được, và máy chủ vẫn kiểm
+     lại mỗi lần gọi — giá trị ở đây chỉ để vẽ giao diện. */
+  let XEM_NHU = null;
+  const thamSo = () => XEM_NHU ? '?xem_nhu=' + encodeURIComponent(XEM_NHU) : '';
+
   /* Máy chủ từ chối thẻ giữa chừng thì đưa về cổng, không để người dùng
      ngồi trước một màn trống mà không hiểu vì sao. */
   function kiemPhien(r) {
@@ -82,7 +87,7 @@
     if (!maNhom) return Promise.resolve();
     if (!dangTai.has(maNhom)) {
       const nguon = PHIEN
-        ? fetch(API + '/portal/nhom/' + maNhom, { headers: dauThe() }).then(kiemPhien)
+        ? fetch(API + '/portal/nhom/' + maNhom + thamSo(), { headers: dauThe() }).then(kiemPhien)
         : fetch(KHOI.duLieu + 'nhom/' + maNhom + '.json');
       dangTai.set(maNhom, nguon
         .then(r => r.ok ? r.json() : {})
@@ -96,7 +101,7 @@
   function taiBang(idVai) {
     const ma = idVai.replace(/^vh_/, '');
     const nguon = PHIEN
-      ? fetch(API + '/portal/bang', { headers: dauThe() }).then(kiemPhien)
+      ? fetch(API + '/portal/bang' + thamSo(), { headers: dauThe() }).then(kiemPhien)
       : fetch(KHOI.duLieu + 'bang/' + ma + '.json');
     return nguon
       .then(r => r.ok ? r.json() : null)
@@ -239,7 +244,8 @@
           <div class="hang-nhap"><label for="mkl">Nhập lại</label>
             <input id="mkl" type="password"></div>
         </div>
-        <div class="nut-hang"><button class="nut dac">Đổi mật khẩu</button></div>
+        <div class="nut-hang"><button class="nut dac" id="nut-doi-mk">Đổi mật khẩu</button></div>
+        <div class="ghi" id="bao-mk" style="display:none;margin-top:12px"></div>
       </section>
       <section class="the">
         <h2>Xác thực hai lớp</h2>
@@ -280,10 +286,16 @@
     const d = document.createElement('div');
     d.id = 'dai-tt';
     d.className = 'dai-tt' + (PHIEN ? ' that' : '');
-    d.innerHTML = PHIEN
-      ? `Đang xem bằng tài khoản <b>${esc(PHIEN.ten)}</b> · vai trò do máy chủ cấp`
-      : 'Bản trình bày — <b>dữ liệu mẫu</b>, chưa đăng nhập. ' +
-        '<a href="dang-nhap.html">Vào bằng tài khoản thật</a>';
+    const muonTen = XEM_NHU &&
+      (MUC_LUC.muon_duoc || []).find(v => v.id === XEM_NHU)?.ten;
+    d.innerHTML = !PHIEN
+      ? 'Bản trình bày — <b>dữ liệu mẫu</b>, chưa đăng nhập. ' +
+        '<a href="dang-nhap.html">Vào bằng tài khoản thật</a>'
+      : muonTen && XEM_NHU !== PHIEN.vai
+        ? `<b>${esc(PHIEN.ten)}</b> đang xem như <b>${esc(muonTen)}</b> — ` +
+          'chỉ đọc, và lượt xem này đã ghi vào nhật ký'
+        : `Đang xem bằng tài khoản <b>${esc(PHIEN.ten)}</b> · vai trò do máy chủ cấp`;
+    if (XEM_NHU && XEM_NHU !== PHIEN?.vai) d.classList.remove('that');
     $('#noi').parentElement.insertBefore(d, $('#noi'));
   }
 
@@ -370,6 +382,7 @@
       noi.innerHTML = CAI_DAT[id].ve();
       noi.scrollTop = 0;
       $('#canh-nav').querySelectorAll('.muc').forEach(e => e.classList.remove('dang'));
+      if (id === 'cai-baomat') noiDoiMatKhau();
       return;
     }
 
@@ -402,6 +415,44 @@
 
     noi.innerHTML = veNoiDung(m, id);
     noi.scrollTop = 0;
+  }
+
+  /* Đổi mật khẩu — nối thẳng vào máy chủ. Không có phiên thật thì nói rõ
+     là chưa đổi được, chứ không hiện thông báo thành công giả. */
+  function noiDoiMatKhau() {
+    const nut = $('#nut-doi-mk'), bao = $('#bao-mk');
+    if (!nut) return;
+    const noi = (t, xanh) => {
+      bao.className = 'ghi' + (xanh ? '' : ' do');
+      bao.textContent = t;
+      bao.style.display = 'block';
+    };
+    nut.addEventListener('click', async () => {
+      if (!PHIEN) return noi('Chưa đăng nhập thật nên chưa đổi được mật khẩu.');
+      const cu = $('#mkc').value, moi_ = $('#mkm').value, lai = $('#mkl').value;
+      if (!cu || !moi_) return noi('Nhập đủ mật khẩu hiện tại và mật khẩu mới.');
+      if (moi_ !== lai) return noi('Hai lần nhập mật khẩu mới không khớp.');
+      if (moi_.length < 12) return noi('Mật khẩu mới cần ít nhất 12 ký tự. Một câu dài dễ nhớ khoẻ hơn một chuỗi ngắn rối rắm.');
+
+      nut.disabled = true;
+      try {
+        const r = await fetch(API + '/toi/doi-mat-khau', {
+          method: 'POST',
+          headers: { ...dauThe(), 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mat_khau_cu: cu, mat_khau_moi: moi_ }),
+        });
+        if (r.status === 401) noi('Mật khẩu hiện tại không đúng. Lượt thử đã ghi nhật ký.');
+        else if (!r.ok) noi('Máy chủ trả lỗi ' + r.status + '.');
+        else {
+          noi('Đã đổi mật khẩu. Lần đăng nhập sau dùng mật khẩu mới.', true);
+          ['#mkc', '#mkm', '#mkl'].forEach(x => { $(x).value = ''; });
+        }
+      } catch {
+        noi('Không nối được máy chủ.');
+      } finally {
+        nut.disabled = false;
+      }
+    });
   }
 
   async function doiVai(id) {
@@ -451,28 +502,58 @@
   });
   $('#che').addEventListener('click', dongCanh);
 
-  (PHIEN
-    ? fetch(API + '/portal/muc-luc', { headers: dauThe() }).then(kiemPhien).then(r => r.json())
-        .then(d => ({ ...d, vai_tro: [{ ...d.vai_tro, nhom: Object.keys(d.nhom_module) }],
-                      mac_dinh: d.vai_tro.id }))
-    : fetch(KHOI.duLieu + 'muc-luc.json').then(r => r.json()))
-    .then(mucLuc => {
-      MUC_LUC = mucLuc;
-      veTrangThai();
+  /* Nạp mục lục rồi dựng lại khung. Gọi lại được — đổi góc nhìn thì gọi
+     lần nữa, vì mục lục phải do máy chủ cắt chứ không lọc ở trình duyệt. */
+  function napLai() {
+    // Đổi góc nhìn thì kho màn cũ không còn đúng nữa
+    Object.keys(KHO).forEach(k => delete KHO[k]);
+    dangTai.clear();
 
-      /* Danh sách phẳng — mỗi portal chỉ có vai trò của mình. Trước đây
-         một bộ chọn gộp cả thương mại lẫn vận hành, vừa rối vừa để lộ
-         cơ cấu nội bộ cho người ngoài. */
-      $('#chon-vai').innerHTML = MUC_LUC.vai_tro.map(v =>
-        `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
-      /* Đăng nhập thật thì vai trò do máy chủ quyết — khoá bộ chọn lại.
-         Để mở là mời người ta thử đổi vai, và tuy máy chủ vẫn chặn nhưng
-         một ô bấm được mà không có tác dụng là giao diện nói dối. */
-      $('#chon-vai').disabled = !!PHIEN;
-      $('#chon-vai').addEventListener('change', e => doiVai(e.target.value));
-      doiVai(MUC_LUC.mac_dinh || MUC_LUC.vai_tro[0].id);
-    })
-    .catch(err => {
-      $('#noi').innerHTML = `<div class="trong"><b>Không đọc được mục lục</b>${esc(err.message)}</div>`;
-    });
+    return (PHIEN
+      ? fetch(API + '/portal/muc-luc' + thamSo(), { headers: dauThe() })
+          .then(kiemPhien).then(r => {
+            if (r.status === 403) throw new Error('Không có quyền xem như vai trò đó');
+            return r.json();
+          })
+          .then(d => ({ ...d, vai_tro: [{ ...d.vai_tro, nhom: Object.keys(d.nhom_module) }],
+                        mac_dinh: d.vai_tro.id }))
+      : fetch(KHOI.duLieu + 'muc-luc.json').then(r => r.json()))
+      .then(mucLuc => {
+        MUC_LUC = mucLuc;
+        nhomDong.clear();
+        veTrangThai();
+
+        const muon = MUC_LUC.muon_duoc || [];
+        if (PHIEN && muon.length) {
+          /* Tài khoản được phép mượn góc nhìn — bộ chọn thành công cụ
+             "xem như", không phải chỗ tự nâng quyền. Máy chủ vẫn kiểm lại
+             từng lượt và ghi nhật ký, nên đây chỉ là lối vào cho tiện. */
+          $('#chon-vai').innerHTML = muon.map(v =>
+            `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
+          $('#chon-vai').value = XEM_NHU || PHIEN.vai;
+          $('#chon-vai').disabled = false;
+        } else {
+          $('#chon-vai').innerHTML = MUC_LUC.vai_tro.map(v =>
+            `<option value="${v.id}">${esc(v.ten)}</option>`).join('');
+          /* Đăng nhập thật mà không được mượn thì khoá lại. Một ô bấm được
+             mà không có tác dụng là giao diện nói dối. */
+          $('#chon-vai').disabled = !!PHIEN;
+        }
+        doiVai(MUC_LUC.mac_dinh || MUC_LUC.vai_tro[0].id);
+      });
+  }
+
+  $('#chon-vai').addEventListener('change', e => {
+    if (PHIEN) {
+      XEM_NHU = e.target.value === PHIEN.vai ? null : e.target.value;
+      napLai().catch(err => {
+        $('#noi').innerHTML = `<div class="trong"><b>Không mở được</b>${esc(err.message)}</div>`;
+      });
+    } else doiVai(e.target.value);
+  });
+
+  napLai().catch(err => {
+    $('#noi').innerHTML =
+      `<div class="trong"><b>Không đọc được mục lục</b>${esc(err.message)}</div>`;
+  });
 })();
