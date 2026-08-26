@@ -2,7 +2,7 @@
    CỔNG PORTAL — nối vào máy chủ thật
 
    Trang gọi phải khai trước:
-       window.CONG = { ten:'Cổng vận hành', mo:'…', vao:'index.html' }
+       window.CONG = { ten:'Cổng vận hành', mo:'…', vao:'./' }
 
    Máy chủ: services/api. Nếu máy chủ chưa chạy thì cổng nói thẳng là
    chưa nối được, KHÔNG giả vờ đăng nhập thành công. Một ô mật khẩu không

@@ -6,7 +6,7 @@
 <title>Cửa hàng — Zen O Tea</title>
 <meta name="description" content="Cửa hàng Zen O Tea. Lục phẩm O Vang và O Beer — trà Shan tuyết cổ thụ lên men theo pháp khúc của Đông dược.">
 <meta name="theme-color" content="#0E211A">
-<link rel="canonical" href="https://zenotea.com/cua-hang.html">
+<link rel="canonical" href="https://zenotea.com/cua-hang">
 <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,11 +18,11 @@
 <body>
 
 <nav>
-  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <a href="./"><img src="./logo.png" alt="Zen O Tea"></a>
   <div class="lui">
-    <a href="./cua-hang.html">Cửa hàng</a>
-    <a href="./index.html#khuc">Pháp khúc</a>
-    <a href="./dang-nhap.html">Đăng nhập</a>
+    <a href="./cua-hang">Cửa hàng</a>
+    <a href="./#khuc">Pháp khúc</a>
+    <a href="./dang-nhap">Đăng nhập</a>
   </div>
 </nav>
 
@@ -113,11 +113,11 @@
         ${p.ban_duoc ? `
         <div class="nut-doi">
           <button class="nut dac" data-them-gio="${esc(p.ma)}">Thêm vào giỏ</button>
-          <a class="nut" href="./pham/${esc(p.slug)}.html">Đọc phẩm</a>
+          <a class="nut" href="./pham/${esc(p.slug)}">Đọc phẩm</a>
         </div>` : `
         <div class="chua">${esc(p.vi_sao)}</div>
         <div class="nut-doi">
-          <a class="nut" href="./pham/${esc(p.slug)}.html">Đọc phẩm</a>
+          <a class="nut" href="./pham/${esc(p.slug)}">Đọc phẩm</a>
         </div>`}
       </article>`).join('');
 

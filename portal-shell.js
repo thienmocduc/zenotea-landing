@@ -75,7 +75,7 @@
     try {
       const r = await fetch(API.replace(/\/api\/v1$/, '') + '/health',
                             { cache: 'no-store' });
-      if (r.ok) { location.replace('dang-nhap.html'); return false; }
+      if (r.ok) { location.replace('dang-nhap'); return false; }
     } catch { /* không nối được — bản tĩnh, cho xem bản trình bày */ }
     return true;
   }
@@ -90,7 +90,7 @@
   function kiemPhien(r) {
     if (r.status === 401) {
       sessionStorage.removeItem('zen_phien');
-      location.replace('dang-nhap.html');
+      location.replace('dang-nhap');
       throw new Error('het phien');
     }
     return r;
@@ -307,7 +307,7 @@
       (MUC_LUC.muon_duoc || []).find(v => v.id === XEM_NHU)?.ten;
     d.innerHTML = !PHIEN
       ? 'Bản trình bày — <b>dữ liệu mẫu</b>, chưa đăng nhập. ' +
-        '<a href="dang-nhap.html">Vào bằng tài khoản thật</a>'
+        '<a href="dang-nhap">Vào bằng tài khoản thật</a>'
       : muonTen && XEM_NHU !== PHIEN.vai
         ? `<b>${esc(PHIEN.ten)}</b> đang xem như <b>${esc(muonTen)}</b> — ` +
           'chỉ đọc, và lượt xem này đã ghi vào nhật ký'
@@ -629,7 +629,7 @@
     b.addEventListener('click', () => { moMan(b.dataset.mo); dongTk(); }));
   $('#thoat').addEventListener('click', () => {
     sessionStorage.removeItem('zen_phien');
-    location.href = 'dang-nhap.html';
+    location.href = 'dang-nhap';
   });
 
   $('#nut-menu').addEventListener('click', () => {

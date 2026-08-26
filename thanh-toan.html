@@ -18,10 +18,10 @@
 <body>
 
 <nav>
-  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <a href="./"><img src="./logo.png" alt="Zen O Tea"></a>
   <div class="lui">
-    <a href="./cua-hang.html">Cửa hàng</a>
-    <a href="./dang-nhap.html">Đăng nhập</a>
+    <a href="./cua-hang">Cửa hàng</a>
+    <a href="./dang-nhap">Đăng nhập</a>
   </div>
 </nav>
 
@@ -108,7 +108,7 @@
 
       <div class="nut-hang">
         <button type="submit" class="nut dac" id="nut-dat">Đặt đơn</button>
-        <a class="nut" href="./cua-hang.html">Chọn thêm phẩm</a>
+        <a class="nut" href="./cua-hang">Chọn thêm phẩm</a>
       </div>
       <div class="phap-ly" id="bao"></div>
 
@@ -151,7 +151,7 @@
     </div>
 
     <div class="nut-hang">
-      <a class="nut" href="./cua-hang.html">Về cửa hàng</a>
+      <a class="nut" href="./cua-hang">Về cửa hàng</a>
       <button class="nut" id="sua-don">Sửa lại đơn</button>
     </div>
 
@@ -226,14 +226,14 @@
       $('#gio-bang').innerHTML =
         `<div class="gio-trong"><b>Giỏ đang trống</b>
            <span>Chưa có phẩm nào để thanh toán.</span>
-           <a class="nut" href="./cua-hang.html">Xem bộ phẩm</a></div>`;
+           <a class="nut" href="./cua-hang">Xem bộ phẩm</a></div>`;
       $('#nut-dat').disabled = true;
       return ct;
     }
     $('#gio-bang').innerHTML = ct.dong.map(d => `
       <div class="gio-dong" data-ma="${esc(d.ma)}">
         <div class="gio-tin">
-          <a href="./pham/${esc(d.slug)}.html">${esc(d.ten)}</a>
+          <a href="./pham/${esc(d.slug)}">${esc(d.ten)}</a>
           <span>${esc(d.dv)} · ${Gio.tien(d.gia)}</span>
         </div>
         <div class="gio-sl">

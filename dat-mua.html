@@ -7,7 +7,7 @@
 <meta name="description" content="Đặt mua phẩm Zen O Tea. Trà cổ thụ Shan tuyết lên men theo pháp khúc của Đông dược.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0E211A">
-<link rel="canonical" href="https://thienmocduc.github.io/zenotea-landing/dat-mua.html">
+<link rel="canonical" href="https://thienmocduc.github.io/zenotea-landing/dat-mua">
 <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,10 @@
 <body>
 
 <nav>
-  <a href="./index.html"><img src="./logo.png" alt="Zen O Tea"></a>
+  <a href="./"><img src="./logo.png" alt="Zen O Tea"></a>
   <div class="lui">
-    <a href="./cua-hang.html">Cửa hàng</a>
-    <a href="./dang-nhap.html">Đăng nhập</a>
+    <a href="./cua-hang">Cửa hàng</a>
+    <a href="./dang-nhap">Đăng nhập</a>
   </div>
 </nav>
 
@@ -38,7 +38,7 @@
   </section>
 
     <div class="phap-ly canh" id="dan-cua-hang" style="margin-top:26px">
-      Đơn nhiều phẩm một lúc thì đi qua <a href="./cua-hang.html">cửa hàng</a> nhanh hơn:
+      Đơn nhiều phẩm một lúc thì đi qua <a href="./cua-hang">cửa hàng</a> nhanh hơn:
       thêm vào giỏ rồi trả một lần bằng mã quét, số tiền và nội dung điền sẵn.
       Trang này giữ lại cho đơn một phẩm và đơn đặt riêng theo lô.
     </div>
@@ -123,7 +123,7 @@
 
     <div class="nut-hang">
       <button type="submit" class="nut dac">Gửi đơn đặt mua</button>
-      <a class="nut" href="./index.html#pham">Quay lại bộ phẩm</a>
+      <a class="nut" href="./#pham">Quay lại bộ phẩm</a>
     </div>
 
     <div class="phap-ly" id="bao"></div>
@@ -157,7 +157,7 @@ const PHAM = {
 const $ = id => document.getElementById(id);
 const tien = n => n.toLocaleString('vi-VN') + '₫';
 
-// Chọn sẵn phẩm theo tham số trên đường dẫn: dat-mua.html?pham=o-vang-bo-de
+// Chọn sẵn phẩm theo tham số trên đường dẫn: dat-mua?pham=o-vang-bo-de
 const thamSo = new URLSearchParams(location.search).get('pham');
 if (thamSo && PHAM[thamSo]) $('pham').value = thamSo;
 

@@ -243,7 +243,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
 
   <!-- ════════ MẶT TRÁI — THƯ NGỎ ════════ -->
   <section class="mat mat-trai">
-    <a href="./index.html"><img class="logo" src="./logo.png" alt="Zen O Tea"></a>
+    <a href="./"><img class="logo" src="./logo.png" alt="Zen O Tea"></a>
 
     <div class="net-dan"></div>
     <h2 class="tieu-thu">Thư ngỏ gửi người đồng hành</h2>
@@ -378,7 +378,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       Tiếp tục nghĩa là bạn đồng ý với <a href="#">Điều khoản sử dụng</a>
       và <a href="#">Chính sách riêng tư</a>.
     </p>
-    <a class="ve" href="./index.html">← Trở lại rừng trà</a>
+    <a class="ve" href="./">← Trở lại rừng trà</a>
   </section>
 </div>
 
@@ -461,7 +461,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       if (!rt.ok) return noi('Không lập được phiên chuyển tiếp. Thử lại giúp nhé.');
       const { ma } = await rt.json();
       noi('Cửa mở. Đang đưa bạn vào…', true);
-      const khu = d.be_mat === 'os' ? '/os/index.html' : '/portal/index.html';
+      const khu = d.be_mat === 'os' ? '/os/' : '/portal/';
       location.replace(GOC_PORTAL + khu + '#trao=' + ma);
     } catch {
       noi('Chưa nối được máy chủ. Kiểm mạng rồi thử lại giúp nhé.');

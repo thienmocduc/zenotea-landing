@@ -157,7 +157,7 @@
         `<div class="gio-trong">
            <b>Giỏ đang trống</b>
            <span>Chọn một phẩm và mở nó ra khi lòng đã lặng.</span>
-           <a class="nut" href="${GOC}cua-hang.html">Xem bộ phẩm</a>
+           <a class="nut" href="${GOC}cua-hang">Xem bộ phẩm</a>
          </div>`;
       chan.innerHTML = '';
       return;
@@ -166,7 +166,7 @@
     than.innerHTML = ct.dong.map(d => `
       <div class="gio-dong" data-ma="${esc(d.ma)}">
         <div class="gio-tin">
-          <a href="${GOC}pham/${esc(d.slug)}.html">${esc(d.ten)}</a>
+          <a href="${GOC}pham/${esc(d.slug)}">${esc(d.ten)}</a>
           <span>${esc(d.dv)}</span>
         </div>
         <div class="gio-sl">
@@ -183,7 +183,7 @@
       <div class="gio-ghi">${ct.hang >= ct.nguong
         ? 'Đơn này được miễn phí giao.'
         : 'Thêm ' + tien(ct.nguong - ct.hang) + ' nữa thì miễn phí giao.'}</div>
-      <a class="nut dac" href="${GOC}thanh-toan.html">Thanh toán</a>`;
+      <a class="nut dac" href="${GOC}thanh-toan">Thanh toán</a>`;
 
     than.querySelectorAll('[data-buoc]').forEach(b =>
       b.addEventListener('click', () => {
