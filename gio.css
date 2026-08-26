@@ -124,7 +124,7 @@
 }
 .loc .day{margin-left:auto;font-size:12.5px;color:var(--reu)}
 
-.luoi{
+.gio-luoi{
   display:grid;gap:clamp(16px,2.2vw,26px);margin-top:clamp(26px,4vw,40px);
   grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));
 }

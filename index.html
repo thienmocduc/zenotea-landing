@@ -203,7 +203,7 @@ nav a:hover{color:var(--kim-sang)}
 /* ── số liệu ── */
 .so-hang{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:1px;background:rgba(201,162,75,.16);margin-top:64px;
+  gap:1px;margin-top:64px;
 }
 .so{background:var(--den);padding:32px 22px;text-align:center}
 .so b.tp{font-family:var(--co);padding:.14em 0 .18em;display:inline-block}
@@ -280,7 +280,7 @@ nav a:hover{color:var(--kim-sang)}
 .the-pham:hover .xem span{transform:translateX(5px)}
 
 /* ── lưới ── */
-.luoi{display:grid;gap:1px;background:rgba(201,162,75,.14);margin-top:56px}
+.luoi{display:grid;gap:1px;margin-top:56px}
 .luoi.c2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 .luoi.c3{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
 .luoi.c4{grid-template-columns:repeat(4,1fr)}
@@ -298,7 +298,7 @@ nav a:hover{color:var(--kim-sang)}
 
 /* ── ngũ phẩm ── */
 .ngu{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;
-     background:rgba(201,162,75,.14);margin-top:56px}
+     margin-top:56px}
 .ngu-o{background:var(--den2);padding:30px 22px;text-align:center;position:relative}
 .cham{width:13px;height:13px;border-radius:50%;margin:0 auto 16px}
 .ngu-o .hanh{font-size:11px;letter-spacing:.2em;color:var(--reu);text-transform:uppercase}
@@ -318,7 +318,7 @@ nav a:hover{color:var(--kim-sang)}
 
 /* ── bảng so sánh 0.0 / 0.5 ── */
 .hai-ban{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-         gap:1px;background:rgba(201,162,75,.16);margin-top:48px}
+         gap:1px;margin-top:48px}
 .ban{background:var(--den2);padding:clamp(28px,3.4vw,42px)}
 .ban .con-so{font-family:var(--serif);font-size:58px;line-height:1;color:var(--kim-sang)}
 .ban ul{list-style:none;margin-top:22px}
@@ -352,7 +352,7 @@ nav a:hover{color:var(--kim-sang)}
 @media(max-width:640px){.tang{grid-template-columns:1fr;gap:5px}}
 
 .he{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:1px;
-    background:rgba(201,162,75,.14);margin-top:48px}
+    margin-top:48px}
 .he-o{background:var(--den2);padding:26px 18px;text-align:center}
 .he-o b{display:block;font-family:var(--serif);font-size:18px;color:var(--kim-sang);font-weight:400}
 .he-o span{display:block;font-size:12px;color:var(--reu);margin-top:7px;line-height:1.6}
@@ -384,6 +384,14 @@ footer p{font-size:13px;color:var(--reu);line-height:1.85}
   html.co-hieu-ung .gh{opacity:1;transform:none;
     transition:opacity .8s ease,transform 1s cubic-bezier(.16,.84,.3,1)}
 }
+
+/* ── Đường chỉ kim tuyến đi theo từng ô ────────────────────────────────────
+   Bản cũ lót nền vàng SAU lưới rồi hở khe 1px cho nền lộ ra làm vạch. Chiêu
+   đó vỡ khi ô bay vào theo hiệu ứng ghép mảnh: ô dịch tới đâu, nền lót phơi
+   ra thành DẢI THÔ tới đó — đúng cái Chairman chụp được 28/08. Giờ mỗi ô tự
+   mang viền nửa nét; hai ô kề ghép lại thành 1px, ô đang bay mang chỉ vàng
+   của chính nó. Vạch mảnh trong mọi khoảnh khắc, kể cả giữa chuyển động. */
+.o,.ngu-o,.he-o,.so,.ban{box-shadow:0 0 0 .5px rgba(201,162,75,.17)}
 </style>
 <link rel="stylesheet" href="./gio.css">
 </head>
