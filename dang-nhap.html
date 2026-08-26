@@ -341,11 +341,19 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
                autocomplete="email" placeholder="ten@congty.com" required>
       </div>
       <div class="hang">
-        <label for="gn-mk">Mật khẩu — một câu dài dễ nhớ, từ 12 ký tự</label>
-        <input class="o-nhap" id="gn-mk" type="password" autocomplete="new-password"
-               placeholder="ví dụ: tra-chieu-ben-hien-nha" required>
+        <label for="gn-mk">Mật khẩu — từ 8 ký tự</label>
+        <div class="mo-mk">
+          <input class="o-nhap" id="gn-mk" type="password" autocomplete="new-password"
+                 placeholder="ví dụ: tra-chieu-ben-hien" required>
+          <button type="button" id="gn-hien-mk" aria-label="Hiện mật khẩu">👁</button>
+        </div>
       </div>
-      <button class="nut-chinh" type="submit" id="nut-gia-nhap">Gia nhập Zen Circle</button>
+      <div class="hang">
+        <label for="gn-mk2">Nhập lại mật khẩu</label>
+        <input class="o-nhap" id="gn-mk2" type="password" autocomplete="new-password"
+               placeholder="gõ lại đúng như trên" required>
+      </div>
+      <button class="nut-chinh" type="submit" id="nut-gia-nhap">Đăng ký gia nhập Zen Circle</button>
       <p class="dieu-khoan" style="margin-top:10px">Tài khoản thành viên — xem phẩm, tủ trà,
         đặt phẩm. Vai trò khác do nội bộ mời.</p>
     </form>
@@ -517,11 +525,20 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
     $('#gn-ten').focus();
   });
 
+  /* Mắt xem: lộ CẢ HAI ô cùng lúc — hiện ô trên mà giấu ô dưới thì con
+     mắt chỉ giúp được một nửa lỗi gõ. */
+  $('#gn-hien-mk').addEventListener('click', () => {
+    const dangAn = $('#gn-mk').type === 'password';
+    $('#gn-mk').type = $('#gn-mk2').type = dangAn ? 'text' : 'password';
+    $('#gn-hien-mk').setAttribute('aria-label', dangAn ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  });
+
   $('#form-gia-nhap').addEventListener('submit', async e => {
     e.preventDefault();
     if ($('#gn-ten').value.trim().length < 2) return noi('Cho chúng tôi biết tên bạn nhé.');
     if (!emailHopLe($('#gn-email').value)) return noi('Email chưa đúng dạng — bạn kiểm lại giúp.');
-    if ($('#gn-mk').value.length < 12) return noi('Mật khẩu cần từ 12 ký tự — một câu dài dễ nhớ khoẻ hơn chuỗi ngắn rối rắm.');
+    if ($('#gn-mk').value.length < 8) return noi('Mật khẩu cần từ 8 ký tự.');
+    if ($('#gn-mk').value !== $('#gn-mk2').value) return noi('Hai lần nhập mật khẩu chưa khớp — bạn gõ lại giúp nhé.');
 
     const nut = $('#nut-gia-nhap');
     nut.disabled = true;
