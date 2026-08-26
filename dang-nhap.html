@@ -330,6 +330,26 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       <button class="nut-chinh" type="submit" id="nut-mk">Đăng nhập</button>
     </form>
 
+    <form id="form-gia-nhap" class="an" novalidate>
+      <div class="hang">
+        <label for="gn-ten">Tên của bạn</label>
+        <input class="o-nhap" id="gn-ten" autocomplete="name" placeholder="Nguyễn Trà My" required>
+      </div>
+      <div class="hang">
+        <label for="gn-email">Email</label>
+        <input class="o-nhap" id="gn-email" type="email" inputmode="email"
+               autocomplete="email" placeholder="ten@congty.com" required>
+      </div>
+      <div class="hang">
+        <label for="gn-mk">Mật khẩu — một câu dài dễ nhớ, từ 12 ký tự</label>
+        <input class="o-nhap" id="gn-mk" type="password" autocomplete="new-password"
+               placeholder="ví dụ: tra-chieu-ben-hien-nha" required>
+      </div>
+      <button class="nut-chinh" type="submit" id="nut-gia-nhap">Gia nhập Zen Circle</button>
+      <p class="dieu-khoan" style="margin-top:10px">Tài khoản thành viên — xem phẩm, tủ trà,
+        đặt phẩm. Vai trò khác do nội bộ mời.</p>
+    </form>
+
     <form id="form-sdt" class="an" novalidate>
       <div class="hang">
         <label for="sdt">Số điện thoại</label>
@@ -412,6 +432,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       const laMk = b.dataset.tab === 'mk';
       $('#form-mk').classList.toggle('an', !laMk);
       $('#form-sdt').classList.toggle('an', laMk);
+      $('#form-gia-nhap').classList.add('an');  // tab nào cũng cất form gia nhập
       bao.className = 'bao';
     });
   });
@@ -485,9 +506,53 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
     e.preventDefault();
     noi('Đặt lại mật khẩu qua thư đang được nối. Trước mắt, nhắn người quản trị của bạn để được cấp lại.', true);
   });
+  /* Gia nhập: lật thiệp sang form đăng ký thật. Vai luôn là thành viên —
+     máy chủ khắc cứng, form không hỏi và không thể hỏi. */
   $('#dang-ky').addEventListener('click', e => {
     e.preventDefault();
-    noi('Tài khoản do nội bộ và người giới thiệu cấp. Nếu bạn đã nhận thư mời, hãy mở đường dẫn trong thư.', true);
+    $('#form-mk').classList.add('an');
+    $('#form-sdt').classList.add('an');
+    $('#form-gia-nhap').classList.remove('an');
+    bao.className = 'bao';
+    $('#gn-ten').focus();
+  });
+
+  $('#form-gia-nhap').addEventListener('submit', async e => {
+    e.preventDefault();
+    if ($('#gn-ten').value.trim().length < 2) return noi('Cho chúng tôi biết tên bạn nhé.');
+    if (!emailHopLe($('#gn-email').value)) return noi('Email chưa đúng dạng — bạn kiểm lại giúp.');
+    if ($('#gn-mk').value.length < 12) return noi('Mật khẩu cần từ 12 ký tự — một câu dài dễ nhớ khoẻ hơn chuỗi ngắn rối rắm.');
+
+    const nut = $('#nut-gia-nhap');
+    nut.disabled = true;
+    nut.textContent = 'Đang dọn chỗ…';
+    try {
+      const r = await fetch(API + '/dang-ky-thanh-vien', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ho_ten: $('#gn-ten').value.trim(),
+          email: $('#gn-email').value.trim(),
+          mat_khau: $('#gn-mk').value,
+          ma_gioi_thieu: localStorage.getItem('zenotea.ref') || '',
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) return noi(d.detail || ('Máy chủ trả lỗi ' + r.status + '.'));
+
+      const rt = await fetch(API + '/auth/trao-ma', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ the: d.the }),
+      });
+      if (!rt.ok) return noi('Tài khoản đã mở — đăng nhập bằng email và mật khẩu vừa đặt nhé.', true);
+      const { ma } = await rt.json();
+      noi('Chỗ của bạn đã sẵn. Đang đưa bạn vào…', true);
+      location.replace(GOC_PORTAL + '/portal/#trao=' + ma);
+    } catch {
+      noi('Chưa nối được máy chủ. Kiểm mạng rồi thử lại giúp nhé.');
+    } finally {
+      nut.disabled = false;
+      nut.textContent = 'Gia nhập Zen Circle';
+    }
   });
 })();
 </script>
