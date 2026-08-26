@@ -349,6 +349,18 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
         </div>
       </div>
       <div class="hang">
+        <label for="gn-vai">Bạn đăng ký với vai</label>
+        <select class="o-nhap" id="gn-vai">
+          <option value="" selected>Thành viên — dùng ngay</option>
+          <option value="sale_aff">Người bán AFF — chờ duyệt</option>
+          <option value="vip">Thành viên VIP — chờ duyệt</option>
+          <option value="dai_ly">Đại lý — chờ duyệt</option>
+          <option value="chu_center">Chủ Center — chờ duyệt</option>
+        </select>
+        <p class="dieu-khoan" style="margin-top:6px">Vai có chữ "chờ duyệt": tài khoản
+          mở ngay như thành viên, quản trị duyệt xong vai mới có hiệu lực.</p>
+      </div>
+      <div class="hang">
         <label for="gn-mk2">Nhập lại mật khẩu</label>
         <input class="o-nhap" id="gn-mk2" type="password" autocomplete="new-password"
                placeholder="gõ lại đúng như trên" required>
@@ -401,7 +413,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       </button>
     </div>
 
-    <p class="chan">Chưa từng ngồi xuống cùng chúng tôi? <a href="#" id="dang-ky">Gia nhập Zen Circle</a></p>
+    <p class="chan">Chưa gia nhập Zen Circle? <a href="#" id="dang-ky">Đăng ký ID</a></p>
     <p class="dieu-khoan">
       Tiếp tục nghĩa là bạn đồng ý với <a href="#">Điều khoản sử dụng</a>
       và <a href="#">Chính sách riêng tư</a>.
@@ -551,6 +563,7 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
           email: $('#gn-email').value.trim(),
           mat_khau: $('#gn-mk').value,
           ma_gioi_thieu: localStorage.getItem('zenotea.ref') || '',
+          vai_mong_muon: $('#gn-vai').value,
         }),
       });
       const d = await r.json().catch(() => ({}));
@@ -562,7 +575,9 @@ label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:upperca
       });
       if (!rt.ok) return noi('Tài khoản đã mở — đăng nhập bằng email và mật khẩu vừa đặt nhé.', true);
       const { ma } = await rt.json();
-      noi('Chỗ của bạn đã sẵn. Đang đưa bạn vào…', true);
+      noi($('#gn-vai').value
+        ? 'Chỗ của bạn đã sẵn — vai bạn xin đã gửi quản trị duyệt. Đang đưa bạn vào…'
+        : 'Chỗ của bạn đã sẵn. Đang đưa bạn vào…', true);
       location.replace(GOC_PORTAL + '/portal/#trao=' + ma);
     } catch {
       noi('Chưa nối được máy chủ. Kiểm mạng rồi thử lại giúp nhé.');
