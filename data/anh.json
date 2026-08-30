@@ -1,0 +1,29 @@
+{
+ "_ghi": "Thu vien anh Zen O Tea. THA ANH THAT vao site/anh/<bo>/ roi chay: node scripts/quet-anh.mjs — anh tu len trang, chu thich giu nguyen qua moi lan quet. Bo nao chua co anh thi KHONG hien ra trang (khong khung rong, khong anh kho).",
+ "bo": {
+  "vung-nguyen-lieu": {
+   "nhan": "Vùng nguyên liệu",
+   "ten": "Nơi cây đứng",
+   "mo": "Hoàng Su Phì, Suối Giàng, Tà Xùa, Tủa Chùa — sương muối, biên độ nhiệt, và những thân trà không ai trồng.",
+   "anh": []
+  },
+  "thu-hai": {
+   "nhan": "Ngày thu hái",
+   "ten": "Hái theo tiết khí",
+   "mo": "Búp một tôm trước Thanh minh, lá bánh tẻ Cốc vũ, lá trưởng thành Lập hạ. Mỗi lô có giới hạn tự nhiên của nó.",
+   "anh": []
+  },
+  "lam-che": {
+   "nhan": "Pháp khúc",
+   "ten": "Từ lá đến men",
+   "mo": "Lá trà cổ thụ và thảo dược bản địa cùng vào một mẻ ủ. Không sao, không thúc nhiệt, không chất bảo quản.",
+   "anh": []
+  },
+  "pham": {
+   "nhan": "Bộ phẩm",
+   "ten": "Phẩm trong tay",
+   "mo": "Chai, hộp, và nghi thức khui — thứ khách cầm được.",
+   "anh": []
+  }
+ }
+}
