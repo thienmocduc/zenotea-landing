@@ -7,35 +7,27 @@
    "mo": "Hoàng Su Phì, Suối Giàng, Tà Xùa, Tủa Chùa — sương muối, biên độ nhiệt, và những thân trà không ai trồng.",
    "anh": [
     {
-     "tep": "ha-giang-doi-che.jpg",
-     "mo": "Đồi chè trên cao nguyên Hà Giang",
-     "noi": "Hà Giang",
-     "nguon": "Velvet · CC BY-SA 4.0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Ha_Giang_theiers.jpg",
+     "tep": "suoi-giang-than-co-thu.jpg",
+     "mo": "Những thân trà cổ thụ ở Suối Giàng — cây cao quá đầu người, không ai trồng và không ai cắt ngọn",
+     "noi": "Suối Giàng, Yên Bái",
+     "nguon": "Viethavvh at Vietnamese Wikipedia · Public domain · Wikimedia Commons",
+     "nguon_url": "https://commons.wikimedia.org/wiki/File:Suoi_Giang_tea.JPG",
      "tu_lieu": true
     },
     {
-     "tep": "shan-tuyet-co-thu.jpg",
-     "mo": "Thân trà Shan tuyết cổ thụ — loại cây làm nên phẩm",
+     "tep": "treo-cay-hai-bup.jpg",
+     "mo": "Hái Shan tuyết cổ thụ phải trèo lên thân cây — không có cách nào đứng dưới đất mà với tới búp",
      "noi": "Vùng cao phía Bắc",
      "nguon": "Havuno1 · CC BY-SA 4.0 · Wikimedia Commons",
      "nguon_url": "https://commons.wikimedia.org/wiki/File:Tra-shan-tuyet-co-thu.jpg",
      "tu_lieu": true
     },
     {
-     "tep": "bup-shan-tuyet.jpg",
-     "mo": "Búp Shan tuyết phủ lông trắng như tuyết — tên gọi đến từ đây",
-     "noi": "Vùng cao phía Bắc",
-     "nguon": "VuThiAnh · Public domain · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Che_Shan_tuyet.JPG",
-     "tu_lieu": true
-    },
-    {
-     "tep": "sa-pa-nuong-che.jpg",
-     "mo": "Nương chè bậc thang vùng núi Tây Bắc",
-     "noi": "Sa Pa, Lào Cai",
-     "nguon": "Christophe95 · CC BY-SA 4.0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Tea_plantation_in_Sa_Pa.jpg",
+     "tep": "ta-xua-tren-may.jpg",
+     "mo": "Tà Xùa trên mây — độ cao và sương mù quanh năm là điều kiện làm nên lớp lông trắng trên búp",
+     "noi": "Tà Xùa, Sơn La",
+     "nguon": "HaiLit · CC0 · Wikimedia Commons",
+     "nguon_url": "https://commons.wikimedia.org/wiki/File:On_cloud_in_Ta_Xua.jpg",
      "tu_lieu": true
     }
    ]
@@ -44,55 +36,13 @@
    "nhan": "Ngày thu hái",
    "ten": "Hái theo tiết khí",
    "mo": "Búp một tôm trước Thanh minh, lá bánh tẻ Cốc vũ, lá trưởng thành Lập hạ. Mỗi lô có giới hạn tự nhiên của nó.",
-   "anh": [
-    {
-     "tep": "doi-che-thai-nguyen.jpg",
-     "mo": "Đồi chè vào vụ — lá bánh tẻ đủ độ để hái",
-     "noi": "Thái Nguyên",
-     "nguon": "Bacthai20 · CC0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Tea_hill_in_Thai_Nguyen.jpg",
-     "tu_lieu": true
-    },
-    {
-     "tep": "khe-mo-vao-vu.jpg",
-     "mo": "Luống chè Khe Mơ giữa mùa thu hái",
-     "noi": "Thái Nguyên",
-     "nguon": "Bacthai20 · CC0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Tea_plantation_Khe_Mo.jpg",
-     "tu_lieu": true
-    },
-    {
-     "tep": "bup-mot-tom-hai-la.jpg",
-     "mo": "Một tôm hai lá — chuẩn hái của phẩm khai vị",
-     "noi": "Cận cảnh búp trà",
-     "nguon": "Ibarakichan · CC BY-SA 4.0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Close_up_of_tea_leaves.jpg",
-     "tu_lieu": true
-    }
-   ]
+   "anh": []
   },
   "lam-che": {
    "nhan": "Pháp khúc",
    "ten": "Từ lá đến men",
    "mo": "Lá trà cổ thụ và thảo dược bản địa cùng vào một mẻ ủ. Không sao, không thúc nhiệt, không chất bảo quản.",
-   "anh": [
-    {
-     "tep": "lam-heo-la.jpg",
-     "mo": "Làm héo — bước đầu tiên, lá nhả bớt nước trước khi vào men",
-     "noi": "Công đoạn chế biến",
-     "nguon": "shankar s. from Dubai, united arab emirates · CC BY 2.0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Fresh_tea_leaves_go_through_the_%27withering%27_process_(7353748710).jpg",
-     "tu_lieu": true
-    },
-    {
-     "tep": "sang-la-kho.jpg",
-     "mo": "Sàng và phân loại lá sau công đoạn làm khô",
-     "noi": "Công đoạn chế biến",
-     "nguon": "Bdx · CC BY-SA 4.0 · Wikimedia Commons",
-     "nguon_url": "https://commons.wikimedia.org/wiki/File:Tea_production,_step_2_-_processing_of_the_dried_tea_leaves_(Ndawara)_(07).jpg",
-     "tu_lieu": true
-    }
-   ]
+   "anh": []
   },
   "pham": {
    "nhan": "Bộ phẩm",
