@@ -70,6 +70,28 @@
     });
   }
 
+  /* GHI CÔNG — không phải trang trí, là điều kiện của giấy phép.
+
+     CC BY và CC BY-SA buộc nêu tác giả và giấy phép ở chỗ hợp lý với môi
+     trường trình bày. Dựng thành hàm ở đây, sinh thẳng từ dữ liệu ảnh, để
+     không có đường nào thêm ảnh mà quên phần ghi công — người thêm ảnh
+     chỉ chạm vào danh mục, hàm này tự lo phần còn lại.
+
+     Và dòng "ảnh tư liệu" là lời nói thật với khách: đây là chè Shan tuyết
+     và vùng chè Việt Nam có thật, nhưng CHƯA phải vườn của Zen O Tea. Bán
+     hàng bằng nguồn gốc thì không được mượn nguồn gốc của người khác. */
+  function veGhiCong(anh) {
+    var tl = anh.filter(function (a) { return a.tu_lieu && a.nguon; });
+    if (!tl.length) return '';
+    var nguon = [];
+    tl.forEach(function (a) {
+      if (nguon.indexOf(a.nguon) < 0) nguon.push(a.nguon);
+    });
+    return '<p class="tv-ghi-cong">Ảnh tư liệu vùng chè Việt Nam — ' +
+      'chưa phải vườn của Zen O Tea. Nguồn: ' +
+      nguon.map(esc).join(' · ') + '</p>';
+  }
+
   function veBo(o, bo) {
     var anh = (bo.anh || []).filter(function (a) { return a.tep; });
     if (!anh.length) {
@@ -90,7 +112,8 @@
           /* Tấm đầu tải ngay, phần còn lại tải khi cuộn tới: tấm đầu là
              thứ quyết định trang có "sống" ngay lúc mở hay không. */
           var chien = i === 0 ? 'eager' : 'lazy';
-          return '<figure class="tv-o gh" data-src="' + esc(src) + '">' +
+          return '<figure class="tv-o gh" data-src="' + esc(src) + '"' +
+            (a.nguon ? ' data-nguon="' + esc(a.nguon) + '"' : '') + '>' +
             '<img src="' + esc(src) + '" alt="' + esc(a.mo || bo.ten) + '"' +
             ' loading="' + chien + '" decoding="async">' +
             (a.mo || a.noi
@@ -100,12 +123,15 @@
               : '') +
             '</figure>';
         }).join('') +
-      '</div>';
+      '</div>' +
+      veGhiCong(anh);
 
     o.querySelectorAll('.tv-o').forEach(function (f) {
       f.addEventListener('click', function () {
         var cap = f.querySelector('figcaption');
-        moLon(f.dataset.src, cap ? cap.textContent : '');
+        moLon(f.dataset.src,
+              (cap ? cap.textContent : '') +
+              (f.dataset.nguon ? '  ·  ' + f.dataset.nguon : ''));
       });
     });
     return anh.length;
